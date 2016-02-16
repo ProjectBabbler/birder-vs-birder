@@ -1,0 +1,22 @@
+{
+  "name": "birder-vs-birder",
+  "version": "0.0.1",
+  "description": "Birder vs Birder.  Challenge your friends big years and life lists",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProjectBabbler/birder-vs-birder.git"
+  },
+  "author": "Greg Schechter",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/ProjectBabbler/birder-vs-birder/issues"
+  },
+  "homepage": "https://github.com/ProjectBabbler/birder-vs-birder#readme",
+  "dependencies": {
+    "ebird": "0.0.1"
+  }
+}
