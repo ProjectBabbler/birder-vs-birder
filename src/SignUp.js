@@ -52,14 +52,14 @@ var SignIn = React.createClass({
             }).then((userData) => {
                 console.log('successful logged in')
                 console.log(userData);
+                
+                browserHistory.push({
+                    pathname: '/',
+                });
             }).catch((error) => {
                 this.setState({
                     error: error,
                 });
-            });
-
-            browserHistory.push({
-                pathname: '/',
             });
         }).catch((error) => {
             this.setState({
