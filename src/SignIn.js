@@ -32,10 +32,11 @@ var SignIn = React.createClass({
             error: '',
         });
 
-        axios.post('/api/signin', {
+        axios.post('/api/ebirdLogin', {
             username: this.state.username,
             password: this.state.password,
         }).then(() => {
+            console.log('successful ebird login');
             browserHistory.push({
                 pathname: '/',
             });

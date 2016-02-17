@@ -1,6 +1,6 @@
 var path = require('path');
 var express = require('express');
-var signin = require('./routes/signin');
+var ebirdLogin = require('./routes/ebirdLogin');
 
 var app = express();
 
@@ -17,7 +17,7 @@ if (app.get('env') === 'development') {
     app.use(require('webpack-hot-middleware')(compiler));
 }
 
-app.use('/api/signin', signin);
+app.use('/api/ebirdLogin', ebirdLogin);
 
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
