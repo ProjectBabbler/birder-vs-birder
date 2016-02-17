@@ -5,6 +5,8 @@ var { browserHistory } = require('react-router');
 var LoadingOverlay = require('./LoadingOverlay');
 var { LinkContainer } = require('react-router-bootstrap');
 var emailValidator = require('email-validator');
+var Firebase = require('firebase');
+var firebaseRef = new Firebase("https://blazing-inferno-9225.firebaseio.com/");
 
 
 var SignIn = React.createClass({
@@ -36,14 +38,37 @@ var SignIn = React.createClass({
             password: this.state.password,
         }).then(() => {
             console.log('successful ebird login');
+            // Create Firebase User
+            return firebaseRef.createUser({
+                email: this.state.email,
+                password: this.state.password,
+            }).then((userData) => {
+                console.log('successful created an account')
+                // Log In.
+                return firebaseRef.authWithPassword({
+                    email: this.state.email,
+                    password: this.state.password,
+                });
+            }).then((userData) => {
+                console.log('successful logged in')
+                console.log(userData);
+            }).catch((error) => {
+                this.setState({
+                    error: error,
+                });
+            });
+
             browserHistory.push({
                 pathname: '/',
             });
         }).catch((error) => {
             this.setState({
-                loading: false,
                 password: '',
                 error: error.data.message,
+            });
+        }).then(() => {
+            this.setState({
+                loading: false,
             });
         });
 
