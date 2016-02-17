@@ -4,6 +4,7 @@ var axios = require('axios');
 var { browserHistory } = require('react-router');
 var LoadingOverlay = require('./LoadingOverlay');
 var { LinkContainer } = require('react-router-bootstrap');
+var emailValidator = require('email-validator');
 
 
 var SignIn = React.createClass({
@@ -11,6 +12,8 @@ var SignIn = React.createClass({
         return {
             username: '',
             password: '',
+            fullname: '',
+            email: '',
             loading: false,
             error: '',
         };
@@ -47,12 +50,21 @@ var SignIn = React.createClass({
         e.preventDefault();
     },
 
+    validateEmail() {
+        console.log('validating')
+        var email = this.state.email;
+        if (!emailValidator.validate(email)) {
+            return 'error';
+        }
+        return;
+    },
+
     render() {
         return (
             <div style={{
                 display: 'flex',
             }}>
-                <Panel header="Sign In" style={{
+                <Panel header="Sign Up" style={{
                     flexGrow: 1,
                 }}>
                     <LoadingOverlay isOpened={this.state.loading} />
@@ -62,20 +74,22 @@ var SignIn = React.createClass({
                         </Alert>
                     ) : null}
                     <form onSubmit={this.onSubmit}>
-                        <Input ref="username" type="text" label="Username" placeholder="Enter Ebird Username" value={this.state.username} onChange={this.onFormChange.bind(this, 'username')} required />
-                        <Input ref="password" name="password" type="password" label="Password" placeholder="Enter Ebird Password" value={this.state.password} onChange={this.onFormChange.bind(this, 'password')} required />
-                        <ButtonInput type="submit" bsStyle="primary" value="Sign In" />
+                        <Input ref="email" type="email" label="Email" placeholder="Email" value={this.state.email} onChange={this.onFormChange.bind(this, 'email')} bsStyle={this.validateEmail()} />
+                        <Input ref="fullname" type="text" label="Full name" placeholder="Full name" value={this.state.fullname} onChange={this.onFormChange.bind(this, 'fullname')} />
+                        <Input ref="username" type="text" label="Username" placeholder="Enter Ebird Username" value={this.state.username} onChange={this.onFormChange.bind(this, 'username')} />
+                        <Input ref="password" name="password" type="password" label="Password" placeholder="Enter Ebird Password" value={this.state.password} onChange={this.onFormChange.bind(this, 'password')} />
+                        <ButtonInput type="submit" bsStyle="primary" value="Sign Up" />
                     </form>
                 </Panel>
-                <Panel header="Don't have an account?" bsStyle="info" style={{
+                <Panel header="Already have an account?" bsStyle="info" style={{
                     marginLeft: 20,
                     width: 300,
                 }}>
                     It's quick and easy.  Just sign up here.
-                    <LinkContainer to={{ pathname: '/signup' }}>
+                    <LinkContainer to={{ pathname: '/signIn' }}>
                         <Button style={{
                             marginTop: 20,
-                        }}>Sign Up</Button>
+                        }}>Sign In</Button>
                     </LinkContainer>
                 </Panel>
             </div>

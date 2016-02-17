@@ -29,6 +29,7 @@
     "babel-preset-stage-1": "^6.3.13",
     "css-loader": "^0.23.1",
     "ebird": "^0.0.1",
+    "email-validator": "1.0.4",
     "express": "^4.13.3",
     "gulp": "^3.9.0",
     "history": "^2.0.0",
