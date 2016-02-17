@@ -51,7 +51,6 @@ var SignIn = React.createClass({
     },
 
     validateEmail() {
-        console.log('validating')
         var email = this.state.email;
         if (!emailValidator.validate(email)) {
             return 'error';
