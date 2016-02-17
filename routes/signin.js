@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 
+var app = express();
+
 app.use(bodyParser.json());
 app.get('/', (req, res) => {
     var username = req.body.username;

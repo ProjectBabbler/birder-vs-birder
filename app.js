@@ -17,9 +17,9 @@ if (app.get('env') === 'development') {
     app.use(require('webpack-hot-middleware')(compiler));
 }
 
-app.use('/signin', signin);
+app.use('/api/signin', signin);
 
-app.get('/', function(req, res) {
+app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
