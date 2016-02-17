@@ -1,4 +1,5 @@
 var React = require('react');
+var Header = require('./Header');
 
 var Base = (props) => {
     return (
@@ -7,10 +8,9 @@ var Base = (props) => {
             margin: 'auto'
         }}>
             <div style={{
-                marginTop: 20,
-                marginBottom: 50,
+                marginBottom: 100,
             }}>
-                Header Goes Here
+                <Header />
             </div>
             {props.children}
         </div>
