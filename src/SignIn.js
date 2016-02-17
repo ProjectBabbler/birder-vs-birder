@@ -62,7 +62,7 @@ var SignIn = React.createClass({
                 ) : null}
                 <form onSubmit={this.onSubmit}>
                     <Input ref="username" name="name" type="text" label="Username" placeholder="Enter Ebird Username" value={this.state.username} onChange={this.onUsernameChange} />
-                    <Input ref="password" name="password" type="text" label="Password" placeholder="Enter Ebird Password" value={this.state.password} onChange={this.onPasswordChange} />
+                    <Input ref="password" name="password" type="password" label="Password" placeholder="Enter Ebird Password" value={this.state.password} onChange={this.onPasswordChange} />
                     <ButtonInput type="submit" bsStyle="primary" value="Sign In" />
                 </form>
             </Panel>
