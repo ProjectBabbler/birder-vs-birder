@@ -52,7 +52,7 @@ var SignIn = React.createClass({
 
     validateEmail() {
         var email = this.state.email;
-        if (!emailValidator.validate(email)) {
+        if (email.length && !emailValidator.validate(email)) {
             return 'error';
         }
         return;
