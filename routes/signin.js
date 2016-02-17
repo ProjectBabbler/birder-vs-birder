@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var app = express();
 
 app.use(bodyParser.json());
-app.get('/', (req, res) => {
+app.post('/', (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
 
