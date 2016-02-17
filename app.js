@@ -1,5 +1,6 @@
 var path = require('path');
 var express = require('express');
+var signin = require('./routes/signin');
 
 var app = express();
 
@@ -15,6 +16,8 @@ if (app.get('env') === 'development') {
 
     app.use(require('webpack-hot-middleware')(compiler));
 }
+
+app.use('/signin', signin);
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
