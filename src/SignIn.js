@@ -4,6 +4,8 @@ var axios = require('axios');
 var { browserHistory } = require('react-router');
 var LoadingOverlay = require('./LoadingOverlay');
 var { LinkContainer } = require('react-router-bootstrap');
+var Firebase = require('firebase');
+var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 
 
 var SignIn = React.createClass({
@@ -23,28 +25,29 @@ var SignIn = React.createClass({
     },
 
     onSubmit(e) {
+        e.preventDefault();
+
         this.setState({
             loading: true,
             error: '',
         });
 
-        axios.post('/api/ebirdLogin', {
-            username: this.state.username,
+        firebaseRef.authWithPassword({
+            email: this.state.username,
             password: this.state.password,
         }).then(() => {
-            console.log('successful ebird login');
             browserHistory.push({
                 pathname: '/',
             });
         }).catch((error) => {
             this.setState({
+                error: error.message,
+            });
+        }).then(() => {
+            this.setState({
                 loading: false,
-                password: '',
-                error: error.data.message,
             });
         });
-
-        e.preventDefault();
     },
 
     render() {
