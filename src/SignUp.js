@@ -6,7 +6,10 @@ var LoadingOverlay = require('./LoadingOverlay');
 var { LinkContainer } = require('react-router-bootstrap');
 var emailValidator = require('email-validator');
 var Firebase = require('firebase');
-var firebaseRef = new Firebase("https://blazing-inferno-9225.firebaseio.com/");
+var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
+var Keys = require('Keys');
+var Cryptr = require('./cryptr'),
+cryptr = new Cryptr(Keys.cryptr);
 
 
 var SignIn = React.createClass({
@@ -51,7 +54,16 @@ var SignIn = React.createClass({
                 });
             }).then((userData) => {
                 console.log('successful logged in')
-                console.log(userData);
+                var usersRef = firebaseRef.child("users");
+                var encryptedPassword = cryptr.encrypt(this.state.password);
+                usersRef.set({
+                    [userData.uid]: {
+                        email: this.state.email,
+                        fullname: this.state.fullname,
+                        ebird_username: this.state.username,
+                        ebird_password: encryptedPassword,
+                    },
+                });
 
                 browserHistory.push({
                     pathname: '/',
