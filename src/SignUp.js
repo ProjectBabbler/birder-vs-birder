@@ -7,8 +7,8 @@ var { LinkContainer } = require('react-router-bootstrap');
 var emailValidator = require('email-validator');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
-var Keys = require('Keys');
-var Cryptr = require('./cryptr'),
+var Keys = require('./Keys');
+var Cryptr = require('cryptr'),
 cryptr = new Cryptr(Keys.cryptr);
 
 
