@@ -52,13 +52,13 @@ var YourLists = React.createClass({
     },
 
     getTableHeader(label, key) {
-        var downColor = 'black';
-        var upColor = 'black';
+        var downColor = 'lightgray';
+        var upColor = 'lightgray';
         if (key == this.state.sort) {
             if (this.state.accending) {
-                downColor = 'green';
+                downColor = 'black';
             } else {
-                upColor = 'green';
+                upColor = 'black';
             }
         }
 
@@ -117,8 +117,6 @@ var YourLists = React.createClass({
                 return b[this.state.sort] - a[this.state.sort];
             }
         });
-
-        console.log(rows)
 
         return (
             <Table striped bordered hover>
