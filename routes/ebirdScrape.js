@@ -53,13 +53,13 @@ router.post('/', (req, res) => {
             };
             var password = cryptr.decrypt(userData.ebird_password);
             return ebird.auth(userData.ebird_username, password).then(() => {
-                return ebird.countries().then(handleData.bind('country'));
+                return ebird.countries().then(handleData.bind(this, 'country'));
             }).then(() => {
-                return ebird.states().then(handleData.bind('state'));
+                return ebird.states().then(handleData.bind(this, 'state'));
             }).then(() => {
-                return ebird.counties().then(handleData.bind('county'));
+                return ebird.counties().then(handleData.bind(this, 'county'));
             }).then(() => {
-                return ebird.regions().then(handleData.bind('region'));
+                return ebird.regions().then(handleData.bind(this, 'region'));
             }).then(() => {
                 console.log('Finished scraping data for: ' + userId);
                 res.status(200);
