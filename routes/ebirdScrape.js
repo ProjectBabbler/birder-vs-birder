@@ -34,13 +34,14 @@ router.post('/', (req, res) => {
         return ref.once('value').then((s) => {
             userData = s.val();
 
-            var handleData = (data) => {
+            var handleData = (list, data) => {
                 if (data) {
                     var totalsRef = firebaseRef.child('ebird/totals');
                     return new Promise((resolve, reject) => {
                         var ps = [];
                         data.forEach(row => {
-                            var rowRef = totalsRef.child(userId).child(row.code);
+                            var rowRef = totalsRef.child(userId).child(list).child(row.code);
+                            ps.push(rowRef.child('name').set(row.name));
                             row.items.forEach((item) => {
                                 ps.push(rowRef.child(item.time).set(item.number));
                             });
@@ -52,13 +53,13 @@ router.post('/', (req, res) => {
             };
             var password = cryptr.decrypt(userData.ebird_password);
             return ebird.auth(userData.ebird_username, password).then(() => {
-                return ebird.countries().then(handleData);
+                return ebird.countries().then(handleData.bind('country'));
             }).then(() => {
-                return ebird.states().then(handleData);
+                return ebird.states().then(handleData.bind('state'));
             }).then(() => {
-                return ebird.counties().then(handleData);
+                return ebird.counties().then(handleData.bind('county'));
             }).then(() => {
-                return ebird.regions().then(handleData);
+                return ebird.regions().then(handleData.bind('region'));
             }).then(() => {
                 console.log('Finished scraping data for: ' + userId);
                 res.status(200);
