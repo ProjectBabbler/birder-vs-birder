@@ -5,6 +5,9 @@ var ebird = require('ebird');
 ebird = new ebird();
 var Firebase = require('Firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
+var Keys = require('../src/Keys');
+var Cryptr = require('cryptr'),
+cryptr = new Cryptr(Keys.cryptr);
 
 
 router.use(bodyParser.json());
@@ -47,8 +50,8 @@ router.post('/', (req, res) => {
                     });
                 }
             };
-
-            return ebird.auth(userData.ebird_username, userData.ebird_password).then(() => {
+            var password = cryptr.decrypt(userData.ebird_password);
+            return ebird.auth(userData.ebird_username, password).then(() => {
                 return ebird.countries().then(handleData);
             }).then(() => {
                 return ebird.states().then(handleData);

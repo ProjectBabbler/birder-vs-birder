@@ -27,7 +27,7 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-react-hmre": "^1.0.0",
     "babel-preset-stage-1": "^6.3.13",
-    "cryptic": "0.1.2",
+    "cryptr": "^1.0.0",
     "css-loader": "^0.23.1",
     "ebird": "^0.0.1",
     "email-validator": "^1.0.4",

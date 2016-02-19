@@ -36,7 +36,8 @@ var SignIn = React.createClass({
         axios.post('/api/ebirdLogin', {
             username: this.state.username,
             password: this.state.password,
-        }).then(() => {
+        }).then((response) => {
+            var ebirdData = response.data;
             console.log('successful ebird login');
             // Create Firebase User
             return firebaseRef.createUser({
@@ -56,7 +57,7 @@ var SignIn = React.createClass({
                     email: this.state.email,
                     fullname: this.state.fullname,
                     ebird_username: this.state.username,
-                    ebird_password: this.state.password,
+                    ebird_password: ebirdData.encryptedPassword,
                 }).then(() => {
                     // Kick off a scrape of their data.
                     axios.post('/api/ebirdScrape', {

@@ -3,6 +3,9 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var ebird = require('ebird');
 ebird = new ebird();
+var Keys = require('../src/Keys');
+var Cryptr = require('cryptr'),
+cryptr = new Cryptr(Keys.cryptr);
 
 router.use(bodyParser.json());
 router.post('/', (req, res) => {
@@ -12,8 +15,9 @@ router.post('/', (req, res) => {
     ebird.auth(username, password).then(() => {
         res.status(200);
         res.setHeader('Content-Type', 'application/json');
+        var encryptedPassword = cryptr.encrypt(password);
         res.send(JSON.stringify({
-            message: 'Valid log in',
+            encryptedPassword: encryptedPassword,
         }));
     }).catch(() => {
         res.status(403);
