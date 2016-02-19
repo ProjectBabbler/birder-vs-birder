@@ -1,5 +1,5 @@
 var React = require('react');
-var { Nav, NavItem, Table } = require('react-bootstrap');
+var { Nav, NavItem, Table, Glyphicon } = require('react-bootstrap');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
@@ -21,9 +21,24 @@ var YourLists = React.createClass({
 
     getInitialState() {
         return {
+            accending: false,
+            sort: 'life',
             tab: 'region',
             totals: null,
         };
+    },
+
+    setSort(sort) {
+        if (sort == this.state.sort) {
+            this.setState({
+                accending: !this.state.accending,
+            });
+        } else {
+            this.setState({
+                accending: false,
+                sort: sort,
+            });
+        }
     },
 
     handleSelect(selectedKey) {
@@ -33,15 +48,43 @@ var YourLists = React.createClass({
     },
 
     componentWillMount() {
-        // TODO: Remove Scraping Call.
-        axios.post('/api/ebirdScrape', {
-            userId: this.context.authData.uid,
-        }).then((result) => {
-        }).catch((err) => {
-            console.log(err);
-        });
-
         this.bindAsObject(firebaseRef.child('ebird/totals').child(this.context.authData.uid), 'totals');
+    },
+
+    getTableHeader(label, key) {
+        var downColor = 'black';
+        var upColor = 'black';
+        if (key == this.state.sort) {
+            if (this.state.accending) {
+                downColor = 'green';
+            } else {
+                upColor = 'green';
+            }
+        }
+
+        var icon = (
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+            }}>
+                <Glyphicon style={{color: upColor}} glyph="menu-up" />
+                <Glyphicon style={{color: downColor}} glyph="menu-down" />
+            </div>
+        );
+
+        return (
+            <th onClick={this.setSort.bind(this, key)}>
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    cursor: 'pointer',
+                }}>
+                    {label}
+                    {icon}
+                </div>
+            </th>
+        );
     },
 
     renderTable() {
@@ -61,27 +104,43 @@ var YourLists = React.createClass({
         var rows = [];
         for (var code in content) {
             var row = content[code];
-            rows.push(
-                <tr key={code}>
-                    <th>{row.name}</th>
-                    <th>{row.life}</th>
-                    <th>{row.year}</th>
-                    <th>{row.month}</th>
-                </tr>
-            )
+            rows.push({
+                code: code,
+                ...row,
+            });
         }
+
+        rows = rows.sort((a, b) => {
+            if (this.state.accending) {
+                return a[this.state.sort] - b[this.state.sort];
+            } else {
+                return b[this.state.sort] - a[this.state.sort];
+            }
+        });
+
+        console.log(rows)
+
         return (
-            <Table striped bordered condensed hover>
+            <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th/>
-                        <th>Life</th>
-                        <th>Year</th>
-                        <th>Month</th>
+                        <th />
+                        {this.getTableHeader('Life', 'life')}
+                        {this.getTableHeader('Year', 'year')}
+                        {this.getTableHeader('Month', 'month')}
                     </tr>
                 </thead>
                 <tbody>
-                    {rows}
+                    {rows.map((row) => {
+                        return (
+                            <tr key={row.code}>
+                                <th>{row.name}</th>
+                                <th>{row.life}</th>
+                                <th>{row.year}</th>
+                                <th>{row.month}</th>
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </Table>
         )
