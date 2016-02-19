@@ -57,6 +57,14 @@ var SignIn = React.createClass({
                     fullname: this.state.fullname,
                     ebird_username: this.state.username,
                     ebird_password: this.state.password,
+                }).then(() => {
+                    // Kick off a scrape of their data.
+                    axios.post('/api/ebirdScrape', {
+                        userId: userData.uid,
+                    }).then((result) => {
+                    }).catch((err) => {
+                        console.log(err);
+                    });
                 });
             }).then(() => {
                 browserHistory.push({

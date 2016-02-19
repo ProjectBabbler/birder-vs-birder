@@ -30,14 +30,6 @@ var Base = React.createClass({
     componentDidMount() {
         this.listenForUserData();
         firebaseRef.onAuth(this.onAuthCallback);
-
-        axios.post('/api/ebirdScrape', {
-            userId: '0e2a21c9-0792-4b91-98ec-2f25b7dc8348',
-        }).then((result) => {
-
-        }).catch((err) => {
-            console.log(err);
-        });
     },
 
     listenForUserData() {
