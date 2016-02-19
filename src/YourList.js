@@ -4,6 +4,7 @@ var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
 var axios = require('axios');
+var CircularProgress = require('material-ui/lib/circular-progress');
 
 var TABS = {
     region: 'Major Regions',
@@ -45,11 +46,18 @@ var YourLists = React.createClass({
 
     renderTable() {
         if (this.state.totals == null) {
-            return 'loading';
+            return (
+                <div style={{
+                    marginTop: 100,
+                    display: 'flex',
+                    justifyContent: 'center',
+                }}>
+                    <CircularProgress size={2} />
+                </div>
+            );
         }
 
         var content = this.state.totals[this.state.tab];
-        console.log(content)
         var rows = [];
         for (var code in content) {
             var row = content[code];
