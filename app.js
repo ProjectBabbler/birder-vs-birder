@@ -1,6 +1,7 @@
 var path = require('path');
 var express = require('express');
 var ebirdLogin = require('./routes/ebirdLogin');
+var ebirdScrape = require('./routes/ebirdScrape');
 
 var app = express();
 
@@ -18,6 +19,7 @@ if (app.get('env') === 'development') {
 }
 
 app.use('/api/ebirdLogin', ebirdLogin);
+app.use('/api/ebirdScrape', ebirdScrape);
 
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));

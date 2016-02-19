@@ -3,6 +3,7 @@ var Header = require('./Header');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
+var axios = require('axios');
 
 var Base = React.createClass({
     mixins: [ReactFireMixin],
@@ -27,15 +28,25 @@ var Base = React.createClass({
     },
 
     componentDidMount() {
-        this.getUserData();
+        this.listenForUserData();
         firebaseRef.onAuth(this.onAuthCallback);
+
+        axios.post('/api/ebirdScrape', {
+            userId: '0e2a21c9-0792-4b91-98ec-2f25b7dc8348',
+        }).then((result) => {
+
+        }).catch((err) => {
+            console.log(err);
+        });
     },
 
-    getUserData() {
+    listenForUserData() {
         if (this.state.authData) {
             var ref = firebaseRef.child('users').child(this.state.authData.uid);
-            this.bound = true;
-            this.bindAsObject(ref, 'userData');
+            if (!this.bound) {
+                this.bindAsObject(ref, 'userData');
+                this.bound = true;
+            }
         } else {
             if (this.bound) {
                 this.unbind('userData');
@@ -50,7 +61,7 @@ var Base = React.createClass({
     onAuthCallback(authData) {
         this.setState({
             authData: authData,
-        }, this.getUserData);
+        }, this.listenForUserData);
     },
 
     componentDidUnMount() {
