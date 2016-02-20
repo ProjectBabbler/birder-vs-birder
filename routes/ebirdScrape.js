@@ -22,11 +22,12 @@ router.post('/', (req, res) => {
         return;
     }
     var ref = firebaseRef.child('users').child(userId);
-
-    ref.child('scraping').once('value').then(s => {
-        if (s.val()) {
-            throw 'Already scraping';
-        }
+    ref.auth(Keys.firebase).then(() => {
+        return ref.child('scraping').once('value').then(s => {
+            if (s.val()) {
+                throw 'Already scraping';
+            }
+        });
     }).then(() => {
         return ref.child('scraping').set(true);
     }).then(() => {
