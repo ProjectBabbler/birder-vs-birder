@@ -29,7 +29,7 @@
     "babel-preset-stage-1": "^6.3.13",
     "cryptr": "^1.0.0",
     "css-loader": "^0.23.1",
-    "ebird": "^0.1.0",
+    "ebird": "^0.1.1",
     "email-validator": "^1.0.4",
     "express": "^4.13.3",
     "firebase": "^2.4.1",
