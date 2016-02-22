@@ -51,6 +51,19 @@ var Base = React.createClass({
     },
 
     onAuthCallback(authData) {
+        axios.post('/api/ebirdListScrape', {
+            userId: authData.uid,
+        }).then((result) => {
+        }).catch((err) => {
+            console.log(err);
+        });
+        /*axios.post('/api/ebirdScrape', {
+            userId: authData.uid,
+        }).then((result) => {
+        }).catch((err) => {
+            console.log(err);
+        });*/
+
         this.setState({
             authData: authData,
         }, this.listenForUserData);
