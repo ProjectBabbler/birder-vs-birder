@@ -40,9 +40,21 @@ var SubscriptionList = React.createClass({
                     label: `${loc.name} - (${code})`,
                 });
             }
+
             this.setState({
                 options,
             });
+        });
+    },
+
+    loadOptions(input, callback) {
+        var filtered = this.state.options.filter(o => {
+            return o.label.toLowerCase().match(input);
+        });
+        var limited = filtered.slice(0, 10);
+
+        callback(null, {
+            options: limited
         });
     },
 
@@ -79,12 +91,12 @@ var SubscriptionList = React.createClass({
 
     renderTypeahead() {
         return (
-            <Select
+            <Select.Async
                 style={{
                     marginBottom: 20,
                 }}
                 placeholder="Add a Challenge Region"
-                options={this.state.options}
+                loadOptions={this.loadOptions}
                 onChange={this.addSubscription}
             />
         );

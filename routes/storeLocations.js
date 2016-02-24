@@ -39,8 +39,6 @@ return ref.authWithCustomToken(Keys.firebase).then(() => {
         ps.push(ref.child(subnational.subnational1Code).set(subnational));
     });
     return Promise.all(ps);
-/*
-Get subnational2 locations.
 }).then(() => {
     return request.get(baseUrl, {
         qs: {
@@ -55,7 +53,6 @@ Get subnational2 locations.
         ps.push(ref.child(subnational.subnational2Code).set(subnational));
     });
     return Promise.all(ps);
-*/
 }).then(() => {
     console.log('Saved locations');
     process.exit(0);
