@@ -1,6 +1,7 @@
 var React = require('react');
 var SignIn = require('./SignIn');
 var YourList = require('./YourList');
+var SubscriptionList = require('./SubscriptionList');
 
 var App = React.createClass({
     contextTypes: {
@@ -10,7 +11,10 @@ var App = React.createClass({
     render() {
         if (this.context.authData) {
             return (
-                <YourList />
+                <div>
+                    <SubscriptionList />
+                    <YourList />
+                </div>
             );
         } else {
             return (
