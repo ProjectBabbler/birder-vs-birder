@@ -2,7 +2,7 @@ var React = require('react');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
-var { ListGroup, ListGroupItem } = require('react-bootstrap');
+var { ListGroup, ListGroupItem, Panel } = require('react-bootstrap');
 var Select = require('react-select');
 require('react-select/dist/react-select.min.css')
 
@@ -66,6 +66,10 @@ var SubscriptionList = React.createClass({
 
         return (
             <Select
+                style={{
+                    marginBottom: 20,
+                }}
+                placeholder="Add a Challenge Region"
                 options={options}
                 onChange={this.addSubscription}
             />
@@ -74,10 +78,13 @@ var SubscriptionList = React.createClass({
 
     render() {
         return (
-            <div>
+            <Panel style={{
+                width: 400,
+            }}>
+                <h3>Your Challenges</h3>
                 {this.renderTypeahead()}
                 {this.renderSubscriptions()}
-            </div>
+            </Panel>
         );
     },
 });
