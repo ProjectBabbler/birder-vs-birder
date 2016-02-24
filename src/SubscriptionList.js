@@ -17,12 +17,33 @@ var SubscriptionList = React.createClass({
     getInitialState() {
         return {
             subscriptions: null,
+            options: [],
         };
     },
 
     componentWillMount() {
         this.subRef = firebaseRef.child('ebird/subscriptions').child(this.context.authData.uid);
         this.bindAsObject(this.subRef, 'subscriptions');
+
+        this.getOptions();
+    },
+
+    getOptions() {
+        var locationsRef = firebaseRef.child('ebird/locations');
+        locationsRef.once('value').then(snap => {
+            var locs = snap.val();
+            var options = [];
+            for (var code in locs) {
+                var loc = locs[code];
+                options.push({
+                    value: code,
+                    label: `${loc.name} - (${code})`,
+                });
+            }
+            this.setState({
+                options,
+            });
+        });
     },
 
     renderSubscriptions() {
@@ -32,7 +53,6 @@ var SubscriptionList = React.createClass({
         var subs = [];
         var subscriptions = this.state.subscriptions;
         for (var key in subscriptions) {
-            console.log(key)
             if (key != '.key' && key != '.value') {
                 var name = subscriptions[key];
                 subs.push({
@@ -58,19 +78,13 @@ var SubscriptionList = React.createClass({
     },
 
     renderTypeahead() {
-        var options = [
-            { value: 'US', label: 'United States of America' },
-            { value: 'CA', label: 'Canada' }
-        ];
-
-
         return (
             <Select
                 style={{
                     marginBottom: 20,
                 }}
                 placeholder="Add a Challenge Region"
-                options={options}
+                options={this.state.options}
                 onChange={this.addSubscription}
             />
         );
