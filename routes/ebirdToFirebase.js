@@ -90,7 +90,7 @@ class ebirdToFirebase {
             };
 
             var getQueryFunc = (code, time) => {
-                var year = new Date().getFullYear();
+                var year = time == 'year' ? new Date().getFullYear() : null;
                 return new Promise((resolve, reject) => {
                     limiter.removeTokens(1, () => {
                         this.ebird.list(code, time)
