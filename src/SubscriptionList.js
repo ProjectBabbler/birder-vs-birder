@@ -64,11 +64,14 @@ var SubscriptionList = React.createClass({
         }
         var subs = [];
         var subscriptions = this.state.subscriptions;
+        console.log(subscriptions)
         for (var key in subscriptions) {
             if (key != '.key' && key != '.value') {
-                var name = subscriptions[key];
+                var data = subscriptions[key];
+                var time = data.time.charAt(0).toUpperCase() + data.time.slice(1);
                 subs.push({
-                    name: name,
+                    name: data.name,
+                    time: time,
                     code: key,
                 });
             }
@@ -78,7 +81,7 @@ var SubscriptionList = React.createClass({
             <ListGroup>
                 {subs.map(sub => {
                     return (
-                        <ListGroupItem key={sub.code}>{sub.name}</ListGroupItem>
+                        <ListGroupItem key={sub.code}>{sub.time} List for {sub.name}</ListGroupItem>
                     )
                 })}
             </ListGroup>
@@ -86,7 +89,10 @@ var SubscriptionList = React.createClass({
     },
 
     addSubscription(obj) {
-        this.subRef.child(obj.value).set(obj.label);
+        this.subRef.child(obj.value).set({
+            name: obj.label,
+            time: 'life',
+        });
     },
 
     renderTypeahead() {

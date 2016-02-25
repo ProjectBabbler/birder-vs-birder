@@ -56,9 +56,9 @@ class ebirdToFirebase {
     }
 
     lists() {
-        var totalsRef = firebaseRef.child('ebird/totals').child(this.uid);
-        return totalsRef.once('value').then((s) => {
-            var totals = s.val();
+        var subsRef = firebaseRef.child('ebird/subscriptions').child(this.uid);
+        return subsRef.once('value').then((s) => {
+            var subs = s.val();
             var handleListData = (code, timeFrame, year, data) => {
                 if (data) {
                     var listsRef = firebaseRef.child('ebird/lists');
@@ -89,15 +89,14 @@ class ebirdToFirebase {
                 }
             };
 
-            var getQueryFunc = (code) => {
+            var getQueryFunc = (code, time) => {
                 var year = new Date().getFullYear();
                 return new Promise((resolve, reject) => {
                     limiter.removeTokens(1, () => {
-                        Promise.all([
-                            this.ebird.list(code, 'life').then(handleListData.bind(this, code, 'life', null)),
-                            this.ebird.list(code, 'year').then(handleListData.bind(this, code, 'year', year)),
-                            this.ebird.list(code, 'month').then(handleListData.bind(this, code, 'month', null)),
-                        ]).then(resolve).catch(reject);
+                        this.ebird.list(code, time)
+                            .then(handleListData.bind(this, code, time, year))
+                            .then(resolve)
+                            .catch(reject);
                     });
                 });
             };
@@ -105,11 +104,10 @@ class ebirdToFirebase {
             var promises = [];
 
 
-            for (var type in totals) {
-                for (var code in totals[type]) {
-                    var promiseSet = getQueryFunc(code);
-                    promises.push(promiseSet);
-                }
+            for (var code in subs) {
+                var time = subs[code].time;
+                var promiseSet = getQueryFunc(code, time);
+                promises.push(promiseSet);
             }
 
             return Promise.all(promises);
