@@ -4,7 +4,8 @@
   "description": "Birder vs Birder.  Challenge your friends big years and life lists",
   "scripts": {
     "start": "node ./bin/www",
-    "start-debug": "DEBUG=birder-vs-birder:* npm start"
+    "start-debug": "DEBUG=birder-vs-birder:* npm start",
+    "dev": "heroku local web -f Procfile.local"
   },
   "repository": {
     "type": "git",
