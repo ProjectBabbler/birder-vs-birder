@@ -1,9 +1,9 @@
-var postmark = require("postmark");
-var Keys = require('../src/Keys');
-var client = new postmark.Client(Keys.postmark);
 var ebirdToFirebase = require('./ebirdToFirebase');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
+var emailUser = require('./emailUser');
+var Keys = require('../src/Keys');
+
 
 var RateLimiter = require('limiter').RateLimiter;
 var limiter = new RateLimiter(60 / 3, 'minute');
@@ -20,7 +20,11 @@ return ref.authWithCustomToken(Keys.firebase).then(() => {
             limiter.removeTokens(1, () => {
                 var ebird = new ebirdToFirebase(key);
                 ebird.auth().then(() => {
+                    console.log(`Updating totals for ${key}`)
                     return ebird.totals();
+                }).then(() => {
+                    console.log(`Updating lists for ${key}`)
+                    return ebird.lists();
                 })
                 .then(resolve)
                 .catch((e) => {
@@ -40,24 +44,15 @@ return ref.authWithCustomToken(Keys.firebase).then(() => {
     var ps = [];
     s.forEach(cs => {
         var userData = cs.val();
-        ps.push(new Promise((resolve, reject) => {
-            client.sendEmail({
-                "From": "info@fieldguideguru.com",
-                "To": userData.email,
-                "Subject": "Weekly Birder Vs Birder Update",
-                "TextBody": "Hello from Postmark!"
-            }, (error, success) => {
-                if(error) {
-                    console.error("Unable to send via postmark: " + error.message);
-                } else {
-                    console.info("Sent to postmark for delivery");
-                }
-                resolve();
-            });
-        }));
+        var userKey = cs.key();
+        console.log(`Gathering and emailing for ${userKey}`);
+        ps.push(emailUser(userKey, userData.email));
     });
 
     return Promise.all(ps);
 }).then(() => {
     process.exit(0);
+}).catch(e => {
+    console.log(e);
+    process.exit(1);
 });

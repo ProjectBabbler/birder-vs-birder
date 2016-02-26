@@ -68,20 +68,11 @@ class ebirdToFirebase {
                         if (year) {
                             rowRef = rowRef.child(year);
                         }
-                        data.forEach(row => {
-                            ps.push(new Promise((resolve, reject) => {
-                                rowRef.push({
-                                    species: row.Species,
-                                    date: row.Date,
-                                }, (err) => {
-                                    if (err) {
-                                        console.log(err)
-                                        reject(err);
-                                    } else {
-                                        resolve();
-                                    }
-                                });
-                            }))
+                        data.forEach((row, i) => {
+                            ps.push(rowRef.child(i).set({
+                                species: row.Species,
+                                date: row.Date,
+                            }));
                         });
 
                         Promise.all(ps).then(resolve).catch(reject);
