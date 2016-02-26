@@ -6,7 +6,7 @@ var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var moment = require('moment');
 
 module.exports = (uid, email) => {
-    var lastWeek = moment().day(-70);
+    var lastWeek = moment().day(-7);
 
     return new Promise((resolve, reject) => {
         var subsRef = firebaseRef.child('ebird/subscriptions').child(uid);
