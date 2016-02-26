@@ -2,9 +2,10 @@ var React = require('react');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
-var { ListGroup, ListGroupItem, Panel } = require('react-bootstrap');
+var { ListGroup, ListGroupItem } = require('react-bootstrap');
 var Select = require('react-select');
-require('react-select/dist/react-select.min.css')
+require('react-select/dist/react-select.min.css');
+var HomePanel = require('./HomePanel');
 
 
 
@@ -110,13 +111,11 @@ var SubscriptionList = React.createClass({
 
     render() {
         return (
-            <Panel style={{
-                width: 400,
-            }}>
+            <HomePanel>
                 <h3>Your Challenges</h3>
                 {this.renderTypeahead()}
                 {this.renderSubscriptions()}
-            </Panel>
+            </HomePanel>
         );
     },
 });

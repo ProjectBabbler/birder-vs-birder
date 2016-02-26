@@ -4,6 +4,7 @@ var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
 var { ListGroup, ListGroupItem, Panel, Input, Button } = require('react-bootstrap');
 var emailValidator = require('email-validator');
+var HomePanel = require('./HomePanel');
 
 
 
@@ -106,13 +107,11 @@ var SubscriptionList = React.createClass({
 
     render() {
         return (
-            <Panel style={{
-                width: 400,
-            }}>
+            <HomePanel>
                 <h3>Your Friends</h3>
                 {this.renderInput()}
                 {this.renderFriends()}
-            </Panel>
+            </HomePanel>
         );
     },
 });

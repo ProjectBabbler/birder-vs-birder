@@ -13,8 +13,12 @@ var App = React.createClass({
         if (this.context.authData) {
             return (
                 <div>
-                    <Friends />
-                    <SubscriptionList />
+                    <div style={{
+                        display: 'flex',
+                    }}>
+                        <Friends />
+                        <SubscriptionList />
+                    </div>
                     <YourList />
                 </div>
             );
