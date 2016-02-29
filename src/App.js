@@ -3,6 +3,7 @@ var SignIn = require('./SignIn');
 var YourList = require('./YourList');
 var SubscriptionList = require('./SubscriptionList');
 var Friends = require('./Friends');
+var CreateChallenge = require('./CreateChallenge');
 
 var App = React.createClass({
     contextTypes: {
@@ -13,6 +14,12 @@ var App = React.createClass({
         if (this.context.authData) {
             return (
                 <div>
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                    }}>
+                        <CreateChallenge />
+                    </div>
                     <div style={{
                         display: 'flex',
                     }}>
