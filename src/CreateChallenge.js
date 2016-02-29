@@ -16,9 +16,7 @@ var CreateChallenge = React.createClass({
     },
 
     close() {
-        this.setState({
-            showModal: false,
-         });
+        this.setState(this.getInitialState());
     },
 
     open() {
