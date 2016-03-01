@@ -33,7 +33,8 @@ class ebirdToFirebase {
                 return new Promise((resolve, reject) => {
                     var ps = [];
                     data.forEach(row => {
-                        var rowRef = totalsRef.child(this.uid).child(list).child(row.code);
+                        var rowRef = totalsRef.child(this.uid).child(row.code);
+                        ps.push(rowRef.child('type').set(list));
                         ps.push(rowRef.child('name').set(row.name));
                         row.items.forEach((item) => {
                             ps.push(rowRef.child(item.time).set(item.number));

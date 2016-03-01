@@ -100,14 +100,15 @@ var YourLists = React.createClass({
             );
         }
 
-        var content = this.state.totals[this.state.tab];
         var rows = [];
-        for (var code in content) {
-            var row = content[code];
-            rows.push({
-                code: code,
-                ...row,
-            });
+        for (var code in this.state.totals) {
+            var row = this.state.totals[code];
+            if (row.type == this.state.tab) {
+                rows.push({
+                    code: code,
+                    ...row,
+                });
+            }
         }
 
         rows = rows.sort((a, b) => {
