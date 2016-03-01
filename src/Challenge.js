@@ -14,32 +14,31 @@ var Challenge = React.createClass({
 
     getInitialState() {
         return {
-            challenge: null,
             members: [],
         };
     },
 
     componentWillMount() {
-        var challenge = this.props.challenge;
-    },
-
-    componentWillMount() {
         this.challengesRef = firebaseRef.child('challenges').child(this.props.id);
-        this.bindAsObject(this.challengesRef, 'challenge');
-
         this.challengesRef.child('members').on('value', snap => {
             var ps = [];
             snap.forEach(member => {
-                ps.push(firebaseRef.child('users').child(member.key()).once('value'));
+                ps.push(new Promise((resolve, reject) => {
+                    Promise.all([
+                        firebaseRef.child('users').child(member.key()).once('value'),
+                        firebaseRef.child('ebird/totals').child(member.key()).child(this.props.challenge.code).once('value'),
+                    ]).then(result => {
+                        return {
+                            user: result[0].val(),
+                            total: result[1].val(),
+                        };
+                    }).then(resolve).catch(reject);
+                }));
             });
 
             Promise.all(ps).then(results => {
-                var members = results.map(r => {
-                    return r.val();
-                });
-
                 this.setState({
-                    members,
+                    members: results,
                 });
             });
         });
@@ -50,29 +49,54 @@ var Challenge = React.createClass({
     },
 
     render() {
-        if (!this.state.challenge) {
-            return <div/>;
-        }
-
         var badgeStyle = {
             marginRight: 10,
         };
 
         var labels = [];
-        if (this.context.authData.uid == this.state.challenge.owner) {
+        if (this.context.authData.uid == this.props.challenge.owner) {
             labels.push(<Label bsStyle="primary" key="owner" style={badgeStyle}>Owner</Label>);
         }
-        labels.push(<Label bsStyle="info" key="time" style={badgeStyle}>{this.state.challenge.time}</Label>);
-        labels.push(<Label bsStyle="info" key="code" style={badgeStyle}>{this.state.challenge.code}</Label>);
+        labels.push(<Label bsStyle="info" key="time" style={badgeStyle}>{this.props.challenge.time}</Label>);
+        labels.push(<Label bsStyle="info" key="code" style={badgeStyle}>{this.props.challenge.code}</Label>);
 
         return (
             <HomePanel>
                 {labels}
-                <h3>{this.state.challenge.name}</h3>
-                {this.state.members.map(m => m.ebird_username)}
+                <h3>{this.props.challenge.name}</h3>
+                {this.state.members.map(m => {
+                    console.log(m)
+                    return (
+                        <div key={m.user.ebird_username}>{m.user.ebird_username} {m.total[this.props.challenge.time]}</div>
+                    );
+                })}
             </HomePanel>
         );
     },
 });
 
-module.exports = Challenge;
+var ChallengeWrapper = React.createClass({
+    mixins: [ReactFireMixin],
+
+    getInitialState() {
+        return {
+            challenge: null,
+        };
+    },
+
+    componentWillMount() {
+        this.challengesRef = firebaseRef.child('challenges').child(this.props.id);
+        this.bindAsObject(this.challengesRef, 'challenge');
+    },
+
+    render() {
+        if (!this.state.challenge) {
+            return <div/>;
+        }
+
+        return <Challenge {...this.props} challenge={this.state.challenge} />
+    },
+});
+
+module.exports = ChallengeWrapper;
+
