@@ -54,7 +54,7 @@ module.exports = (uid, email) => {
                 } else {
                     message += `
                         <br/>
-                        Sorry no updates for ${heading} this week.  Good luck birding.
+                        Sorry no updates for your ${heading} list this week.  Good luck birding.
                     `;
                 }
             }
