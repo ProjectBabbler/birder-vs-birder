@@ -1,10 +1,17 @@
 var React = require('react');
-var { Button, Modal, DropdownButton, MenuItem, Input, ButtonGroup } = require('react-bootstrap');
+var { Button, Modal, DropdownButton, MenuItem, Input, ButtonGroup, Alert } = require('react-bootstrap');
 var LocationsSearch = require('./LocationsSearch');
 var emailValidator = require('email-validator');
+var Firebase = require('firebase');
+var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
+var LoadingOverlay = require('./LoadingOverlay');
 
 
 var CreateChallenge = React.createClass({
+    contextTypes: {
+        authData: React.PropTypes.object.isRequired,
+    },
+
     getInitialState() {
         return {
             showModal: false,
@@ -12,6 +19,8 @@ var CreateChallenge = React.createClass({
             timeFrame: 'life',
             friends: new Set(),
             email: '',
+            loading: false,
+            error: null,
         };
     },
 
@@ -102,6 +111,52 @@ var CreateChallenge = React.createClass({
         return content;
     },
 
+    onCreate() {
+        if (!this.state.location) {
+            this.setState({
+                error: 'Please pick a location',
+            });
+
+            return;
+        }
+
+        this.setState({
+            loading: true,
+        });
+        var name = this.refs.nameInput.getValue() || this.getDefaultName();
+        var ref = firebaseRef.child('challenges').push();
+        ref.set({
+            name: name,
+            code: this.state.location.value,
+            time: this.state.timeFrame,
+            owner: this.context.authData.uid,
+        }).then(() => {
+            return firebaseRef.child('users').child(this.context.authData.uid).child('challenges').child(ref.key()).set(true);
+        }).then(() => {
+            this.close();
+        }).catch((e) => {
+            this.setState({
+                error: e,
+            });
+        }).then(() => {
+            this.setState({
+                loading: false,
+            });
+        });
+    },
+
+    getDefaultName() {
+        return `${this.getTimeFrameTitle()} for ${this.state.location.label}`;
+    },
+
+    getNamePlaceholder() {
+        if (!this.state.location) {
+            return 'Please pick a location';
+        } else {
+            return `Default name "${this.getDefaultName()}"`;
+        }
+    },
+
     render() {
         return (
             <div>
@@ -111,12 +166,24 @@ var CreateChallenge = React.createClass({
                     Create Challenge
                 </Button>
                 <Modal show={this.state.showModal} onHide={this.close}>
+                    <LoadingOverlay isOpened={this.state.loading} />
                     <Modal.Header closeButton>
                         <Modal.Title>Create a new Challenge</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                        {this.state.error ? (
+                            <Alert bsStyle="danger">
+                                {this.state.error || 'Sorry, something went wrong'}
+                            </Alert>
+                        ) : null}
                         <h4>Location for your Challenge</h4>
                         <LocationsSearch value={this.state.location} onChange={this.updateLocation} />
+                        <h4>Name</h4>
+                        <Input
+                            type="text"
+                            placeholder={this.getNamePlaceholder()}
+                            ref="nameInput"
+                        />
                         <h4>Time Frame</h4>
                         <DropdownButton title={this.getTimeFrameTitle()} id="timeFrameDropdown">
                             <MenuItem eventKey="1" onClick={this.updateTimeFrame.bind(this, 'life')}>Life List</MenuItem>
@@ -142,7 +209,7 @@ var CreateChallenge = React.createClass({
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.close}>Close</Button>
-                        <Button type="submit" bsStyle="primary">Create</Button>
+                        <Button type="submit" bsStyle="primary" onClick={this.onCreate}>Create</Button>
                     </Modal.Footer>
                 </Modal>
             </div>
