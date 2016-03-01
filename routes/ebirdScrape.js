@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
-var Firebase = require('Firebase');
+var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var Keys = require('../src/Keys');
 var ebirdToFirebase = require('./ebirdToFirebase');
