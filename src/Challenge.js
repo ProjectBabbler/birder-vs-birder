@@ -60,12 +60,15 @@ var Challenge = React.createClass({
         labels.push(<Label bsStyle="info" key="time" style={badgeStyle}>{this.props.challenge.time}</Label>);
         labels.push(<Label bsStyle="info" key="code" style={badgeStyle}>{this.props.challenge.code}</Label>);
 
+        var sorted = this.state.members.sort((a, b) => {
+            return b.total[this.props.challenge.time] - a.total[this.props.challenge.time];
+        });
+
         return (
             <HomePanel>
                 {labels}
                 <h3>{this.props.challenge.name}</h3>
-                {this.state.members.map(m => {
-                    console.log(m)
+                {sorted.map(m => {
                     return (
                         <div key={m.user.ebird_username}>{m.user.ebird_username} {m.total[this.props.challenge.time]}</div>
                     );
