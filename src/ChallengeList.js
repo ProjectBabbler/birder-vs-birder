@@ -24,7 +24,7 @@ var ChallengeList = React.createClass({
     },
 
     renderChallenge(challenge) {
-        return <Challenge key={challenge} id={challenge['.key']} />
+        return <Challenge key={challenge['.key']} id={challenge['.key']} />
     },
 
     render() {
@@ -41,7 +41,9 @@ var ChallengeList = React.createClass({
         }
 
         return (
-            <div>
+            <div style={{
+                display: 'flex',
+            }}>
                 {this.state.challenges.map(this.renderChallenge)}
             </div>
         );

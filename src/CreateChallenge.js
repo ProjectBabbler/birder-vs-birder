@@ -130,6 +130,9 @@ var CreateChallenge = React.createClass({
             code: this.state.location.value,
             time: this.state.timeFrame,
             owner: this.context.authData.uid,
+            members: {
+                [this.context.authData.uid]: true,
+            }
         }).then(() => {
             return firebaseRef.child('users').child(this.context.authData.uid).child('challenges').child(ref.key()).set(true);
         }).then(() => {
