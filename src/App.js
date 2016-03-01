@@ -4,6 +4,7 @@ var YourList = require('./YourList');
 var SubscriptionList = require('./SubscriptionList');
 var Friends = require('./Friends');
 var CreateChallenge = require('./CreateChallenge');
+var ChallengeList = require('./ChallengeList');
 
 var App = React.createClass({
     contextTypes: {
@@ -23,8 +24,7 @@ var App = React.createClass({
                     <div style={{
                         display: 'flex',
                     }}>
-                        <Friends />
-                        <SubscriptionList />
+                        <ChallengeList />
                     </div>
                     <YourList />
                 </div>

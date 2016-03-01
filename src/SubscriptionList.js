@@ -65,7 +65,6 @@ var SubscriptionList = React.createClass({
         }
         var subs = [];
         var subscriptions = this.state.subscriptions;
-        console.log(subscriptions)
         for (var key in subscriptions) {
             if (key != '.key' && key != '.value') {
                 var data = subscriptions[key];
