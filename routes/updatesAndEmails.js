@@ -20,11 +20,13 @@ return ref.authWithCustomToken(Keys.firebase).then(() => {
             limiter.removeTokens(1, () => {
                 var ebird = new ebirdToFirebase(key);
                 ebird.auth().then(() => {
+                    console.log(`Moving totals for ${key}`)
+                    return firebaseRef.child('ebird/totals').child(key).once('value');
+                }).then((sub) => {
+                    return firebaseRef.child('ebird/totals/last').child(key).set(sub.val());
+                }).then(() => {
                     console.log(`Updating totals for ${key}`)
                     return ebird.totals();
-                }).then(() => {
-                    console.log(`Updating lists for ${key}`)
-                    return ebird.lists();
                 })
                 .then(resolve)
                 .catch((e) => {
