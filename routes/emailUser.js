@@ -13,6 +13,7 @@ module.exports = (uid, email) => {
             firebaseRef.child('ebird/totals/last').child(uid).once('value'),
         ]).then((results) => {
             var message = '';
+            var hasUpdates = false;
 
             var current = results[0].val();
             var old = results[1].val();
@@ -21,30 +22,52 @@ module.exports = (uid, email) => {
                 for (var code in current[heading]) {
                     var c = current[heading][code];
                     var o = old[heading][code]
-                    rows.push(`
-                        <tr>
-                            <td>${c.name}</td>
-                            <td>${o.life} -> ${c.life}</td>
-                            <td>${o.year} -> ${c.year}</td>
-                        </tr>
-                    `);
+                    if (o.life != c.life || o.year != c.year) {
+                        rows.push(`
+                            <tr>
+                                <td>${c.name}</td>
+                                <td>${o.life} -> ${c.life}</td>
+                                <td>${o.year} -> ${c.year}</td>
+                            </tr>
+                        `);
+                    }
                 }
 
-                message += `
-                    <br/>
-                    ${heading}
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Life Total</th>
-                                <th>Year Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${rows.join('')}
-                        </tbody>
-                    </table>
+                if (rows.length) {
+                    hasUpdates = true;
+                    message += `
+                        <br/>
+                        Nice job on your ${heading} lists.  Here are all the places you got new birds.
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Life Total</th>
+                                    <th>Year Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${rows.join('')}
+                            </tbody>
+                        </table>
+                    `;
+                } else {
+                    message += `
+                        <br/>
+                        Sorry no updates for ${heading} this week.  Good luck birding.
+                    `;
+                }
+            }
+
+            var fullMessage;
+            if (hasUpdates) {
+                fullMessage = `
+                    <h1>Nice job birding this week.  Here are all your updates</h1>
+                    ${message}
+                `;
+            } else {
+                fullMessage = `
+                    <h1>No new birds this week.  Good luck birding.</h1>
                 `;
             }
 
@@ -55,7 +78,7 @@ module.exports = (uid, email) => {
                 HtmlBody: `
                     <html>
                         <body>
-                            ${message}
+                            ${fullMessage}
                         </body>
                     </html>
                 `,
