@@ -30,7 +30,7 @@ var Challenge = React.createClass({
                     ]).then(result => {
                         return {
                             user: result[0].val(),
-                            total: result[1].val(),
+                            total: result[1].val() || {},
                         };
                     }).then(resolve).catch(reject);
                 }));
@@ -64,14 +64,18 @@ var Challenge = React.createClass({
             return b.total[this.props.challenge.time] - a.total[this.props.challenge.time];
         });
 
-        var max = sorted[0].total[this.props.challenge.time];
+        var max;
+        if (sorted.length) {
+            max = sorted[0].total[this.props.challenge.time];
+        }
 
         return (
             <HomePanel>
                 {labels}
                 <h3>{this.props.challenge.name}</h3>
                 {sorted.map(m => {
-                    var value = m.total[this.props.challenge.time];
+                    var value = m.total[this.props.challenge.time] || 0;
+                    var padding = value ? 10 : 0;
                     return (
                         <div key={m.user.ebird_username} style={{
                             display: 'flex',
@@ -80,9 +84,10 @@ var Challenge = React.createClass({
                         }}>
                             <div style={{
                                 width: `${(value / max) * 100}%`,
-                                padding: 10,
+                                padding: `10px ${padding}px`,
+                                marginBottom: 3,
                                 borderRadius: 3,
-                                color: '#fff',
+                                color: 'black',
                                 backgroundColor: '#5bc0de',
                             }}>
                                 {m.user.ebird_username}
