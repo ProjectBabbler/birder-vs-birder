@@ -18,6 +18,7 @@ var App = React.createClass({
                     <div style={{
                         display: 'flex',
                         justifyContent: 'flex-end',
+                        marginBottom: 20,
                     }}>
                         <CreateChallenge />
                     </div>

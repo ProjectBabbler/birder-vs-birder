@@ -43,6 +43,7 @@ var ChallengeList = React.createClass({
         return (
             <div style={{
                 display: 'flex',
+                flexWrap: 'wrap',
             }}>
                 {this.state.challenges.map(this.renderChallenge)}
             </div>

@@ -69,8 +69,26 @@ var Challenge = React.createClass({
                 {labels}
                 <h3>{this.props.challenge.name}</h3>
                 {sorted.map(m => {
+                    var value = m.total[this.props.challenge.time];
                     return (
-                        <div key={m.user.ebird_username}>{m.user.ebird_username} {m.total[this.props.challenge.time]}</div>
+                        <div key={m.user.ebird_username} style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                        }}>
+                            <div style={{
+                                width: 300,
+                                padding: 10,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#5bc0de',
+                            }}>
+                                {m.user.ebird_username}
+                            </div>
+                            <div>
+                                {value}
+                            </div>
+                        </div>
                     );
                 })}
             </HomePanel>
