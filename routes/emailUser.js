@@ -93,7 +93,7 @@ module.exports = (uid, email) => {
             client.sendEmail({
                 From: 'info@fieldguideguru.com',
                 To: email,
-                Subject: 'Weekly Birder Vs Birder Update',
+                Subject: `Weekly Birder Vs Birder Update for ${moment().format('MMMM Do YYYY')}`,
                 HtmlBody: `
                     <html>
                         <body>
