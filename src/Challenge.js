@@ -64,6 +64,8 @@ var Challenge = React.createClass({
             return b.total[this.props.challenge.time] - a.total[this.props.challenge.time];
         });
 
+        var max = sorted[0].total[this.props.challenge.time];
+
         return (
             <HomePanel>
                 {labels}
@@ -77,7 +79,7 @@ var Challenge = React.createClass({
                             alignItems: 'center',
                         }}>
                             <div style={{
-                                width: 300,
+                                width: `${(value / max) * 100}%`,
                                 padding: 10,
                                 borderRadius: 3,
                                 color: '#fff',
@@ -85,7 +87,10 @@ var Challenge = React.createClass({
                             }}>
                                 {m.user.ebird_username}
                             </div>
-                            <div>
+                            <div style={{
+                                width: 50,
+                                textAlign: 'right',
+                            }}>
                                 {value}
                             </div>
                         </div>
