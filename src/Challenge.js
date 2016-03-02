@@ -75,7 +75,6 @@ var Challenge = React.createClass({
                 <h3>{this.props.challenge.name}</h3>
                 {sorted.map(m => {
                     var value = m.total[this.props.challenge.time] || 0;
-                    var padding = value ? 10 : 0;
                     return (
                         <div key={m.user.ebird_username} style={{
                             display: 'flex',
@@ -83,14 +82,24 @@ var Challenge = React.createClass({
                             alignItems: 'center',
                         }}>
                             <div style={{
-                                width: `${(value / max) * 100}%`,
-                                padding: `10px ${padding}px`,
-                                marginBottom: 3,
-                                borderRadius: 3,
-                                color: 'black',
-                                backgroundColor: '#5bc0de',
+                                position: 'relative',
+                                width: '100%',
                             }}>
-                                {m.user.ebird_username}
+                                <div style={{
+                                    width: `${(value / max) * 100}%`,
+                                    height: 40,
+                                    marginBottom: 3,
+                                    borderRadius: 3,
+                                    color: 'black',
+                                    backgroundColor: '#5bc0de',
+                                }} />
+                                <div style={{
+                                    position: 'absolute',
+                                    left: 10,
+                                    top: 10,
+                                }}>
+                                    {m.user.ebird_username}
+                                </div>
                             </div>
                             <div style={{
                                 width: 50,
