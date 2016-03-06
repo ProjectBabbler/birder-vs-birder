@@ -19,7 +19,7 @@ var UpdateEmail = function UpdateEmail(props) {
             'div',
             null,
             React.createElement(
-                'h1',
+                'p',
                 null,
                 'Nice job birding this week.  Here are all your updates'
             ),
@@ -29,7 +29,7 @@ var UpdateEmail = function UpdateEmail(props) {
         );
     } else {
         content = React.createElement(
-            'h1',
+            'p',
             null,
             'No new birds this week.  Good luck birding.'
         );
