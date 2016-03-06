@@ -5,6 +5,7 @@ var emailValidator = require('email-validator');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var LoadingOverlay = require('./LoadingOverlay');
+var axios = require('axios');
 
 
 var CreateChallenge = React.createClass({
@@ -124,10 +125,6 @@ var CreateChallenge = React.createClass({
             loading: true,
         });
 
-        var emailMap = {};
-        this.state.friends.forEach(e => {
-            emailMap[e] = true;
-        });
         var name = this.refs.nameInput.getValue() || this.getDefaultName();
         var ref = firebaseRef.child('challenges').push();
         ref.set({
@@ -138,19 +135,28 @@ var CreateChallenge = React.createClass({
             members: {
                 [this.context.authData.uid]: false,
             },
-            invites: emailMap,
+        }).then(() => {
+            var ps = [];
+            this.state.friends.forEach(email => {
+                var r = ref.child('invites').push();
+                ps.push(r.set({
+                    email: email,
+                    sent: false,
+                }));
+            });
+            return Promise.all(ps);
         }).then(() => {
             return firebaseRef.child('users').child(this.context.authData.uid).child('challenges').child(ref.key()).set(true);
         }).then(() => {
             return axios.post('/api/emailInvites', {
-                challenge: ref.key(),
+                challengeId: ref.key(),
             });
-        }).then(() => {
-            this.close();
         }).catch((e) => {
             this.setState({
                 error: e,
             });
+        }).then(() => {
+            this.close();
         }).then(() => {
             this.setState({
                 loading: false,
