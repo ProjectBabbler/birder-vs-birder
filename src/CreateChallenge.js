@@ -123,6 +123,11 @@ var CreateChallenge = React.createClass({
         this.setState({
             loading: true,
         });
+
+        var emailMap = {};
+        this.state.friends.forEach(e => {
+            emailMap[e] = true;
+        });
         var name = this.refs.nameInput.getValue() || this.getDefaultName();
         var ref = firebaseRef.child('challenges').push();
         ref.set({
@@ -131,10 +136,15 @@ var CreateChallenge = React.createClass({
             time: this.state.timeFrame,
             owner: this.context.authData.uid,
             members: {
-                [this.context.authData.uid]: true,
-            }
+                [this.context.authData.uid]: false,
+            },
+            invites: emailMap,
         }).then(() => {
             return firebaseRef.child('users').child(this.context.authData.uid).child('challenges').child(ref.key()).set(true);
+        }).then(() => {
+            return axios.post('/api/emailInvites', {
+                challenge: ref.key(),
+            });
         }).then(() => {
             this.close();
         }).catch((e) => {
