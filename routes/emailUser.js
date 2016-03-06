@@ -4,6 +4,9 @@ var client = new postmark.Client(Keys.postmark);
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var moment = require('moment');
+var UpdateEmail = require('../email/UpdateEmail');
+var ReactDOMServer = require('react-dom/server');
+var React = require('react');
 
 var getMessageForList = (uid, list) => {
     var recentMap = {};
@@ -11,9 +14,6 @@ var getMessageForList = (uid, list) => {
         firebaseRef.child('ebird/totals').child(uid).orderByChild('type').equalTo(list).once('value'),
         firebaseRef.child('ebird/totals/last').child(uid).orderByChild('type').equalTo(list).once('value'),
     ]).then((results) => {
-        var message = '';
-        var hasUpdates = false;
-
         var current = results[0].val();
         var old = results[1].val();
 
@@ -22,43 +22,19 @@ var getMessageForList = (uid, list) => {
             var c = current[code];
             var o = old[code]
             if (o.life != c.life || o.year != c.year) {
-                rows.push(`
-                    <tr>
-                        <td>${c.name}</td>
-                        <td>${o.life} -> ${c.life}</td>
-                        <td>${o.year} -> ${c.year}</td>
-                    </tr>
-                `);
+                rows.push({
+                    name: c.name,
+                    oldLife: o.life,
+                    newList: c.life,
+                    oldYear: o.year,
+                    newYear: c.year,
+                });
             }
         }
 
-        if (rows.length) {
-            hasUpdates = true;
-            message += `
-                <br/>
-                Nice job on your ${list} lists.  Here are all the places you got new birds.
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Life Total</th>
-                            <th>Year Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${rows.join('')}
-                    </tbody>
-                </table>
-            `;
-        } else {
-            message += `
-                <br/>
-                Sorry no updates for your ${list} list this week.  Good luck birding.
-            `;
-        }
         return {
-            message,
-            hasUpdates,
+            list,
+            lineItems: rows,
         };
     });
 };
@@ -72,35 +48,13 @@ module.exports = (uid, email) => {
             getMessageForList(uid, 'state'),
             getMessageForList(uid, 'county'),
         ]).then((results) => {
-            var hasUpdates = false;
-            var message = '';
-            results.forEach(m => {
-                hasUpdates = m.hasUpdates || hasUpdates;
-                message += m.message;
-            });
-            var fullMessage;
-            if (hasUpdates) {
-                fullMessage = `
-                    <h1>Nice job birding this week.  Here are all your updates</h1>
-                    ${message}
-                `;
-            } else {
-                fullMessage = `
-                    <h1>No new birds this week.  Good luck birding.</h1>
-                `;
-            }
-
             client.sendEmail({
                 From: 'info@fieldguideguru.com',
                 To: email,
                 Subject: `Weekly Birder Vs Birder Update for ${moment().format('MMMM Do YYYY')}`,
-                HtmlBody: `
-                    <html>
-                        <body>
-                            ${fullMessage}
-                        </body>
-                    </html>
-                `,
+                HtmlBody: ReactDOMServer.renderToStaticMarkup(React.createElement(UpdateEmail, {
+                    sections: results,
+                })),
             }, (error, success) => {
                 if(error) {
                     console.error('Unable to send via postmark: ' + error.message);
