@@ -46,6 +46,7 @@ router.post('/', (req, res) => {
                             challenge: challenge,
                             challengeId: challengeId,
                             user: user,
+                            email: email,
                         })),
                     }, (error, success) => {
                         if(error) {
