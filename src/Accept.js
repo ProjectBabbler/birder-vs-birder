@@ -1,6 +1,7 @@
 var React = require('react');
 import { browserHistory } from 'react-router';
 var { Button } = require('react-bootstrap');
+var SignupModal = require('./SignupModal');
 
 
 var Accept = React.createClass({
@@ -37,6 +38,7 @@ var Accept = React.createClass({
             <div>
                 <Button onClick={this.acceptInvite}>Accept Challenge</Button>
                 <p>Signed in as {this.context.userData.email}. <a onClick={this.switchUser}>Switch users</a></p>
+                <SignupModal show={true} />
             </div>
         )
     },

@@ -1,11 +1,17 @@
 var React = require('react');
 var Signup = require('./Signup');
+var { Modal } = require('react-bootstrap');
 
 var SignupModal = React.createClass({
     render() {
         return (
             <Modal show={this.props.show} onHide={this.props.close}>
-                <Signup onSignup={this.props.onSignup} />
+                <Modal.Header closeButton>
+                    <Modal.Title>Sign Up</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Signup onSignup={this.props.onSignup} />
+                </Modal.Body>
             </Modal>
         );
     },
