@@ -6,6 +6,7 @@ var Base = require('./Base');
 var SignIn = require('./SignIn');
 var SignUp = require('./SignUp');
 var About = require('./About');
+var Accept = require('./Accept');
 var { Router, Route, browserHistory } = require('react-router');
 
 render(
@@ -14,6 +15,7 @@ render(
             <Route path="signin" component={SignIn} />
             <Route path="signup" component={SignUp} />
             <Route path="about" component={About} />
+            <Route path="accept" component={Accept} />
             <Route path="*" component={App} />
         </Route>
     </Router>
