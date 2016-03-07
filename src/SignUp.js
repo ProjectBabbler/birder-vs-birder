@@ -1,7 +1,6 @@
 var React = require('react');
 var { Panel, Input, ButtonInput, Alert, Button } = require('react-bootstrap');
 var axios = require('axios');
-var { browserHistory } = require('react-router');
 var LoadingOverlay = require('./LoadingOverlay');
 var { LinkContainer } = require('react-router-bootstrap');
 var emailValidator = require('email-validator');
@@ -68,9 +67,7 @@ var SignIn = React.createClass({
                     });
                 });
             }).then(() => {
-                browserHistory.push({
-                    pathname: '/',
-                });
+                this.props.onSignup();
             }).catch((error) => {
                 this.setState({
                     error: error.message,
