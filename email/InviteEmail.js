@@ -23,6 +23,8 @@ var InviteEmail = function InviteEmail(props) {
         textDecoration: 'none'
     };
 
+    var acceptLink = `https://birder-vs-birder.herokuapp.com/accept?email=${props.email}&challenge=${props.challengeId}`
+
     return React.createElement(
         Layout,
         null,
@@ -52,7 +54,7 @@ var InviteEmail = function InviteEmail(props) {
                         null,
                         React.createElement(
                             'a',
-                            { style: button },
+                            { style: button, href: acceptLink },
                             'Accept Challenge'
                         )
                     )

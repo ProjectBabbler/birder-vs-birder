@@ -44,6 +44,7 @@ router.post('/', (req, res) => {
                         Subject: `You've been invited to a birder vs birder challenge`,
                         HtmlBody: ReactDOMServer.renderToStaticMarkup(React.createElement(InviteEmail, {
                             challenge: challenge,
+                            challengeId: challengeId,
                             user: user,
                         })),
                     }, (error, success) => {
