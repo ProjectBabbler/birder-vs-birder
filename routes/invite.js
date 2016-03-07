@@ -51,10 +51,11 @@ router.post('/', (req, res) => {
                     }, (error, success) => {
                         if(error) {
                             console.error('Unable to send via postmark: ' + error.message);
+                            resolve();
                         } else {
                             console.info('Sent to postmark for delivery');
+                            challengeRef.child('invites').child(key).child('sent').set(true).then(resolve);
                         }
-                        resolve();
                     });
                 });
             }));
