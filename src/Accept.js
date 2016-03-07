@@ -38,13 +38,16 @@ var Accept = React.createClass({
             <div>
                 <Button onClick={this.acceptInvite}>Accept Challenge</Button>
                 <p>Signed in as {this.context.userData.email}. <a onClick={this.switchUser}>Switch users</a></p>
-                <SignupModal show={true} />
             </div>
         )
     },
 
     renderSigninup() {
-        return <div />;
+        return (
+            <div>
+                <SignupModal show={true} />
+            </div>
+        );
     },
 
     render() {
