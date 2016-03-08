@@ -2,6 +2,7 @@ var React = require('react');
 import { browserHistory } from 'react-router';
 var { Button } = require('react-bootstrap');
 var SignupModal = require('./SignupModal');
+var SignInModal = require('./SignInModal');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var LoadingOverlay = require('./LoadingOverlay');
@@ -17,25 +18,12 @@ var Accept = React.createClass({
         return {
             challenge: null,
             user: null,
-            showSignup: false,
             loading: true,
         };
     },
 
     acceptInvite() {
 
-    },
-
-    switchUser() {
-        this.setState({
-            showSignup: true,
-        });
-    },
-
-    onSignupClose() {
-        this.setState({
-            showSignup: false,
-        });
     },
 
     abort() {
@@ -70,28 +58,18 @@ var Accept = React.createClass({
         });
     },
 
-    renderAccept() {
-        return (
-            <div>
-                <Button onClick={this.acceptInvite}>Accept Challenge</Button>
-                <p>Signed in as {this.context.userData.email}. <a onClick={this.switchUser}>Switch users</a></p>
-            </div>
-        )
-    },
-
     renderError() {
         return (
             <h3>No Challenge by that id</h3>
         );
     },
 
-    renderPermissionsError() {
-        return (
-            <div>
-                <p>Signed in as {this.context.userData.email}.</p>
-                <p>You don't have permission to accept this challenge. <a onClick={this.switchUser}>Switch users</a></p>
-            </div>
-        );
+    renderLogin() {
+        return <SignInModal show={true} />
+    },
+
+    renderSignup() {
+        return <SignupModal show={true} />
     },
 
     render() {
@@ -102,17 +80,14 @@ var Accept = React.createClass({
             return this.renderError();
         }
 
-        if (this.context.userData && this.state.userData &&
-            this.context.userData.email != this.state.userData.email) {
-            return this.renderPermissionsError();
-        }
+        var userExists = this.state.userData && this.state.userData.email;
+        var differentUser = userExists && this.context.userData && this.context.userData.email != this.state.userData.email;
 
-        return (
-            <div>
-                {this.context.userData ? this.renderAccept() : null}
-                <SignupModal show={this.state.showSignup} close={this.onSignupClose} />
-            </div>
-        )
+        if (userExists) {
+            return this.renderLogin();
+        } else {
+            return this.renderSignup();
+        }
     },
 });
 
