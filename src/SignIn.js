@@ -1,7 +1,6 @@
 var React = require('react');
 var { Panel, Input, ButtonInput, Alert, Button } = require('react-bootstrap');
 var axios = require('axios');
-var { browserHistory } = require('react-router');
 var LoadingOverlay = require('./LoadingOverlay');
 var { LinkContainer } = require('react-router-bootstrap');
 var Firebase = require('firebase');
@@ -36,9 +35,7 @@ var SignIn = React.createClass({
             email: this.state.email,
             password: this.state.password,
         }).then(() => {
-            browserHistory.push({
-                pathname: '/',
-            });
+            this.props.onSignIn();
         }).catch((error) => {
             this.setState({
                 error: error.message,

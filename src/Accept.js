@@ -32,6 +32,12 @@ var Accept = React.createClass({
         });
     },
 
+    onSignupClose() {
+        this.setState({
+            showSignup: false,
+        });
+    },
+
     abort() {
         browserHistory.push({
             pathname: '/',
@@ -73,14 +79,6 @@ var Accept = React.createClass({
         )
     },
 
-    renderSigninup() {
-        return (
-            <div>
-                <SignupModal show={this.state.showSignup} />
-            </div>
-        );
-    },
-
     renderError() {
         return (
             <h3>No Challenge by that id</h3>
@@ -108,9 +106,11 @@ var Accept = React.createClass({
             this.context.userData.email != this.state.userData.email) {
             return this.renderPermissionsError();
         }
+
         return (
             <div>
-                {this.context.userData ? this.renderAccept() : this.renderSigninup()}
+                {this.context.userData ? this.renderAccept() : null}
+                <SignupModal show={this.state.showSignup} close={this.onSignupClose} />
             </div>
         )
     },
