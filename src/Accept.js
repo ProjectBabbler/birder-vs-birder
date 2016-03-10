@@ -8,11 +8,6 @@ var LoadingOverlay = require('./LoadingOverlay');
 
 
 var Accept = React.createClass({
-    contextTypes: {
-        authData: React.PropTypes.object,
-        userData: React.PropTypes.object,
-    },
-
     getInitialState() {
         return {
             challenge: null,
@@ -22,7 +17,39 @@ var Accept = React.createClass({
     },
 
     acceptInvite() {
+        var query = this.props.location.query;
+        var challengeId = query.challengeId;
+        var email = query.email;
 
+        var challengeRef = firebaseRef.child('challenges').child(challengeId);
+
+        var ps = [];
+        this.setState({
+            loading: true,
+        });
+
+        ps.push(challengeRef.child('members').child(this.props.authData.uid).set(true));
+        ps.push(firebaseRef.child('users').child(this.props.authData.uid).child('challenges').child(challengeId).set(true));
+
+        ps.push(challengeRef.child('invites').orderByChild('email').equalTo(email).once('value').then((snap) => {
+            var ps = [];
+            snap.forEach(subSnap => {
+                ps.push(challengeRef.child('invites').child(subSnap.key()).set(null));
+            });
+            return Promise.all(ps);
+        }));
+
+        Promise.all(ps).then(() => {
+            console.log('Accepted - redirecting');
+            browserHistory.push({
+                pathname: '/',
+            });
+        }).catch((e) => {
+            console.log(e);
+            this.setState({
+                loading: false,
+            });
+        });
     },
 
     abort() {
@@ -31,8 +58,12 @@ var Accept = React.createClass({
         });
     },
 
-    componentDidMount() {
-        var query = this.props.location.query;
+    componentWillReceiveProps(props) {
+        this.checkMatch(props);
+    },
+
+    checkMatch(props=this.props) {
+        var query = props.location.query;
         var challengeId = query.challengeId;
         var email = query.email;
 
@@ -41,9 +72,16 @@ var Accept = React.createClass({
             return;
         }
 
-        if (this.context.userData && email == this.context.userData.email) {
+        if (props.userData && email == props.userData.email) {
             this.acceptInvite();
         }
+    },
+
+    componentDidMount() {
+        var query = this.props.location.query;
+        var challengeId = query.challengeId;
+        var email = query.email;
+        this.checkMatch();
 
         var ps = [];
         ps.push(firebaseRef.child('users').orderByChild('email').equalTo(email).once('value'));
@@ -64,11 +102,11 @@ var Accept = React.createClass({
     },
 
     renderLogin() {
-        return <SignInModal show={true} />;
+        return <SignInModal show={true} onSignin={this.acceptInvite} />;
     },
 
     renderSignup() {
-        return <SignupModal show={true} />;
+        return <SignupModal show={true} onSignup={this.acceptInvite} />;
     },
 
     render() {
@@ -89,4 +127,15 @@ var Accept = React.createClass({
     },
 });
 
-module.exports = Accept;
+var Wrapper = React.createClass({
+    contextTypes: {
+        authData: React.PropTypes.object,
+        userData: React.PropTypes.object,
+    },
+
+    render() {
+        return <Accept {...this.props} authData={this.context.authData} userData={this.context.userData} />;
+    },
+});
+
+module.exports = Wrapper;
