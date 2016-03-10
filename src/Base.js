@@ -3,7 +3,6 @@ var Header = require('./Header');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
-var axios = require('axios');
 
 var Base = React.createClass({
     mixins: [ReactFireMixin],

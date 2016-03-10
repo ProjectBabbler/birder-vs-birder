@@ -64,9 +64,7 @@ var Layout = function Layout(props) {
     var emailFooterP = {
         color: '#AEAEAE',
         marginTop: 0,
-        fontSize: 16,
         lineHeight: '1.5em',
-        textAlign: 'left',
         fontSize: 12,
         textAlign: 'center'
     };
