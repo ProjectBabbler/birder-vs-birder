@@ -3,9 +3,12 @@ var HomePanel = require('./HomePanel');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
-var { Label }= require('react-bootstrap');
+var { Label, DropdownButton, Glyphicon }= require('react-bootstrap');
+var Confirm = require('react-confirm-bootstrap');
+var Radium = require('radium');
 
-var Challenge = React.createClass({
+
+var Challenge = Radium(React.createClass({
     mixins: [ReactFireMixin],
 
     contextTypes: {
@@ -15,6 +18,7 @@ var Challenge = React.createClass({
     getInitialState() {
         return {
             members: [],
+            deleting: false,
         };
     },
 
@@ -30,6 +34,7 @@ var Challenge = React.createClass({
                     ]).then(result => {
                         return {
                             user: result[0].val(),
+                            userKey: result[0].key(),
                             total: result[1].val() || {},
                         };
                     }).then(resolve).catch(reject);
@@ -44,8 +49,56 @@ var Challenge = React.createClass({
         });
     },
 
+    onDelete() {
+        this.setState({
+            deleting: true,
+        });
+        var ps = [];
+        this.state.members.forEach(user => {
+            ps.push(firebaseRef.child('users').child(user.userKey).child('challenges').child(this.props.id).set(null));
+        });
+        ps.push(this.challengesRef.set(null));
+
+        Promise.all(ps).catch((e) => {
+            console.log(e);
+            this.setState({
+                deleting: false,
+            });
+        });
+    },
+
     componentWillUnmount() {
         this.challengesRef.child('members').off('value');
+    },
+
+    renderSettings() {
+        var menuStyle = {
+            display: 'block',
+            padding: '3px 20px',
+            clear: 'both',
+            fontWeight: '400',
+            lineHeight: '1.42857143',
+            color: '#333 !important',
+            whiteSpace: 'nowrap',
+
+            ':hover': {
+                color: '#262626',
+                textDecoration: 'none',
+                backgroundColor: '#f5f5f5',
+            },
+        };
+
+        return (
+            <DropdownButton title={<Glyphicon glyph="cog" />} id={`delete-${this.props.id}`} bsSize="small">
+                <Confirm
+                    onConfirm={this.onDelete}
+                    body="Are you sure you want to delete this challenge? It can't be undone"
+                    confirmText="Confirm"
+                    title={`Delete "${this.props.challenge.name}"`}>
+                    <div style={menuStyle}>Delete</div>
+                </Confirm>
+            </DropdownButton>
+        );
     },
 
     render() {
@@ -71,7 +124,15 @@ var Challenge = React.createClass({
 
         return (
             <HomePanel>
-                {labels}
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                }}>
+                    <div>
+                        {labels}
+                    </div>
+                    {this.renderSettings()}
+                </div>
                 <h3>{this.props.challenge.name}</h3>
                 {sorted.map(m => {
                     var value = m.total[this.props.challenge.time] || 0;
@@ -115,7 +176,7 @@ var Challenge = React.createClass({
             </HomePanel>
         );
     },
-});
+}));
 
 var ChallengeWrapper = React.createClass({
     mixins: [ReactFireMixin],
@@ -132,7 +193,7 @@ var ChallengeWrapper = React.createClass({
     },
 
     render() {
-        if (!this.state.challenge) {
+        if (!this.state.challenge || this.state.deleting) {
             return <div/>;
         }
 
