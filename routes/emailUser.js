@@ -24,7 +24,7 @@ var getMessageForList = (uid, list) => {
                 rows.push({
                     name: c.name,
                     oldLife: o.life,
-                    newList: c.life,
+                    newLife: c.life,
                     oldYear: o.year,
                     newYear: c.year,
                 });
