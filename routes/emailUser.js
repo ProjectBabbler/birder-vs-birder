@@ -1,4 +1,4 @@
-var postmark = require("postmark");
+var postmark = require('postmark');
 var Keys = require('../src/Keys');
 var client = new postmark.Client(Keys.postmark);
 var Firebase = require('firebase');
@@ -9,7 +9,6 @@ var ReactDOMServer = require('react-dom/server');
 var React = require('react');
 
 var getMessageForList = (uid, list) => {
-    var recentMap = {};
     return Promise.all([
         firebaseRef.child('ebird/totals').child(uid).orderByChild('type').equalTo(list).once('value'),
         firebaseRef.child('ebird/totals/last').child(uid).orderByChild('type').equalTo(list).once('value'),
@@ -20,7 +19,7 @@ var getMessageForList = (uid, list) => {
         var rows = [];
         for (var code in current) {
             var c = current[code];
-            var o = old[code]
+            var o = old[code];
             if (o.life != c.life || o.year != c.year) {
                 rows.push({
                     name: c.name,
@@ -41,7 +40,6 @@ var getMessageForList = (uid, list) => {
 
 module.exports = (uid, email) => {
     return new Promise((resolve, reject) => {
-        var recentMap = {};
         Promise.all([
             getMessageForList(uid, 'region'),
             getMessageForList(uid, 'country'),
@@ -56,7 +54,7 @@ module.exports = (uid, email) => {
                     sections: results,
                 })),
             }, (error, success) => {
-                if(error) {
+                if (error) {
                     console.error('Unable to send via postmark: ' + error.message);
                 } else {
                     console.info('Sent to postmark for delivery');

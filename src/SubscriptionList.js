@@ -82,7 +82,7 @@ var SubscriptionList = React.createClass({
                 {subs.map(sub => {
                     return (
                         <ListGroupItem key={sub.code}>{sub.time} List for {sub.name}</ListGroupItem>
-                    )
+                    );
                 })}
             </ListGroup>
         );

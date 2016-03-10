@@ -1,6 +1,5 @@
 var React = require('react');
 import { browserHistory } from 'react-router';
-var { Button } = require('react-bootstrap');
 var SignupModal = require('./SignupModal');
 var SignInModal = require('./SignInModal');
 var Firebase = require('firebase');
@@ -65,11 +64,11 @@ var Accept = React.createClass({
     },
 
     renderLogin() {
-        return <SignInModal show={true} />
+        return <SignInModal show={true} />;
     },
 
     renderSignup() {
-        return <SignupModal show={true} />
+        return <SignupModal show={true} />;
     },
 
     render() {
@@ -81,7 +80,6 @@ var Accept = React.createClass({
         }
 
         var userExists = this.state.userData && this.state.userData.email;
-        var differentUser = userExists && this.context.userData && this.context.userData.email != this.state.userData.email;
 
         if (userExists) {
             return this.renderLogin();

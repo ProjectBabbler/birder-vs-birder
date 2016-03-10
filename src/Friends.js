@@ -2,7 +2,7 @@ var React = require('react');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
-var { ListGroup, ListGroupItem, Panel, Input, Button } = require('react-bootstrap');
+var { ListGroup, ListGroupItem, Input, Button } = require('react-bootstrap');
 var emailValidator = require('email-validator');
 var HomePanel = require('./HomePanel');
 
@@ -49,7 +49,7 @@ var SubscriptionList = React.createClass({
                 {subs.map(sub => {
                     return (
                         <ListGroupItem key={sub.uid}>{sub.name} - {data.confirmed ? null : '(Pending)'}</ListGroupItem>
-                    )
+                    );
                 })}
             </ListGroup>
         );

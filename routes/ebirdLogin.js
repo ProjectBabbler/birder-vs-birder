@@ -4,8 +4,8 @@ var bodyParser = require('body-parser');
 var ebird = require('ebird');
 ebird = new ebird();
 var Keys = require('../src/Keys');
-var Cryptr = require('cryptr'),
-cryptr = new Cryptr(Keys.cryptr);
+var Cryptr = require('cryptr');
+var cryptr = new Cryptr(Keys.cryptr);
 
 router.use(bodyParser.json());
 router.post('/', (req, res) => {
@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
         res.status(403);
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({
-            message: `Sorry your ebird username or password wasn't correct`,
+            message: "Sorry your ebird username or password wasn't correct",
         }));
     });
 });

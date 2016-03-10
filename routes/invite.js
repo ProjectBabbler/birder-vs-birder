@@ -7,7 +7,7 @@ var Keys = require('../src/Keys');
 var InviteEmail = require('../email/InviteEmail');
 var ReactDOMServer = require('react-dom/server');
 var React = require('react');
-var postmark = require("postmark");
+var postmark = require('postmark');
 var client = new postmark.Client(Keys.postmark);
 
 
@@ -41,7 +41,7 @@ router.post('/', (req, res) => {
                     client.sendEmail({
                         From: 'info@fieldguideguru.com',
                         To: email,
-                        Subject: `You've been invited to a birder vs birder challenge`,
+                        Subject: "You've been invited to a birder vs birder challenge",
                         HtmlBody: ReactDOMServer.renderToStaticMarkup(React.createElement(InviteEmail, {
                             challenge: challenge,
                             challengeId: challengeId,
@@ -49,7 +49,7 @@ router.post('/', (req, res) => {
                             email: email,
                         })),
                     }, (error, success) => {
-                        if(error) {
+                        if (error) {
                             console.error('Unable to send via postmark: ' + error.message);
                             resolve();
                         } else {

@@ -19,7 +19,7 @@
   "homepage": "https://github.com/ProjectBabbler/birder-vs-birder#readme",
   "dependencies": {
     "axios": "^0.9.1",
-    "babel-core": "^6.6.5",
+    "babel-core": "^6.7.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-react-constant-elements": "^6.3.13",
     "babel-plugin-transform-react-inline-elements": "^6.6.5",
@@ -39,14 +39,14 @@
     "history": "^2.0.1",
     "limiter": "^1.1.0",
     "material-ui": "^0.14.4",
-    "moment": "^2.11.2",
+    "moment": "^2.12.0",
     "postmark": "^1.2.1",
     "react": "^0.14.3",
     "react-bootstrap": "^0.28.2",
     "react-dom": "^0.14.3",
-    "react-router": "^2.0.0",
+    "react-router": "^2.0.1",
     "react-router-bootstrap": "^0.20.1",
-    "react-select": "^1.0.0-beta10",
+    "react-select": "^1.0.0-beta11",
     "reactfire": "^0.6.0",
     "request-promise": "^2.0.1",
     "serve-favicon": "~2.3.0",
@@ -55,6 +55,8 @@
     "webpack-config-merger": "^0.0.5"
   },
   "devDependencies": {
+    "eslint": "2.3.0",
+    "eslint-plugin-react": "4.2.1",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-hot-middleware": "^2.9.1"
   }

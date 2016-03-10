@@ -3,7 +3,6 @@ var { Nav, NavItem, Table, Glyphicon } = require('react-bootstrap');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
-var axios = require('axios');
 var CircularProgress = require('material-ui/lib/circular-progress');
 
 var TABS = {
@@ -120,7 +119,7 @@ var YourLists = React.createClass({
         });
 
         return (
-            <Table striped bordered hover>
+            <Table striped={true} bordered={true} hover={true}>
                 <thead>
                     <tr>
                         <th />
@@ -142,7 +141,7 @@ var YourLists = React.createClass({
                     })}
                 </tbody>
             </Table>
-        )
+        );
     },
 
     render() {

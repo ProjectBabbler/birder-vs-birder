@@ -7,7 +7,7 @@ var ref = firebaseRef.child('ebird/locations');
 
 var baseUrl = 'http://ebird.org/ws1.1/ref/location/list';
 
-return ref.authWithCustomToken(Keys.firebase).then(() => {
+ref.authWithCustomToken(Keys.firebase).then(() => {
     return request.get(baseUrl, {
         qs: {
             fmt: 'json',

@@ -41,11 +41,11 @@ router.post('/', (req, res) => {
         res.status(200);
         res.send();
     }).catch((err) => {
-        console.log(`Failed data for: ${userId}`)
+        console.log(`Failed data for: ${userId}`);
         res.status(500);
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({
-            message: err || `Sorry something went wrong`,
+            message: err || 'Sorry something went wrong',
         }));
     }).then(() => {
         return userRef.child('scraping').set(false);

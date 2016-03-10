@@ -85,14 +85,16 @@ var Challenge = React.createClass({
                                 position: 'relative',
                                 width: '100%',
                             }}>
-                                <div style={{
-                                    width: `${(value / max) * 100}%`,
-                                    height: 40,
-                                    marginBottom: 3,
-                                    borderRadius: 3,
-                                    color: 'black',
-                                    backgroundColor: '#5bc0de',
-                                }} />
+                                <div
+                                    style={{
+                                        width: `${(value / max) * 100}%`,
+                                        height: 40,
+                                        marginBottom: 3,
+                                        borderRadius: 3,
+                                        color: 'black',
+                                        backgroundColor: '#5bc0de',
+                                    }}
+                                />
                                 <div style={{
                                     position: 'absolute',
                                     left: 10,
@@ -134,7 +136,7 @@ var ChallengeWrapper = React.createClass({
             return <div/>;
         }
 
-        return <Challenge {...this.props} challenge={this.state.challenge} />
+        return <Challenge {...this.props} challenge={this.state.challenge} />;
     },
 });
 

@@ -9,7 +9,7 @@ var RateLimiter = require('limiter').RateLimiter;
 var limiter = new RateLimiter(60 / 3, 'minute');
 
 var ref = firebaseRef.child('users');
-return ref.authWithCustomToken(Keys.firebase).then(() => {
+ref.authWithCustomToken(Keys.firebase).then(() => {
     return ref.once('value');
 }).then((s) => {
     // Update totals.
@@ -20,18 +20,18 @@ return ref.authWithCustomToken(Keys.firebase).then(() => {
             limiter.removeTokens(1, () => {
                 var ebird = new ebirdToFirebase(key);
                 ebird.auth().then(() => {
-                    console.log(`Moving totals for ${key}`)
+                    console.log(`Moving totals for ${key}`);
                     return firebaseRef.child('ebird/totals').child(key).once('value');
                 }).then((sub) => {
                     return firebaseRef.child('ebird/totals/last').child(key).set(sub.val());
                 }).then(() => {
-                    console.log(`Updating totals for ${key}`)
+                    console.log(`Updating totals for ${key}`);
                     return ebird.totals();
                 })
                 .then(resolve)
                 .catch((e) => {
                     // Log the error, but don't block all updates.
-                    console.log(e)
+                    console.log(e);
                 })
                 .then(resolve);
             });

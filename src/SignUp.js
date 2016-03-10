@@ -1,5 +1,5 @@
 var React = require('react');
-var { Input, ButtonInput, Alert, Button } = require('react-bootstrap');
+var { Input, ButtonInput, Alert } = require('react-bootstrap');
 var axios = require('axios');
 var LoadingOverlay = require('./LoadingOverlay');
 var emailValidator = require('email-validator');
@@ -42,15 +42,15 @@ var SignIn = React.createClass({
                 email: this.state.email,
                 password: this.state.password,
             }).then((userData) => {
-                console.log('successful created an account')
+                console.log('successful created an account');
                 // Log In.
                 return firebaseRef.authWithPassword({
                     email: this.state.email,
                     password: this.state.password,
                 });
             }).then((userData) => {
-                console.log('successful logged in')
-                var usersRef = firebaseRef.child("users");
+                console.log('successful logged in');
+                var usersRef = firebaseRef.child('users');
                 return usersRef.child(userData.uid).set({
                     email: this.state.email,
                     fullname: this.state.fullname,

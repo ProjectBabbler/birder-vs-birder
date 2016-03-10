@@ -1,8 +1,5 @@
 var React = require('react');
-var SignIn = require('./SignIn');
 var YourList = require('./YourList');
-var SubscriptionList = require('./SubscriptionList');
-var Friends = require('./Friends');
 var CreateChallenge = require('./CreateChallenge');
 var ChallengeList = require('./ChallengeList');
 
@@ -35,7 +32,7 @@ var App = React.createClass({
                 <div>
                     I'm a fancy welcome page.
                 </div>
-            )
+            );
         }
     },
 });

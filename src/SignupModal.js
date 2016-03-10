@@ -6,7 +6,7 @@ var SignupModal = React.createClass({
     render() {
         return (
             <Modal show={this.props.show} onHide={this.props.close}>
-                <Modal.Header closeButton>
+                <Modal.Header closeButton={true}>
                     <Modal.Title>Sign Up</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

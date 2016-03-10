@@ -101,7 +101,7 @@ var CreateChallenge = React.createClass({
                 <Button>{email}</Button>
                 <Button onClick={this.removeFriend.bind(this, email)}>X</Button>
             </ButtonGroup>
-        )
+        );
     },
 
     renderFriends() {
@@ -186,7 +186,7 @@ var CreateChallenge = React.createClass({
                 </Button>
                 <Modal show={this.state.showModal} onHide={this.close}>
                     <LoadingOverlay isOpened={this.state.loading} />
-                    <Modal.Header closeButton>
+                    <Modal.Header closeButto={true}>
                         <Modal.Title>Create a new Challenge</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>

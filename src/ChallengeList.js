@@ -24,7 +24,7 @@ var ChallengeList = React.createClass({
     },
 
     renderChallenge(challenge) {
-        return <Challenge key={challenge['.key']} id={challenge['.key']} />
+        return <Challenge key={challenge['.key']} id={challenge['.key']} />;
     },
 
     render() {

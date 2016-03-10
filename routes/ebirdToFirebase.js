@@ -6,8 +6,8 @@ var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var RateLimiter = require('limiter').RateLimiter;
 var limiter = new RateLimiter(60 / 3, 'minute');
 var Keys = require('../src/Keys');
-var Cryptr = require('cryptr'),
-cryptr = new Cryptr(Keys.cryptr);
+var Cryptr = require('cryptr');
+var cryptr = new Cryptr(Keys.cryptr);
 
 class ebirdToFirebase {
     constructor(uid) {
