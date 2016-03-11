@@ -6,6 +6,8 @@ var ReactFireMixin = require('reactfire');
 var { Label, DropdownButton, Glyphicon }= require('react-bootstrap');
 var Confirm = require('react-confirm-bootstrap');
 var Radium = require('radium');
+var CreateChallengeModal = require('./CreateChallengeModal');
+
 
 
 var Challenge = Radium(React.createClass({
@@ -19,6 +21,7 @@ var Challenge = Radium(React.createClass({
         return {
             members: [],
             deleting: false,
+            editing: false,
         };
     },
 
@@ -71,6 +74,12 @@ var Challenge = Radium(React.createClass({
         this.challengesRef.child('members').off('value');
     },
 
+    onEdit() {
+        this.setState({
+            editing: true,
+        });
+    },
+
     renderSettings() {
         var menuStyle = {
             display: 'block',
@@ -90,12 +99,13 @@ var Challenge = Radium(React.createClass({
 
         return (
             <DropdownButton title={<Glyphicon glyph="cog" />} id={`delete-${this.props.id}`} bsSize="small">
+                <div onClick={this.onEdit} style={menuStyle} key="edit">Edit</div>
                 <Confirm
                     onConfirm={this.onDelete}
                     body="Are you sure you want to delete this challenge? It can't be undone"
                     confirmText="Confirm"
                     title={`Delete "${this.props.challenge.name}"`}>
-                    <div style={menuStyle}>Delete</div>
+                    <div style={menuStyle} key="delete">Delete</div>
                 </Confirm>
             </DropdownButton>
         );
@@ -173,6 +183,14 @@ var Challenge = Radium(React.createClass({
                         </div>
                     );
                 })}
+                {this.state.editing ? (
+                    <CreateChallengeModal
+                        edit={true}
+                        onClose={() => {
+                            this.setState({ editing: false, });
+                        }}
+                    />
+                ) : null}
             </HomePanel>
         );
     },
@@ -197,7 +215,11 @@ var ChallengeWrapper = React.createClass({
             return <div/>;
         }
 
-        return <Challenge {...this.props} challenge={this.state.challenge} />;
+        return (
+            <div>
+                <Challenge {...this.props} challenge={this.state.challenge} />
+            </div>
+        );
     },
 });
 
