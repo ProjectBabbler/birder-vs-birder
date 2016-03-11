@@ -6,7 +6,7 @@ var ReactFireMixin = require('reactfire');
 var { Label, DropdownButton, Glyphicon }= require('react-bootstrap');
 var Confirm = require('react-confirm-bootstrap');
 var Radium = require('radium');
-var CreateChallengeModal = require('./CreateChallengeModal');
+var EditChallengeModal = require('./EditChallengeModal');
 
 
 
@@ -184,8 +184,10 @@ var Challenge = Radium(React.createClass({
                     );
                 })}
                 {this.state.editing ? (
-                    <CreateChallengeModal
+                    <EditChallengeModal
                         edit={true}
+                        challenge={this.props.challenge}
+                        challengeId={this.props.challengeId}
                         onClose={() => {
                             this.setState({ editing: false, });
                         }}
@@ -217,7 +219,7 @@ var ChallengeWrapper = React.createClass({
 
         return (
             <div>
-                <Challenge {...this.props} challenge={this.state.challenge} />
+                <Challenge {...this.props} challenge={this.state.challenge} challengeId={this.props.id} />
             </div>
         );
     },

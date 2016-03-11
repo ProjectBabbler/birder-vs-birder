@@ -15,9 +15,10 @@ var CreateChallengeModal = React.createClass({
 
     getInitialState() {
         return {
-            location: null,
-            timeFrame: 'life',
+            location: this.props.location || null,
+            timeFrame: this.props.timeFrame || 'life',
             friends: new Set(),
+            name: this.props.name || '',
             email: '',
             loading: false,
             error: null,
@@ -56,6 +57,11 @@ var CreateChallengeModal = React.createClass({
         return;
     },
 
+    nameChange() {
+        this.setState({
+            name: this.refs.nameInput.getValue(),
+        });
+    },
 
     emailChange() {
         this.setState({
@@ -118,16 +124,26 @@ var CreateChallengeModal = React.createClass({
             loading: true,
         });
 
-        var name = this.refs.nameInput.getValue() || this.getDefaultName();
-        var ref = firebaseRef.child('challenges').push();
+        var name = this.state.name || this.getDefaultName();
+
+        var ref;
+        var members;
+        if (this.props.edit) {
+            ref = firebaseRef.child('challenges').child(this.props.challengeId);
+            members = this.props.members;
+        } else {
+            ref = firebaseRef.child('challenges').push();
+            members = {
+                [this.context.authData.uid]: false,
+            };
+        }
+
         ref.set({
             name: name,
             code: this.state.location.value,
             time: this.state.timeFrame,
             owner: this.context.authData.uid,
-            members: {
-                [this.context.authData.uid]: false,
-            },
+            members: members,
         }).then(() => {
             var ps = [];
             this.state.friends.forEach(email => {
@@ -189,6 +205,8 @@ var CreateChallengeModal = React.createClass({
                         type="text"
                         placeholder={this.getNamePlaceholder()}
                         ref="nameInput"
+                        onChange={this.nameChange}
+                        value={this.state.name}
                     />
                     <h4>Time Frame</h4>
                     <DropdownButton title={this.getTimeFrameTitle()} id="timeFrameDropdown">
@@ -215,7 +233,7 @@ var CreateChallengeModal = React.createClass({
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.close}>Close</Button>
-                    <Button type="submit" bsStyle="primary" onClick={this.onCreate}>Create</Button>
+                    <Button type="submit" bsStyle="primary" onClick={this.onCreate}>{this.props.edit ? 'Save' : 'Create'}</Button>
                 </Modal.Footer>
             </Modal>
         );
