@@ -1,5 +1,7 @@
 var React = require('react');
 var CreateChallengeModal = require('./CreateChallengeModal');
+var Firebase = require('firebase');
+var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 
 var EditChallengeModal = React.createClass({
     render() {
@@ -7,10 +9,7 @@ var EditChallengeModal = React.createClass({
             timeFrame: this.props.challenge.time,
             name: this.props.challenge.name,
             challengeId: this.props.challengeId,
-            location: {
-                value: this.props.challenge.code,
-                label: '',
-            },
+            location: this.props.location,
             members: this.props.challenge.members,
         };
 
@@ -24,4 +23,33 @@ var EditChallengeModal = React.createClass({
     },
 });
 
-module.exports = EditChallengeModal;
+var Wrapper = React.createClass({
+    getInitialState() {
+        return {
+            location: null,
+        };
+    },
+
+    componentWillMount() {
+        firebaseRef.child('ebird/locations')
+            .child(this.props.challenge.code)
+            .once('value')
+            .then((sub) => {
+                this.setState({
+                    location: {
+                        value: this.props.challenge.code,
+                        label: `${sub.val().name} - (${this.props.challenge.code})`,
+                    },
+                });
+            });
+    },
+
+    render() {
+        if (!this.state.location) {
+            return <div />;
+        }
+        return <EditChallengeModal {...this.props} location={this.state.location} />;
+    }
+});
+
+module.exports = Wrapper;
