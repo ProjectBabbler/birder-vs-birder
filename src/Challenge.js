@@ -103,7 +103,7 @@ var Challenge = Radium(React.createClass({
 
         return (
             <div>
-                <DropdownButton title={<Glyphicon glyph="cog" />} id={`delete-${this.props.id}`} bsSize="small">
+                <DropdownButton title={<Glyphicon glyph="cog" />} id={`delete-${this.props.id}`} bsSize="xsmall">
                     <div onClick={this.onEdit} style={menuStyle} key="edit">Edit</div>
                     <Confirm
                         onConfirm={this.onDelete}
