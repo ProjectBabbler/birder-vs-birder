@@ -49,6 +49,7 @@ var Header = React.createClass({
         return (
             <Navbar fixedTop={true} style={{
                 backgroundColor: '#2c3e50',
+                borderColor: '#2c3e50',
             }}>
                 <Navbar.Header>
                     <Navbar.Brand>
