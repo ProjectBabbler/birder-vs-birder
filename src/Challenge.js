@@ -81,6 +81,10 @@ var Challenge = Radium(React.createClass({
     },
 
     renderSettings() {
+        if (!this.isOwner()) {
+            return;
+        }
+
         var menuStyle = {
             display: 'block',
             padding: '3px 20px',
@@ -98,17 +102,33 @@ var Challenge = Radium(React.createClass({
         };
 
         return (
-            <DropdownButton title={<Glyphicon glyph="cog" />} id={`delete-${this.props.id}`} bsSize="small">
-                <div onClick={this.onEdit} style={menuStyle} key="edit">Edit</div>
-                <Confirm
-                    onConfirm={this.onDelete}
-                    body="Are you sure you want to delete this challenge? It can't be undone"
-                    confirmText="Confirm"
-                    title={`Delete "${this.props.challenge.name}"`}>
-                    <div style={menuStyle} key="delete">Delete</div>
-                </Confirm>
-            </DropdownButton>
+            <div>
+                <DropdownButton title={<Glyphicon glyph="cog" />} id={`delete-${this.props.id}`} bsSize="small">
+                    <div onClick={this.onEdit} style={menuStyle} key="edit">Edit</div>
+                    <Confirm
+                        onConfirm={this.onDelete}
+                        body="Are you sure you want to delete this challenge? It can't be undone"
+                        confirmText="Confirm"
+                        title={`Delete "${this.props.challenge.name}"`}>
+                        <div style={menuStyle} key="delete">Delete</div>
+                    </Confirm>
+                </DropdownButton>
+                {this.state.editing ? (
+                    <EditChallengeModal
+                        edit={true}
+                        challenge={this.props.challenge}
+                        challengeId={this.props.challengeId}
+                        onClose={() => {
+                            this.setState({ editing: false, });
+                        }}
+                    />
+                ) : null}
+            </div>
         );
+    },
+
+    isOwner() {
+        return this.context.authData.uid == this.props.challenge.owner;
     },
 
     render() {
@@ -117,7 +137,7 @@ var Challenge = Radium(React.createClass({
         };
 
         var labels = [];
-        if (this.context.authData.uid == this.props.challenge.owner) {
+        if (this.isOwner()) {
             labels.push(<Label bsStyle="primary" key="owner" style={badgeStyle}>Owner</Label>);
         }
         labels.push(<Label bsStyle="info" key="time" style={badgeStyle}>{this.props.challenge.time}</Label>);
@@ -183,16 +203,6 @@ var Challenge = Radium(React.createClass({
                         </div>
                     );
                 })}
-                {this.state.editing ? (
-                    <EditChallengeModal
-                        edit={true}
-                        challenge={this.props.challenge}
-                        challengeId={this.props.challengeId}
-                        onClose={() => {
-                            this.setState({ editing: false, });
-                        }}
-                    />
-                ) : null}
             </HomePanel>
         );
     },
