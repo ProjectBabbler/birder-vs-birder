@@ -39,7 +39,7 @@ var WelcomePage = React.createClass({
                         <h1>Logo</h1>
                         <h1 style={styles.main}>Birder Vs Birder</h1>
                         {this.renderLine()}
-                        <h1>Its not just for the birds</h1>
+                        <h1>It's not just for the birds</h1>
                     </div>
                 </div>
             </div>

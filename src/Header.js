@@ -47,10 +47,7 @@ var Header = React.createClass({
 
     render() {
         return (
-            <Navbar fixedTop={true} style={{
-                backgroundColor: '#2c3e50',
-                borderColor: '#2c3e50',
-            }}>
+            <Navbar fixedTop={true}>
                 <Navbar.Header>
                     <Navbar.Brand>
                         <Link to={{ pathname: '/' }}>
