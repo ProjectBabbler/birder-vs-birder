@@ -7,6 +7,7 @@ var { Label, DropdownButton, Glyphicon }= require('react-bootstrap');
 var Confirm = require('react-confirm-bootstrap');
 var Radium = require('radium');
 var EditChallengeModal = require('./EditChallengeModal');
+var StackedList = require('./StackedList');
 
 
 
@@ -143,14 +144,12 @@ var Challenge = Radium(React.createClass({
         labels.push(<Label bsStyle="info" key="time" style={badgeStyle}>{this.props.challenge.time}</Label>);
         labels.push(<Label bsStyle="info" key="code" style={badgeStyle}>{this.props.challenge.code}</Label>);
 
-        var sorted = this.state.members.sort((a, b) => {
-            return b.total[this.props.challenge.time] - a.total[this.props.challenge.time];
+        var stackedItems = this.state.members.map(m => {
+            return {
+                value: m.total[this.props.challenge.time],
+                label: m.user.ebird_username,
+            };
         });
-
-        var max;
-        if (sorted.length) {
-            max = sorted[0].total[this.props.challenge.time];
-        }
 
         return (
             <HomePanel>
@@ -164,45 +163,7 @@ var Challenge = Radium(React.createClass({
                     {this.renderSettings()}
                 </div>
                 <h3>{this.props.challenge.name}</h3>
-                {sorted.map(m => {
-                    var value = m.total[this.props.challenge.time] || 0;
-                    return (
-                        <div key={m.user.ebird_username} style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                        }}>
-                            <div style={{
-                                position: 'relative',
-                                width: '100%',
-                            }}>
-                                <div
-                                    style={{
-                                        width: `${(value / max) * 100}%`,
-                                        height: 40,
-                                        marginBottom: 3,
-                                        borderRadius: 3,
-                                        color: 'black',
-                                        backgroundColor: '#5bc0de',
-                                    }}
-                                />
-                                <div style={{
-                                    position: 'absolute',
-                                    left: 10,
-                                    top: 10,
-                                }}>
-                                    {m.user.ebird_username}
-                                </div>
-                            </div>
-                            <div style={{
-                                width: 50,
-                                textAlign: 'right',
-                            }}>
-                                {value}
-                            </div>
-                        </div>
-                    );
-                })}
+                <StackedList items={stackedItems} />
             </HomePanel>
         );
     },

@@ -28,9 +28,8 @@ var WelcomePage = React.createClass({
 
         return (
             <div>
-                <div style={{
+                <div className="bg-success" style={{
                     textAlign: 'center',
-                    background: '#18bc9c',
                     color: 'white',
                 }}>
                     <div style={{
