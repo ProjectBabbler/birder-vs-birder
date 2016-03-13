@@ -3,6 +3,7 @@ var Header = require('./Header');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
+var Footer = require('./Footer');
 
 var Base = React.createClass({
     mixins: [ReactFireMixin],
@@ -76,10 +77,9 @@ var Base = React.createClass({
     render () {
         return (
             <div>
-                <div>
-                    <Header />
-                </div>
+                <Header />
                 {this.props.children}
+                <Footer />
             </div>
         );
     }
