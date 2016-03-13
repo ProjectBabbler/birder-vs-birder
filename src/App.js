@@ -1,7 +1,8 @@
 var React = require('react');
-var YourList = require('./YourList');
-var CreateChallenge = require('./CreateChallenge');
-var ChallengeList = require('./ChallengeList');
+var Dashboard = require('./Dashboard');
+var WelcomePage = require('./WelcomePage');
+var MainContent = require('./MainContent');
+
 
 var App = React.createClass({
     contextTypes: {
@@ -11,28 +12,12 @@ var App = React.createClass({
     render() {
         if (this.context.authData) {
             return (
-                <div>
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        marginBottom: 20,
-                    }}>
-                        <CreateChallenge />
-                    </div>
-                    <div style={{
-                        display: 'flex',
-                    }}>
-                        <ChallengeList />
-                    </div>
-                    <YourList />
-                </div>
+                <MainContent>
+                    <Dashboard />
+                </MainContent>
             );
         } else {
-            return (
-                <div>
-                    I'm a fancy welcome page.
-                </div>
-            );
+            return <WelcomePage />;
         }
     },
 });

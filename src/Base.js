@@ -75,13 +75,8 @@ var Base = React.createClass({
 
     render () {
         return (
-            <div style={{
-                maxWidth: 1170,
-                margin: 'auto'
-            }}>
-                <div style={{
-                    marginBottom: 100,
-                }}>
+            <div>
+                <div>
                     <Header />
                 </div>
                 {this.props.children}
