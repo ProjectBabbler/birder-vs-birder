@@ -32,7 +32,9 @@ var SectionList = (props) => {
     };
 
     return (
-        <table>
+        <table style={{
+            width: '100%',
+        }}>
             <p style={titleStyle}>
                 Nice job on your {props.list} lists.  Here are all the places you got new birds.
             </p>
