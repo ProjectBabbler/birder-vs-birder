@@ -1,31 +1,49 @@
 var React = require('react');
 
 var SectionList = (props) => {
+    var titleStyle = {
+        fontSize: '26px',
+    };
+
+    var thStyle = {
+        textAlign: 'left',
+    };
+
     if (!props.lineItems.length) {
         return (
-            <p>Sorry no updates for your {props.list} list this week.  Good luck birding.</p>
+            <p style={titleStyle}>Sorry no updates for your {props.list} list this week.  Good luck birding.</p>
         );
     }
 
-    var renderRow = (row) => {
+    var renderRow = (row, i) => {
+        var rowStyles = {};
+        if (i % 2 == 1) {
+            rowStyles = {
+                backgroundColor: '#f9f9f9',
+            };
+        }
         return (
-            <tr>
+            <tr style={rowStyles}>
                 <td>{row.name}</td>
-                <td>{row.newLife} +{row.newLife - row.oldLife}</td>
-                <td>{row.newYear} +{row.newYear - row.oldYear}</td>
+                <td>{row.oldLife} + {row.newLife - row.oldLife} = {row.newLife}</td>
+                <td>{row.oldYear} + {row.newYear - row.oldYear} = {row.newYear}</td>
             </tr>
         );
     };
 
     return (
         <table>
-            <p>Nice job on your {props.list} lists.  Here are all the places you got new birds.</p>
-            <table>
+            <p style={titleStyle}>
+                Nice job on your {props.list} lists.  Here are all the places you got new birds.
+            </p>
+            <table style={{
+                width: '100%',
+            }}>
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Life Total</th>
-                        <th>Year Total</th>
+                        <th style={thStyle}>Name</th>
+                        <th style={thStyle}>Life Total</th>
+                        <th style={thStyle}>Year Total</th>
                     </tr>
                 </thead>
                 <tbody>

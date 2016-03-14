@@ -5,7 +5,7 @@ var React = require('react');
 var UpdateEmail = (props) => {
     var hasUpdates = false;
     props.sections.forEach((m) => {
-        hasUpdates = m.lineItems.length != 0;
+        hasUpdates = hasUpdates || m.lineItems.length != 0;
     });
 
     var content;
