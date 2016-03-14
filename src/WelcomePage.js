@@ -87,6 +87,21 @@ var WelcomePage = React.createClass({
                         </div>
                     </div>
                 </div>
+                <div className="bg-success" style={{
+                    textAlign: 'center',
+                    color: 'white',
+                    padding: 100,
+                }}>
+                    <h2 style={styles.main}>About</h2>
+                    {this.renderLine()}
+                    <p style={{
+                        fontSize: 30,
+                        textAlign: 'center',
+                    }}>
+                        Birder vs Birder is brought to you by Project Babbler,<br/>
+                        an organization built upon leveraging technology to enchance nature experiences
+                    </p>
+                </div>
             </div>
         );
     },

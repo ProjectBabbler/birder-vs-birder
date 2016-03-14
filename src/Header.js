@@ -8,6 +8,7 @@ var { Link } = require('react-router');
 var Header = React.createClass({
     contextTypes: {
         authData: React.PropTypes.object,
+        userData: React.PropTypes.object,
     },
 
     logOut() {
@@ -28,19 +29,13 @@ var Header = React.createClass({
                     <NavItem eventKey={2}>Sign Up</NavItem>
                 </LinkContainer>
             );
-        } else {
+        } else if (this.context.userData) {
             navItems.push(
                 <NavItem key="log out" onClick={this.logOut}>
-                    Log out of {this.context.authData.uid}
+                    Log out of {this.context.userData.ebird_username}
                 </NavItem>
             );
         }
-
-        navItems.push(
-            <LinkContainer key="abount" to={{ pathname: '/about' }}>
-                <NavItem eventKey={3}>About</NavItem>
-            </LinkContainer>
-        );
 
         return navItems;
     },
