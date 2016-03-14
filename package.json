@@ -20,6 +20,7 @@
   "homepage": "https://github.com/ProjectBabbler/birder-vs-birder#readme",
   "dependencies": {
     "axios": "^0.9.1",
+    "babel-cli": "^6.6.5",
     "babel-core": "^6.7.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-react-constant-elements": "^6.3.13",
@@ -37,6 +38,7 @@
     "express": "^4.13.3",
     "firebase": "^2.4.1",
     "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.2",
     "history": "^2.0.1",
     "limiter": "^1.1.0",
     "material-ui": "^0.14.4",

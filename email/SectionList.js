@@ -1,84 +1,38 @@
 var React = require('react');
 
-var SectionList = function SectionList(props) {
+var SectionList = (props) => {
     if (!props.lineItems.length) {
-        return React.createElement(
-            'p',
-            null,
-            'Sorry no updates for your ',
-            props.list,
-            ' list this week.  Good luck birding.'
+        return (
+            <p>Sorry no updates for your {props.list} list this week.  Good luck birding.</p>
         );
     }
 
-    var renderRow = function renderRow(row) {
-        return React.createElement(
-            'tr',
-            null,
-            React.createElement(
-                'td',
-                null,
-                row.name
-            ),
-            React.createElement(
-                'td',
-                null,
-                row.oldLife,
-                ' -> ',
-                row.newLife
-            ),
-            React.createElement(
-                'td',
-                null,
-                row.oldYear,
-                ' -> ',
-                row.newYear
-            )
+    var renderRow = (row) => {
+        return (
+            <tr>
+                <td>{row.name}</td>
+                <td>{row.newLife} +{row.newLife - row.oldLife}</td>
+                <td>{row.newYear} +{row.newYear - row.oldYear}</td>
+            </tr>
         );
     };
 
-    return React.createElement(
-        'table',
-        null,
-        React.createElement(
-            'p',
-            null,
-            'Nice job on your ',
-            props.list,
-            ' lists.  Here are all the places you got new birds.'
-        ),
-        React.createElement(
-            'table',
-            null,
-            React.createElement(
-                'thead',
-                null,
-                React.createElement(
-                    'tr',
-                    null,
-                    React.createElement(
-                        'th',
-                        null,
-                        'Name'
-                    ),
-                    React.createElement(
-                        'th',
-                        null,
-                        'Life Total'
-                    ),
-                    React.createElement(
-                        'th',
-                        null,
-                        'Year Total'
-                    )
-                )
-            ),
-            React.createElement(
-                'tbody',
-                null,
-                props.lineItems.map(renderRow)
-            )
-        )
+    return (
+        <table>
+            <p>Nice job on your {props.list} lists.  Here are all the places you got new birds.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Life Total</th>
+                        <th>Year Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {props.lineItems.map(renderRow)}
+                </tbody>
+            </table>
+        </table>
     );
 };
 

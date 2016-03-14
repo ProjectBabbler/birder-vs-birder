@@ -1,8 +1,15 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var webpack = require('webpack');
+var babel = require('gulp-babel');
 
-gulp.task('default', ['webpack']);
+gulp.task('default', ['webpack', 'build']);
+
+gulp.task('build', () => {
+    return gulp.src('./email/*.js')
+        .pipe(babel())
+        .pipe(gulp.dest('./bin/email'));
+});
 
 gulp.task('webpack', (callback) => {
     webpack(require('./webpack.config.prod.js'), (err, stats) => {

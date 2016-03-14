@@ -4,7 +4,7 @@ var client = new postmark.Client(Keys.postmark);
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var moment = require('moment');
-var UpdateEmail = require('../email/UpdateEmail');
+var UpdateEmail = require('../bin/email/UpdateEmail');
 var ReactDOMServer = require('react-dom/server');
 var React = require('react');
 

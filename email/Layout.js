@@ -1,6 +1,6 @@
 var React = require('react');
 
-var Layout = function Layout(props) {
+var Layout = (props) => {
     var baseStyle = {
         width: '100% !important',
         height: '100%',
@@ -73,88 +73,44 @@ var Layout = function Layout(props) {
         padding: 35
     };
 
-    return React.createElement(
-        'html',
-        null,
-        React.createElement(
-            'body',
-            null,
-            React.createElement(
-                'div',
-                { style: baseStyle },
-                React.createElement(
-                    'table',
-                    { style: emailWrapper, width: '100%', cellPadding: '0', cellSpacing: '0' },
-                    React.createElement(
-                        'tr',
-                        null,
-                        React.createElement(
-                            'td',
-                            { align: 'center' },
-                            React.createElement(
-                                'table',
-                                { style: emailContent, width: '100%', cellPadding: '0', cellSpacing: '0' },
-                                React.createElement(
-                                    'tr',
-                                    null,
-                                    React.createElement(
-                                        'td',
-                                        { style: emailMasthead },
-                                        React.createElement(
-                                            'a',
-                                            { style: emailMastheadName },
-                                            'Birder Vs Birder'
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'tr',
-                                    null,
-                                    React.createElement(
-                                        'td',
-                                        { style: emailBody, width: '100%' },
-                                        React.createElement(
-                                            'table',
-                                            { style: emailBodyInner, align: 'center', width: '570', cellPadding: '0', cellSpacing: '0' },
-                                            React.createElement(
-                                                'tr',
-                                                null,
-                                                props.children
-                                            )
-                                        )
-                                    )
-                                ),
-                                React.createElement(
-                                    'tr',
-                                    null,
-                                    React.createElement(
-                                        'td',
-                                        null,
-                                        React.createElement(
-                                            'table',
-                                            { style: emailFooter, align: 'center', width: '570', cellPadding: '0', cellSpacing: '0' },
-                                            React.createElement(
-                                                'tr',
-                                                null,
-                                                React.createElement(
-                                                    'td',
-                                                    { style: contentCell },
-                                                    React.createElement(
-                                                        'p',
-                                                        { style: emailFooterP },
-                                                        '© 2016 Birder Vs Birder. All rights reserved.'
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        )
+    return (
+        <html>
+            <body>
+                <div style={baseStyle}>
+                    <table style={emailWrapper} width="100%" cellPadding="0" cellSpacing="0">
+                        <tr>
+                            <td align="center">
+                                <table style={emailContent} width="100%" cellPadding="0" cellSpacing="0">
+                                    <tr>
+                                        <td style={emailMasthead}>
+                                            <a style={emailMastheadName}>Birder Vs Birder</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style={emailBody} width="100%">
+                                            <table style={emailBodyInner} align="center" width="570" cellPadding="0" cellSpacing="0">
+                                                <tr>{props.children}</tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table style={emailFooter} align="center" width="570" cellPadding="0" cellSpacing="0">
+                                                <tr>
+                                                    <td style={contentCell}>
+                                                        <p style={emailFooterP}>© 2016 Birder Vs Birder. All rights reserved.</p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </body>
+        </html>
     );
 };
 

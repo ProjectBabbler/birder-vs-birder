@@ -1,44 +1,33 @@
-'use strict';
-
 var Layout = require('./Layout');
 var SectionList = require('./SectionList');
-var React = require('react'),
-    DOM = React.DOM,
-    div = DOM.div,
-    h1 = DOM.h1;
+var React = require('react');
 
-var UpdateEmail = function UpdateEmail(props) {
+var UpdateEmail = (props) => {
     var hasUpdates = false;
-    props.sections.forEach(function (m) {
+    props.sections.forEach((m) => {
         hasUpdates = m.lineItems.length != 0;
     });
 
     var content;
     if (hasUpdates) {
-        content = React.createElement(
-            'div',
-            null,
-            React.createElement(
-                'p',
-                null,
-                'Nice job birding this week.  Here are all your updates'
-            ),
-            props.sections.map(function (s) {
-                return React.createElement(SectionList, s);
-            })
+        content = (
+            <div>
+                <p>Nice job birding this week.  Here are all your updates</p>
+                {props.sections.map((s) => {
+                    return <SectionList {...s} key={s.list} />;
+                })}
+            </div>
         );
     } else {
-        content = React.createElement(
-            'p',
-            null,
-            'No new birds this week.  Good luck birding.'
+        content = (
+            <p>No new birds this week.  Good luck birding.</p>
         );
     }
 
-    return React.createElement(
-        Layout,
-        null,
-        content
+    return (
+        <Layout>
+            {content}
+        </Layout>
     );
 };
 

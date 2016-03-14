@@ -1,9 +1,7 @@
-'use strict';
-
 var Layout = require('./Layout');
 var React = require('react');
 
-var InviteEmail = function InviteEmail(props) {
+var InviteEmail = (props) => {
     var body = {
         width: '100%',
         margin: '30px auto',
@@ -25,42 +23,20 @@ var InviteEmail = function InviteEmail(props) {
 
     var acceptLink = `https://birder-vs-birder.herokuapp.com/accept?email=${props.email}&challengeId=${props.challengeId}`;
 
-    return React.createElement(
-        Layout,
-        null,
-        React.createElement(
-            'h3',
-            null,
-            'You\'ve been invited to a birder vs birder challenge'
-        ),
-        React.createElement(
-            'h4',
-            null,
-            props.challenge.time,
-            ' list for ',
-            props.challenge.code
-        ),
-        React.createElement(
-            'table',
-            { style: body, align: 'center', width: '100%', cellPadding: '0', cellSpacing: '0' },
-            React.createElement(
-                'tr',
-                null,
-                React.createElement(
-                    'td',
-                    { align: 'center' },
-                    React.createElement(
-                        'div',
-                        null,
-                        React.createElement(
-                            'a',
-                            { style: button, href: acceptLink },
-                            'Accept Challenge'
-                        )
-                    )
-                )
-            )
-        )
+    return (
+        <Layout>
+            <h3>You've been invited to a birder vs birder challenge</h3>
+            <h4>{props.challenge.time} list for {props.challenge.code}</h4>
+            <table style={body} align="center" width="100%" cellPadding="0" cellSpacing="0">
+                <tr>
+                    <td align="center">
+                        <div>
+                            <a style={button} href={acceptLink}>Accept Challenge</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </Layout>
     );
 };
 
