@@ -26,7 +26,8 @@ var InviteEmail = (props) => {
     return (
         <Layout>
             <h3>You've been invited to a birder vs birder challenge</h3>
-            <h4>{props.challenge.time} list for {props.challenge.code}</h4>
+            <h4>{props.challenge.name}</h4>
+            <h5>{props.challenge.time} list for {props.challenge.code}</h5>
             <table style={body} align="center" width="100%" cellPadding="0" cellSpacing="0">
                 <tr>
                     <td align="center">

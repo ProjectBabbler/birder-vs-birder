@@ -102,7 +102,7 @@ var YourLists = React.createClass({
         var rows = [];
         for (var code in this.state.totals) {
             var row = this.state.totals[code];
-            if (row.type == this.state.tab) {
+            if (row && row.type == this.state.tab) {
                 rows.push({
                     code: code,
                     ...row,

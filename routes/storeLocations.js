@@ -7,6 +7,12 @@ var ref = firebaseRef.child('ebird/locations');
 
 var baseUrl = 'http://ebird.org/ws1.1/ref/location/list';
 
+var extras = {
+    ABA: {
+        name: 'ABA'
+    },
+};
+
 ref.authWithCustomToken(Keys.firebase).then(() => {
     return request.get(baseUrl, {
         qs: {
@@ -52,6 +58,12 @@ ref.authWithCustomToken(Keys.firebase).then(() => {
     subnationals.forEach(subnational => {
         ps.push(ref.child(subnational.subnational2Code).set(subnational));
     });
+    return Promise.all(ps);
+}).then(() => {
+    var ps = [];
+    for (var key in extras) {
+        ps.push(ref.child(key).set(extras[key]));
+    }
     return Promise.all(ps);
 }).then(() => {
     console.log('Saved locations');
