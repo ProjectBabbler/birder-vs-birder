@@ -1,5 +1,6 @@
 var React = require('react');
 var StackedList = require('./StackedList');
+var { Image } = require('react-bootstrap');
 
 var WelcomePage = React.createClass({
     renderLine() {
@@ -24,7 +25,12 @@ var WelcomePage = React.createClass({
                 textTransform: 'uppercase',
                 fontWeight: 700,
                 fontSize: '4em',
-            }
+            },
+
+            logo: {
+                backgroundColor: '#2c3e50',
+                width: 250,
+            },
         };
 
         return (
@@ -34,7 +40,7 @@ var WelcomePage = React.createClass({
                     color: 'white',
                     padding: 100,
                 }}>
-                    <h1>Logo</h1>
+                    <Image style={styles.logo} src="/static/images/logo.png" circle={true} />
                     <h1 style={styles.main}>Birder Vs Birder</h1>
                     {this.renderLine()}
                     <h1>It's not just for the birds</h1>
