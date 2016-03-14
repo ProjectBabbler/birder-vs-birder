@@ -25,7 +25,7 @@ var SectionList = function SectionList(props) {
                 null,
                 row.oldLife,
                 ' -> ',
-                row.newlife
+                row.newLife
             ),
             React.createElement(
                 'td',
