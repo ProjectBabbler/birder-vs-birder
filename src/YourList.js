@@ -118,6 +118,8 @@ var YourLists = React.createClass({
             }
         });
 
+        var hasMonth = this.state.tab != 'state';
+
         return (
             <Table striped={true} bordered={true} hover={true}>
                 <thead>
@@ -125,7 +127,7 @@ var YourLists = React.createClass({
                         <th />
                         {this.getTableHeader('Life', 'life')}
                         {this.getTableHeader('Year', 'year')}
-                        {this.getTableHeader('Month', 'month')}
+                        {hasMonth ? this.getTableHeader('Month', 'month') : null}
                     </tr>
                 </thead>
                 <tbody>
@@ -135,7 +137,9 @@ var YourLists = React.createClass({
                                 <th>{row.name}</th>
                                 <th>{row.life}</th>
                                 <th>{row.year}</th>
-                                <th>{row.month}</th>
+                                {hasMonth ? (
+                                    <th>{row.month}</th>
+                                ) : null}
                             </tr>
                         );
                     })}
