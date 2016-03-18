@@ -3,6 +3,7 @@ var ChallengeListener = require('./ChallengeListener');
 var LoadingOverlay = require('./LoadingOverlay');
 var axios = require('axios');
 var ReactHighcharts = require('react-highcharts');
+var Challenge = require('./Challenge');
 
 var ChallengePage = React.createClass({
     getInitialState() {
@@ -117,14 +118,27 @@ var ChallengePage = React.createClass({
             series: series,
         };
 
-        return <ReactHighcharts config={config} key={this.state.chartKey} />;
+        return (
+            <div style={{
+                flexGrow: 1,
+                marginLeft: 10,
+            }}>
+                <ReactHighcharts config={config} key={this.state.chartKey} />
+            </div>
+        );
     },
 
     render() {
         return (
             <div>
                 <LoadingOverlay isOpened={this.state.loading} />
-                {this.renderGraph()}
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                }}>
+                    <Challenge id={this.props.challengeId} />
+                    {this.renderGraph()}
+                </div>
             </div>
         );
     },
