@@ -9,6 +9,7 @@ var ChallengePage = React.createClass({
         return {
             loading: false,
             lists: null,
+            chartKey: 0,
         };
     },
 
@@ -19,6 +20,10 @@ var ChallengePage = React.createClass({
     },
 
     componentWillReceiveProps(nextProps) {
+        this.setState({
+            chartKey: this.state.chartKey + 1,
+        });
+
         if (nextProps.challenge && nextProps.challenge != this.props.challenge) {
             this.getMembersData(nextProps);
         }
@@ -81,7 +86,7 @@ var ChallengePage = React.createClass({
             });
 
             return {
-                name: list.user.data.ebird_username,
+                name: `${list.user.data.ebird_username} - (${total})`,
                 data: sorted.map(d => {
                     return [d.date, d.value];
                 }),
@@ -113,7 +118,7 @@ var ChallengePage = React.createClass({
             series: series,
         };
 
-        return <ReactHighcharts config={config} />;
+        return <ReactHighcharts config={config} key={this.state.chartKey} />;
     },
 
     render() {
