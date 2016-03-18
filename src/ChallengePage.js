@@ -67,7 +67,7 @@ var ChallengePage = React.createClass({
 
             var data = Array.from(buckets).map(b => {
                 return {
-                    date: Date.parse(b[0]),
+                    date: Date.parse(`${b[0]} GMT`),
                     value: b[1],
                 };
             });
@@ -95,7 +95,7 @@ var ChallengePage = React.createClass({
 
         var config = {
             chart: {
-                type: 'line'
+                zoomType: 'x'
             },
             title: {
                 text: this.props.challenge.name,
@@ -113,7 +113,6 @@ var ChallengePage = React.createClass({
                 title: {
                     text: 'Number of Species'
                 },
-                min: 0
             },
             series: series,
         };
