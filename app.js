@@ -5,6 +5,7 @@ var ebirdScrape = require('./routes/ebirdScrape');
 var ebirdListScrape = require('./routes/ebirdListScrape');
 var invite = require('./routes/invite');
 var challengeLists = require('./routes/challengeLists');
+var donate = require('./routes/donate');
 
 
 var app = express();
@@ -27,7 +28,7 @@ app.use('/api/ebirdScrape', ebirdScrape);
 app.use('/api/ebirdListScrape', ebirdListScrape);
 app.use('/api/emailInvites', invite);
 app.use('/api/challengeLists', challengeLists);
-
+app.use('/api/donate', donate);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));

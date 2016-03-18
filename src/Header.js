@@ -4,6 +4,7 @@ var { LinkContainer } = require('react-router-bootstrap');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var { Link } = require('react-router');
+var Donate = require('./Donate');
 
 var Header = React.createClass({
     contextTypes: {
@@ -33,6 +34,11 @@ var Header = React.createClass({
             navItems.push(
                 <NavItem key="log out" onClick={this.logOut}>
                     Log out of {this.context.userData.ebird_username}
+                </NavItem>
+            );
+            navItems.push(
+                <NavItem key="donate">
+                    <Donate />
                 </NavItem>
             );
         }
