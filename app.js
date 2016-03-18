@@ -4,6 +4,7 @@ var ebirdLogin = require('./routes/ebirdLogin');
 var ebirdScrape = require('./routes/ebirdScrape');
 var ebirdListScrape = require('./routes/ebirdListScrape');
 var invite = require('./routes/invite');
+var challengeLists = require('./routes/challengeLists');
 
 
 var app = express();
@@ -14,8 +15,8 @@ if (app.get('env') === 'development') {
     var config = require('./webpack.config.dev');
     var compiler = webpack(config);
     app.use(require('webpack-dev-middleware')(compiler, {
-      noInfo: true,
-      publicPath: config.output.publicPath
+        noInfo: true,
+        publicPath: config.output.publicPath
     }));
 
     app.use(require('webpack-hot-middleware')(compiler));
@@ -25,10 +26,11 @@ app.use('/api/ebirdLogin', ebirdLogin);
 app.use('/api/ebirdScrape', ebirdScrape);
 app.use('/api/ebirdListScrape', ebirdListScrape);
 app.use('/api/emailInvites', invite);
+app.use('/api/challengeLists', challengeLists);
 
 
-app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 module.exports = app;

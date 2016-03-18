@@ -8,6 +8,7 @@ var Confirm = require('react-confirm-bootstrap');
 var Radium = require('radium');
 var EditChallengeModal = require('./EditChallengeModal');
 var StackedList = require('./StackedList');
+var { Link } = require('react-router');
 
 
 
@@ -162,7 +163,16 @@ var Challenge = Radium(React.createClass({
                     </div>
                     {this.renderSettings()}
                 </div>
-                <h3>{this.props.challenge.name}</h3>
+                <h3>
+                    <Link to={{
+                        pathname: '/challenge',
+                        query: {
+                            id: this.props.challengeId,
+                        },
+                    }}>
+                        {this.props.challenge.name}
+                    </Link>
+                </h3>
                 <StackedList items={stackedItems} />
             </HomePanel>
         );
