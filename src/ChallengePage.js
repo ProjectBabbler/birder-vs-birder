@@ -4,6 +4,8 @@ var LoadingOverlay = require('./LoadingOverlay');
 var axios = require('axios');
 var ReactHighcharts = require('react-highcharts');
 var Challenge = require('./Challenge');
+var ReactDataGrid = require('react-data-grid');
+require('react-data-grid/themes/react-data-grid.css');
 
 var ChallengePage = React.createClass({
     getInitialState() {
@@ -128,6 +130,81 @@ var ChallengePage = React.createClass({
         );
     },
 
+    renderTable() {
+        if (!this.state.lists) {
+            return;
+        }
+
+        var rows = new Map();
+        var userColumns = this.state.lists.map(list => {
+            list.list.forEach(s => {
+                var key = s.Species;
+                if (key.indexOf(' -')) {
+                    key = key.split(' -')[0];
+                }
+                var value = {};
+                if (rows.has(key)) {
+                    value = rows.get(key);
+                }
+
+                value[list.user.data.ebird_username] = true;
+
+                rows.set(key, value);
+            });
+
+            return {
+                name: list.user.data.ebird_username,
+                key: list.user.data.ebird_username,
+                formatter: React.createClass({
+                    render() {
+                        if (this.props.value == true) {
+                            return (
+                                <div style={{textAlign: 'center'}}>x</div>
+                            );
+                        }
+
+                        return <div/>;
+                    }
+                }),
+            };
+        });
+
+        rows = Array.from(rows);
+        rows = rows.map(r => {
+            return {
+                bird: r[0],
+                ...r[1],
+            };
+        });
+
+
+        var columns = [
+            {
+                key: 'bird',
+                name: 'Bird Name',
+                filterable: true,
+            },
+            ...userColumns,
+        ];
+
+        var rowGetter = (i) => {
+            return rows[i];
+        };
+
+        return (
+            <div style={{
+                marginTop: 50,
+                marginBottom: 50,
+            }}>
+                <ReactDataGrid
+                    columns={columns}
+                    rowGetter={rowGetter}
+                    rowsCount={rows.length}
+                />
+            </div>
+         );
+    },
+
     render() {
         return (
             <div>
@@ -139,6 +216,7 @@ var ChallengePage = React.createClass({
                     <Challenge id={this.props.challengeId} />
                     {this.renderGraph()}
                 </div>
+                {this.renderTable()}
             </div>
         );
     },
