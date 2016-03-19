@@ -182,7 +182,7 @@ var ChallengePage = React.createClass({
             {
                 key: 'bird',
                 name: 'Bird Name',
-                filterable: true,
+                locked: true,
             },
             ...userColumns,
         ];
