@@ -61,11 +61,11 @@ var ChallengePage = React.createClass({
             var buckets = new Map();
             list.list.forEach(s => {
                 var total = 0;
-                if (buckets.has(s.Date)) {
-                    total = buckets.get(s.Date);
+                if (buckets.has(s.date)) {
+                    total = buckets.get(s.date);
                 }
 
-                buckets.set(s.Date, total + 1);
+                buckets.set(s.date, total + 1);
             });
 
             var data = Array.from(buckets).map(b => {
@@ -138,10 +138,7 @@ var ChallengePage = React.createClass({
         var rows = new Map();
         var userColumns = this.state.lists.map(list => {
             list.list.forEach(s => {
-                var key = s.Species;
-                if (key.indexOf(' -')) {
-                    key = key.split(' -')[0];
-                }
+                var key = s.commonName;
                 var value = {};
                 if (rows.has(key)) {
                     value = rows.get(key);

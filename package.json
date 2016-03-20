@@ -33,7 +33,7 @@
     "body-parser": "^1.15.0",
     "cryptr": "^1.0.0",
     "css-loader": "^0.23.1",
-    "ebird": "^0.2.3",
+    "ebird": "^0.3.0",
     "email-validator": "^1.0.4",
     "express": "^4.13.3",
     "firebase": "^2.4.1",
