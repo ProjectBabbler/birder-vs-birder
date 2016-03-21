@@ -6,7 +6,7 @@ var ReactHighcharts = require('react-highcharts');
 var Challenge = require('./Challenge');
 var ReactDataGrid = require('react-data-grid');
 require('react-data-grid/themes/react-data-grid.css');
-var birdList = require('../../bird-list/lib/index.js');
+var birdList = require('bird-list');
 
 var ChallengePage = React.createClass({
     getInitialState() {
