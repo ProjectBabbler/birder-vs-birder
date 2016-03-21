@@ -39,7 +39,7 @@ router.post('/', (req, res) => {
                     var user = userSub.val();
 
                     client.sendEmail({
-                        From: 'info@fieldguideguru.com',
+                        From: 'info@birdervsbirder.com',
                         To: email,
                         Subject: "You've been invited to a birder vs birder challenge",
                         HtmlBody: ReactDOMServer.renderToStaticMarkup(React.createElement(InviteEmail, {

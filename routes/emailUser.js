@@ -47,7 +47,7 @@ module.exports = (uid, email) => {
             getMessageForList(uid, 'county'),
         ]).then((results) => {
             client.sendEmail({
-                From: 'info@fieldguideguru.com',
+                From: 'info@birdervsbirder.com',
                 To: email,
                 Subject: `Weekly Birder Vs Birder Update for ${moment().format('MMMM Do YYYY')}`,
                 HtmlBody: ReactDOMServer.renderToStaticMarkup(React.createElement(UpdateEmail, {
