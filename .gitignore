@@ -3,6 +3,7 @@ logs
 *.log
 npm-debug.log*
 bin
+tests_output/
 
 # Runtime data
 pids
