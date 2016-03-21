@@ -8,7 +8,7 @@
 
   "selenium" : {
     "start_process" : true,
-    "server_path" : "selenium-server-standalone-2.48.2.jar"
+    "server_path" : "selenium-server-standalone-2.53.0.jar"
   },
 
   "test_settings" : {
