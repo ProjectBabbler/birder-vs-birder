@@ -6,9 +6,6 @@ deploy:
   provider: heroku
   api_key:
     secure: PKdRYIBRg23BjrJlR8eUdBcRhR+YuDGOySoeZLDd3PUkRlDsTuGvXKl323P06apZ5YJDqKAgxgmbPRE1OdBhVICeHDZ+xI5j8rEH43x0+bXflKgJMgZx77R5mvpVMjsUyJEl3mO9osBdBXc+5vqZNd9e+onX7SEQYWMdxc6PD8DJuVvR6RcuN1piRTJNegcG4D/8nkqr3qQbbjjJUpPS9/r/Ry6PEX3VqX5Ytx8DdRQa6kHhg0zpZX9vjIE3SYqc6LWU+6KPqjTrhprRuXqtvHOHwF3DgQjKmGiw9epKEIVQgWGXnH9SVj45BSp0Jy6MoViG2i65bS9AGqUqohxDjYFZXAHYoM5Ay51VTzBC9HbVYqDMnVVf06dg95ZkpBnTHKltsg0llc5sCNXD0I+RNNGNEESKtMo5ZGDynjJNfEHnmfsjf/dLy626AuwE8mjvq5MHOBG3jGT5AvUY2fHfwP65ddiBJR6tXVIKDzqs3YP3gRdspC8NBAQCkZsYFxejUt2wvKyLueitbCI4oJ9uBh29pkLX+QLT/FyjPS99RZaAaafqSy4gCViqxqDXv4XS7mPopMGJWw7VH+OjZ+Fuyu1BSsPctvp1ecpCUQK/MBJAPPzwZx15ptzdlBqEi0OtbmlwUe7G4fqZuJX6utBNt4blwd5bOFpYM5V55c2L0VI=
-  app: birder-vs-birder
-  on:
-    repo: ProjectBabbler/birder-vs-birder
 
 addons:
   firefox: '42.0'
