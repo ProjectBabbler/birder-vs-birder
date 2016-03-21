@@ -4,6 +4,7 @@ logs
 npm-debug.log*
 bin
 tests_output/
+public/static/bundle.js
 
 # Runtime data
 pids
