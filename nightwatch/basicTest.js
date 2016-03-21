@@ -3,7 +3,7 @@ module.exports = {
         var baseUrl = 'http://localhost:5000';
         browser
             .url(baseUrl)
-            .expect.element('.navbar-brand').text.to.contain('Birder Vs Birder').after(10000);
+            .expect.element('.navbar-brand').text.to.contain('Birder Vs Birder').after(20000);
         browser
             .end();
     },
