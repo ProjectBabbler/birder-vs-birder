@@ -17,5 +17,10 @@ before_install:
         --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 2560x1440x16
 
 before_script:
+    - gem install heroku
+    - yes | ruby travis_deployer.rb
+    - heroku keys:clear
+    - yes | heroku keys:add
+
     - npm install -g nightwatch
     - npm run dev &
