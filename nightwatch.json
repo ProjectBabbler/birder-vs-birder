@@ -8,15 +8,11 @@
 
   "selenium" : {
     "start_process" : true,
-    "server_path" : "selenium-server-standalone-2.48.2.jar",
-    "host" : "127.0.0.1",
-    "port" : 4444,
-    "cli_args" : {
-      "webdriver.chrome.driver" : "chromedriver"
-    }
+    "server_path" : "selenium-server-standalone-2.48.2.jar"
   },
 
   "test_settings" : {
+    "launch_url" : "http://localhost:5000",
     "default" : {
       "silent": true,
       "screenshots" : {
