@@ -180,7 +180,7 @@ var ChallengePage = React.createClass({
             });
 
             return {
-                name: list.user.data.ebird_username,
+                name: list.user.data.fullname,
                 key: list.user.data.ebird_username,
                 formatter: React.createClass({
                     render() {
