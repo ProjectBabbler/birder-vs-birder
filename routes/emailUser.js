@@ -1,25 +1,26 @@
 var postmark = require('postmark');
 var Keys = require('../src/Keys');
 var client = new postmark.Client(Keys.postmark);
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var moment = require('moment');
 var UpdateEmail = require('../bin/email/UpdateEmail');
 var ReactDOMServer = require('react-dom/server');
 var React = require('react');
+var UserUtils = require('../utils/UserUtils');
 
 var getMessageForList = (uid, list) => {
     return Promise.all([
-        firebaseRef.child('ebird/totals').child(uid).orderByChild('type').equalTo(list).once('value'),
-        firebaseRef.child('ebird/totals/last').child(uid).orderByChild('type').equalTo(list).once('value'),
+        UserUtils.getRecentTotalsRef(uid).then(ref => {
+            return ref.orderByChild('type').equalTo(list).once('value');
+        }),
+        UserUtils.getLastWeekTotalsRef(uid).orderByChild('type').equalTo(list).once('value'),
     ]).then((results) => {
         var current = results[0].val();
-        var old = results[1].val();
+        var old = results[1].val() || {};
 
         var rows = [];
         for (var code in current) {
             var c = current[code];
-            var o = old[code];
+            var o = old[code] || { life: 0, year: 0, };
             if (o.life != c.life || o.year != c.year) {
                 rows.push({
                     name: c.name,

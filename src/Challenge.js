@@ -9,6 +9,7 @@ var Radium = require('radium');
 var EditChallengeModal = require('./EditChallengeModal');
 var StackedList = require('./StackedList');
 var { Link } = require('react-router');
+var UserUtils = require('../utils/UserUtils');
 
 
 
@@ -35,7 +36,9 @@ var Challenge = Radium(React.createClass({
                 ps.push(new Promise((resolve, reject) => {
                     Promise.all([
                         firebaseRef.child('users').child(member.key()).once('value'),
-                        firebaseRef.child('ebird/totals').child(member.key()).child(this.props.challenge.code).once('value'),
+                        UserUtils.getRecentTotalsRef(member.key()).then(ref => {
+                            return ref.child(this.props.challenge.code).once('value');
+                        }),
                     ]).then(result => {
                         return {
                             user: result[0].val(),
