@@ -1,9 +1,8 @@
 var React = require('react');
 var { Nav, NavItem, Table, Glyphicon } = require('react-bootstrap');
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
 var CircularProgress = require('material-ui/lib/circular-progress');
+var UserUtils = require('../utils/UserUtils');
 
 var TABS = {
     region: 'Major Regions',
@@ -47,7 +46,9 @@ var YourLists = React.createClass({
     },
 
     componentWillMount() {
-        this.bindAsObject(firebaseRef.child('ebird/totals').child(this.context.authData.uid), 'totals');
+        UserUtils.getRecentTotalsRef(this.context.authData.uid).then(ref => {
+            this.bindAsObject(ref, 'totals');
+        });
     },
 
     getTableHeader(label, key) {

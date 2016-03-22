@@ -8,6 +8,7 @@ var limiter = new RateLimiter(60 / 3, 'minute');
 var Keys = require('../src/Keys');
 var Cryptr = require('cryptr');
 var cryptr = new Cryptr(Keys.cryptr);
+var moment = require('moment');
 
 class ebirdToFirebase {
     constructor(uid) {
@@ -30,10 +31,11 @@ class ebirdToFirebase {
         var handleData = (list, data) => {
             if (data) {
                 var totalsRef = firebaseRef.child('ebird/totals');
+                totalsRef = totalsRef.child(this.uid).child(moment().startOf('day').valueOf());
                 return new Promise((resolve, reject) => {
                     var ps = [];
                     data.forEach(row => {
-                        var rowRef = totalsRef.child(this.uid).child(row.code);
+                        var rowRef = totalsRef.child(row.code);
                         ps.push(rowRef.child('type').set(list));
                         ps.push(rowRef.child('name').set(row.name));
                         row.items.forEach((item) => {

@@ -23,7 +23,7 @@ var SectionList = (props) => {
             };
         }
         return (
-            <tr style={rowStyles}>
+            <tr key={i} style={rowStyles}>
                 <td>{row.name}</td>
                 <td>{row.oldLife} + {row.newLife - row.oldLife} = {row.newLife}</td>
                 <td>{row.oldYear} + {row.newYear - row.oldYear} = {row.newYear}</td>

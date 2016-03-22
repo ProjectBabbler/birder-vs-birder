@@ -1,5 +1,7 @@
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
+var UserUtils = require('../utils/UserUtils');
+
 
 var ChallengeUtils = {
     getSnapshot(id) {
@@ -10,7 +12,9 @@ var ChallengeUtils = {
                 ps.push(new Promise((resolve, reject) => {
                     Promise.all([
                         firebaseRef.child('users').child(member.key()).once('value'),
-                        firebaseRef.child('ebird/totals').child(member.key()).child(this.props.challenge.code).once('value'),
+                        UserUtils.getRecentTotalsRef(member.key()).then(ref => {
+                            return ref.child(this.props.challenge.code).once('value');
+                        }),
                     ]).then(result => {
                         return {
                             user: result[0].val(),
