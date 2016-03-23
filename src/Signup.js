@@ -34,6 +34,8 @@ var SignIn = React.createClass({
         axios.post('/api/ebirdLogin', {
             username: this.state.username,
             password: this.state.password,
+            email: this.state.email,
+            fullname: this.state.fullname,
         }).then((response) => {
             var ebirdData = response.data;
             console.log('successful ebird login');
