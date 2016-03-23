@@ -34,11 +34,12 @@ router.post('/', (req, res) => {
                 return new Promise((resolve, reject) => {
                     client.get('birdLists', cacheKey, (err, res) => {
                         if (err) {
-                            console.log(err);
                             // Ok if cache fails.
+                            resolve(null);
+                        } else {
+                            var result = JSON.parse(res.value);
+                            resolve(result);
                         }
-                        var result = JSON.parse(res.value);
-                        resolve(result);
                     });
                 }).then(result => {
                     if (result) {
