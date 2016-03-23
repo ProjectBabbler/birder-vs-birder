@@ -2,6 +2,7 @@ var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var Keys = require('../src/Keys');
 var UserManager = require('./UserManager');
+var emailUser = require('../routes/emailUser');
 
 var RateLimiter = require('limiter').RateLimiter;
 var limiter = new RateLimiter(10, 'minute');
@@ -12,7 +13,6 @@ var UsersManager = {
         return ref.authWithCustomToken(Keys.firebase).then(() => {
             return ref.once('value');
         }).then((s) => {
-            // Update totals.
             var ps = [];
             s.forEach(cs => {
                 var key = cs.key();
@@ -31,7 +31,24 @@ var UsersManager = {
 
             return Promise.all(ps);
         });
-    }
+    },
+
+    emailWeekly: () => {
+        var ref = firebaseRef.child('users');
+        return ref.authWithCustomToken(Keys.firebase).then(() => {
+            return ref.once('value');
+        }).then((s) => {
+            var ps = [];
+            s.forEach(cs => {
+                var userData = cs.val();
+                var userKey = cs.key();
+                console.log(`Gathering and emailing for ${userKey}`);
+                ps.push(emailUser(userKey, userData.email));
+            });
+
+            return Promise.all(ps);
+        });
+    },
 };
 
 module.exports = UsersManager;
