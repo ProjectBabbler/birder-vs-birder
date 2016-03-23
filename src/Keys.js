@@ -5,4 +5,5 @@ module.exports = {
     stripe: process.env.STRIPE_KEY,
     ironcacheProject: process.env.IRON_CACHE_PROJECT,
     ironcacheToken: process.env.IRON_CACHE_TOKEN,
+    mailchimp: process.env.MAILCHIMP_API,
 };
