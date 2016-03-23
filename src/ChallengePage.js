@@ -245,6 +245,12 @@ var ChallengePage = React.createClass({
             <div>
                 <LoadingOverlay isOpened={this.state.loading} />
                 <div style={{
+                    textAlign: 'right',
+                    fontStyle: 'italic',
+                }}>
+                    Graphs updated every 4 hours
+                </div>
+                <div style={{
                     display: 'flex',
                     justifyContent: 'space-between',
                 }}>
