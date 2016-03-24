@@ -1,5 +1,7 @@
 var moment = require('moment');
 var UsersManager = require('../managers/UsersManager');
+var ChallengesManager = require('../managers/ChallengesManager');
+
 
 UsersManager.updateTotals().then(() => {
     // If Sunday
@@ -8,6 +10,8 @@ UsersManager.updateTotals().then(() => {
     } else {
         return;
     }
+}).then(() => {
+    return ChallengesManager.updateSnapshots();
 }).then(() => {
     process.exit(0);
 }).catch(e => {
