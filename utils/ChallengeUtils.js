@@ -1,29 +1,29 @@
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
-var UserUtils = require('../utils/UserUtils');
+var UserUtils = require('./UserUtils');
 
 
 var ChallengeUtils = {
     getSnapshot(id) {
-        var challengeRef = firebaseRef.child('challenges').child(id);
-        return challengeRef.child('members').once('value').then(snap => {
+        return firebaseRef.child('challenges').child(id).once('value').then(snap => {
+            var challenge = snap.val();
             var ps = [];
-            snap.forEach(member => {
+            for (var memberId in challenge.members) {
                 ps.push(new Promise((resolve, reject) => {
                     Promise.all([
-                        firebaseRef.child('users').child(member.key()).once('value'),
-                        UserUtils.getRecentTotalsRef(member.key()).then(ref => {
-                            return ref.child(this.props.challenge.code).once('value');
+                        firebaseRef.child('users').child(memberId).once('value'),
+                        UserUtils.getRecentTotalsRef(memberId).then(ref => {
+                            return ref.child(challenge.code).once('value');
                         }),
                     ]).then(result => {
+                        var total = result[1].val() || {};
                         return {
-                            user: result[0].val(),
                             userKey: result[0].key(),
-                            total: result[1].val() || {},
+                            total: total[challenge.time] || 0,
                         };
                     }).then(resolve).catch(reject);
                 }));
-            });
+            }
 
             return Promise.all(ps).then(results => {
                 var sorted = results.sort((a, b) => {
