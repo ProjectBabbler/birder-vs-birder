@@ -4,6 +4,7 @@ var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
 var Footer = require('./Footer');
+var Ad = require('./Ad');
 
 var Base = React.createClass({
     mixins: [ReactFireMixin],
@@ -24,12 +25,25 @@ var Base = React.createClass({
         return {
             authData: null,
             userData: null,
+            adKey: 0,
         };
     },
 
     componentDidMount() {
         this.listenForUserData();
         firebaseRef.onAuth(this.onAuthCallback);
+    },
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.location != nextProps.location) {
+            this.updateAd();
+        }
+    },
+
+    updateAd() {
+        this.setState({
+            adKey: this.state.adKey + 1,
+        });
     },
 
     listenForUserData() {
@@ -79,6 +93,12 @@ var Base = React.createClass({
             <div>
                 <Header />
                 {this.props.children}
+                <div style={{
+                    marginTop: 20,
+                    marginBottom: 20,
+                }}>
+                    <Ad slot="4309409562" key={this.state.adKey} />
+                </div>
                 <Footer />
             </div>
         );
