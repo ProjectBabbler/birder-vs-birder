@@ -2,6 +2,7 @@ var React = require('react');
 var YourList = require('./YourList');
 var CreateChallenge = require('./CreateChallenge');
 var ChallengeList = require('./ChallengeList');
+var Ad = require('./Ad');
 
 var Dashboard = React.createClass({
     contextTypes: {
@@ -26,6 +27,7 @@ var Dashboard = React.createClass({
                 }}>
                     <ChallengeList />
                 </div>
+                <Ad slot="4309409562" />
                 <YourList />
             </div>
         );
