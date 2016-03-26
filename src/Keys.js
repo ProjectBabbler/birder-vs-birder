@@ -6,4 +6,5 @@ module.exports = {
     ironcacheProject: process.env.IRON_CACHE_PROJECT,
     ironcacheToken: process.env.IRON_CACHE_TOKEN,
     mailchimp: process.env.MAILCHIMP_API,
+    newrelic: process.env.NEWRELIC,
 };
