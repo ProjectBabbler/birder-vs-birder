@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
 require('babel-polyfill');
-require('newrelic');
 require('../styles/CustomStyles.css');
 var App = require('./App');
 var Base = require('./Base');
