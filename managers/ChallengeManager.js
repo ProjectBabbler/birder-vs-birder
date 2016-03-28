@@ -1,3 +1,5 @@
+'use strict';
+
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ChallengeUtils = require('../utils/ChallengeUtils');
@@ -52,13 +54,24 @@ var ChallengeManager = {
 
         var ps = [];
 
-        for (var i = lastSnap.length - 1; i >= 0; i--) {
-            var userKey = lastSnap[i].userKey;
-            var index = indexOfUserKey(currentSnap, userKey);
+        for (let i = lastSnap.length - 1; i >= 0; i--) {
+            let userKey = lastSnap[i].userKey;
+            let index = indexOfUserKey(currentSnap, userKey);
             if (index > i) {
                 ps.push(firebaseRef.child('users').child(userKey).once('value').then(snap => {
                     var name = snap.val().fullname;
                     return `${name} moved into ${index}${ord(index)}`;
+                }));
+            }
+        }
+
+        for (let i = currentSnap.length - 1; i >= 0; i--) {
+            let userKey = currentSnap[i].userKey;
+            let index = indexOfUserKey(lastSnap, userKey);
+            if (index == -1) {
+                ps.push(firebaseRef.child('users').child(userKey).once('value').then(snap => {
+                    var name = snap.val().fullname;
+                    return `${name} has joined your challenge`;
                 }));
             }
         }
