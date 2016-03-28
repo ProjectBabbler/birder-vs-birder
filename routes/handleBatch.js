@@ -13,6 +13,8 @@ UsersManager.updateTotals().then(() => {
 }).then(() => {
     return ChallengesManager.updateSnapshots();
 }).then(() => {
+    return ChallengesManager.emailChanges();
+}).then(() => {
     process.exit(0);
 }).catch(e => {
     console.log(e);
