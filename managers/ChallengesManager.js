@@ -19,6 +19,20 @@ var UsersManager = {
             return Promise.all(ps);
         });
     },
+
+    emailChanges: () => {
+        var ref = firebaseRef.child('challenges');
+        return ref.authWithCustomToken(Keys.firebase).then(() => {
+            return ref.once('value');
+        }).then((s) => {
+            var ps = [];
+            s.forEach(cs => {
+                ps.push(ChallengeManager.emailChanges(cs.val()));
+            });
+
+            return Promise.all(ps);
+        });
+    },
 };
 
 module.exports = UsersManager;
