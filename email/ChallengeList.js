@@ -24,36 +24,48 @@ var renderRow = (userKey, change, i) => {
     }
 
     var totalString;
-    if (change.currentTotal != change.lastTotal) {
+    if (change.currentTotal != change.lastTotal && change.lastTotal) {
         totalString = `(added ${change.currentTotal - change.lastTotal} from yesterday)`;
     }
-    var diff = change.lastIndex - change.currentIndex;
+
     var diffArrow;
-    if (diff != 0) {
-        var diffStyle = {
-            margin: 5,
-            fontSize: '12px',
-        };
-        if (diff > 0) {
-            diffArrow = (
-                <span style={{
-                    ...diffStyle,
-                    color: '#86b400'
-                }}>
-                    <img src="http://www.birdervsbirder.com/static/images/movementUp.png" />
-                    {diff}
-                </span>
-            );
-        } else {
-            diffArrow = (
-                <span style={{
-                    ...diffStyle,
-                    color: '#c60000'
-                }}>
-                    <img src="http://www.birdervsbirder.com/static/images/movementDown.png" />
-                    {diff}
-                </span>
-            );
+    var diffStyle = {
+        margin: 5,
+        fontSize: '12px',
+    };
+    if (change.lastIndex == -1) {
+        diffArrow = (
+            <span style={{
+                ...diffStyle,
+                color: 'darkgoldenrod'
+            }}>
+                * Joined today
+            </span>
+        );
+    } else {
+        var diff = change.lastIndex - change.currentIndex;
+        if (diff != 0) {
+            if (diff > 0) {
+                diffArrow = (
+                    <span style={{
+                        ...diffStyle,
+                        color: '#86b400'
+                    }}>
+                        <img src="http://www.birdervsbirder.com/static/images/movementUp.png" />
+                        {diff}
+                    </span>
+                );
+            } else {
+                diffArrow = (
+                    <span style={{
+                        ...diffStyle,
+                        color: '#c60000'
+                    }}>
+                        <img src="http://www.birdervsbirder.com/static/images/movementDown.png" />
+                        {diff}
+                    </span>
+                );
+            }
         }
     }
 
