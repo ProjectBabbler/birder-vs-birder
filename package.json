@@ -33,6 +33,7 @@
     "babel-preset-stage-1": "^6.3.13",
     "bird-list": "0.0.2",
     "body-parser": "^1.15.0",
+    "compression": "^1.6.1",
     "cryptr": "^1.0.0",
     "css-loader": "^0.23.1",
     "ebird": "^0.3.0",
