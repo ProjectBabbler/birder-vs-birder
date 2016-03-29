@@ -64,7 +64,9 @@ var renderRow = (userKey, change, i) => {
             ...styles.baseStyles,
             ...rowStyle
         }}>
-            <td>
+            <td style={{
+                whiteSpace: 'nowrap',
+            }}>
                 {change.currentIndex + 1}
                 {diffArrow}
             </td>
