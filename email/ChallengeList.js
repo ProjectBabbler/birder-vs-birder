@@ -30,10 +30,14 @@ var renderRow = (userKey, change, i) => {
     var diff = change.lastIndex - change.currentIndex;
     var diffArrow;
     if (diff != 0) {
+        var diffStyle = {
+            margin: 5,
+            fontSize: '12px',
+        };
         if (diff > 0) {
             diffArrow = (
                 <span style={{
-                    fontSize: '12px',
+                    ...diffStyle,
                     color: '#86b400'
                 }}>
                     <img src="http://www.birdervsbirder.com/static/images/movementUp.png" />
@@ -43,7 +47,7 @@ var renderRow = (userKey, change, i) => {
         } else {
             diffArrow = (
                 <span style={{
-                    fontSize: '12px',
+                    ...diffStyle,
                     color: '#c60000'
                 }}>
                     <img src="http://www.birdervsbirder.com/static/images/movementDown.png" />

@@ -6,6 +6,7 @@ var ChallengeMetaData = (props) => {
             <tbody>
                 <tr>
                     <td>
+                        <h3>Looks like someone has been busy birding.  The rankings have changed.</h3>
                         <a href={`http://www.birdervsbirder.com/challenge?id=${props.challengeKey}`}>
                             <h3>Updates for "{props.challenge.name}"</h3>
                         </a>
