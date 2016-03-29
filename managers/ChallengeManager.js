@@ -4,7 +4,7 @@ var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ChallengeUtils = require('../utils/ChallengeUtils');
 var moment = require('moment');
-var ord = require('ord');
+var emailChallenge = require('../routes/emailChallenge');
 
 var ChallengeManager = {
     updateSnapshot(cid) {
@@ -22,7 +22,7 @@ var ChallengeManager = {
         });
     },
 
-    emailChanges(challenge) {
+    emailChanges(challengeKey, challenge) {
         var snapshots = challenge.snapshots;
         var keys = Object.keys(snapshots).sort();
         if (keys.length < 2) {
@@ -52,32 +52,37 @@ var ChallengeManager = {
         var currentSnap = toArray(snapshots[current]);
         var lastSnap = toArray(snapshots[last]);
 
-        var ps = [];
-
-        for (let i = lastSnap.length - 1; i >= 0; i--) {
-            let userKey = lastSnap[i].userKey;
-            let index = indexOfUserKey(currentSnap, userKey);
-            if (index > i) {
-                ps.push(firebaseRef.child('users').child(userKey).once('value').then(snap => {
-                    var name = snap.val().fullname;
-                    return `${name} moved into ${index}${ord(index)}`;
-                }));
-            }
-        }
-
-        for (let i = currentSnap.length - 1; i >= 0; i--) {
+        var foundChange = false;
+        var changes = [];
+        for (let i = 0; i < currentSnap.length; i++) {
             let userKey = currentSnap[i].userKey;
             let index = indexOfUserKey(lastSnap, userKey);
-            if (index == -1) {
-                ps.push(firebaseRef.child('users').child(userKey).once('value').then(snap => {
-                    var name = snap.val().fullname;
-                    return `${name} has joined your challenge`;
-                }));
+            var data = {
+                currentIndex: i,
+                lastIndex: index,
+                currentTotal: currentSnap[i].total,
+                userKey: userKey,
+                name: currentSnap[i].name,
+            };
+
+            if (index != -1) {
+                data.lastTotal = lastSnap[index].total;
+            }
+
+            changes.push(data);
+
+            if (index != i) {
+                foundChange = true;
             }
         }
 
-        return Promise.all(ps).then(message => {
-            console.log(message);
+        if (!foundChange) {
+            // No changes, so no email to send.
+            return;
+        }
+
+        return emailChallenge(challengeKey, challenge, changes).then(() => {
+            console.log(`Send change emails for ${challenge.name}`);
         });
     },
 };

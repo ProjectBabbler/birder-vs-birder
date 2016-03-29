@@ -27,7 +27,7 @@ var UsersManager = {
         }).then((s) => {
             var ps = [];
             s.forEach(cs => {
-                ps.push(ChallengeManager.emailChanges(cs.val()));
+                ps.push(ChallengeManager.emailChanges(cs.key(), cs.val()));
             });
 
             return Promise.all(ps);
