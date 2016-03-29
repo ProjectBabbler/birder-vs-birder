@@ -19,6 +19,7 @@ var ChallengeUtils = {
                         var total = result[1].val() || {};
                         return {
                             userKey: result[0].key(),
+                            name: result[0].val().fullname,
                             total: total[challenge.time] || 0,
                         };
                     }).then(resolve).catch(reject);
