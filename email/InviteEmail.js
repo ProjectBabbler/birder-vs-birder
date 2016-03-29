@@ -21,7 +21,7 @@ var InviteEmail = (props) => {
         textDecoration: 'none'
     };
 
-    var acceptLink = `https://birder-vs-birder.herokuapp.com/accept?email=${props.email}&challengeId=${props.challengeId}`;
+    var acceptLink = `http://www.birdervsbirder.com/accept?email=${props.email}&challengeId=${props.challengeId}`;
 
     return (
         <Layout>
