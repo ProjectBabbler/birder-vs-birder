@@ -6,9 +6,12 @@ var ebirdListScrape = require('./routes/ebirdListScrape');
 var invite = require('./routes/invite');
 var challengeLists = require('./routes/challengeLists');
 var donate = require('./routes/donate');
+var compression = require('compression');
+
 
 
 var app = express();
+app.use(compression());
 
 app.use(express.static(path.join(__dirname, 'public')));
 if (app.get('env') === 'development') {
