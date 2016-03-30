@@ -73,40 +73,78 @@ var Layout = (props) => {
         padding: 35
     };
 
+    var donateButton = {
+        display: 'inline-block',
+        width: 70,
+        backgroundColor: '#22BC66',
+        borderRadius: 3,
+        color: '#ffffff',
+        fontSize: 12,
+        lineHeight: '45px',
+        textAlign: 'center',
+        textDecoration: 'none'
+    };
+
+    var donateStyle = {
+        marginBottom: '10px',
+    };
+
     return (
         <html>
             <body>
                 <div style={baseStyle}>
                     <table style={emailWrapper} width="100%" cellPadding="0" cellSpacing="0">
-                        <tr>
-                            <td align="center">
-                                <table style={emailContent} width="100%" cellPadding="0" cellSpacing="0">
-                                    <tr>
-                                        <td style={emailMasthead}>
-                                            <a style={emailMastheadName}>Birder Vs Birder</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style={emailBody} width="100%">
-                                            <table style={emailBodyInner} align="center" width="570" cellPadding="0" cellSpacing="0">
-                                                <tr>{props.children}</tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <table style={emailFooter} align="center" width="570" cellPadding="0" cellSpacing="0">
-                                                <tr>
-                                                    <td style={contentCell}>
-                                                        <p style={emailFooterP}>© 2016 Birder Vs Birder. All rights reserved.</p>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <td align="center">
+                                    <table style={emailContent} width="100%" cellPadding="0" cellSpacing="0">
+                                        <tbody>
+                                            <tr>
+                                                <td style={emailMasthead}>
+                                                    <a style={emailMastheadName}>Birder Vs Birder</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style={emailBody} width="100%">
+                                                    <table style={emailBodyInner} align="center" width="570" cellPadding="0" cellSpacing="0">
+                                                        <tbody>
+                                                            <tr><td>{props.children}</td></tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table style={donateStyle} align="center" width="570" cellPadding="0" cellSpacing="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <p>
+                                                                        Thank you for being a member of the Birder Vs Birder community.
+                                                                        Please help Birder Vs Birder stay up and running.
+                                                                        Your donations go towards the costs of running our servers and building new features.
+                                                                    </p>
+                                                                    <a style={donateButton} href="http://www.birdervsbirder.com/donate">Donate</a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table style={emailFooter} align="center" width="570" cellPadding="0" cellSpacing="0">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style={contentCell}>
+                                                                    <p style={emailFooterP}>© 2016 Birder Vs Birder. All rights reserved.</p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </body>
