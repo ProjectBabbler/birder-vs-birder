@@ -10,6 +10,8 @@ var Accept = require('./Accept');
 var { Router, Route, browserHistory } = require('react-router');
 var MainContent = require('./MainContent');
 var ChallengePage = require('./ChallengePage');
+var DonatePage = require('./DonatePage');
+var ThankYouPage = require('./ThankYouPage');
 
 render(
     <Router history={browserHistory}>
@@ -18,6 +20,8 @@ render(
                 <Route path="signin" component={SignInPage} />
                 <Route path="signup" component={SignupPage} />
                 <Route path="accept" component={Accept} />
+                <Route path="donate" component={DonatePage} />
+                <Route path="thankyou" component={ThankYouPage} />
                 <Route path="challenge" component={ChallengePage} />
             </Route>
             <Route path="*" component={App} />
