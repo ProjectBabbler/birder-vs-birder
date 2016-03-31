@@ -166,7 +166,7 @@ var Challenge = Radium(React.createClass({
         var stackedItems = this.state.members.map(m => {
             return {
                 value: m.total[this.props.challenge.time] || 0,
-                label: m.user.ebird_username,
+                label: m.user.fullname,
             };
         });
 
