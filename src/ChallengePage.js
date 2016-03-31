@@ -92,7 +92,7 @@ var ChallengePage = React.createClass({
             });
 
             return {
-                name: `${list.user.data.ebird_username} - (${total})`,
+                name: `${list.user.data.fullname} - (${total})`,
                 data: sorted.map(d => {
                     return [d.date, d.value];
                 }),
