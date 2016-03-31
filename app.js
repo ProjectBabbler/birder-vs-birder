@@ -7,11 +7,15 @@ var invite = require('./routes/invite');
 var challengeLists = require('./routes/challengeLists');
 var donate = require('./routes/donate');
 var compression = require('compression');
+var favicon = require('serve-favicon');
+
 
 
 
 var app = express();
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(compression());
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 if (app.get('env') === 'development') {

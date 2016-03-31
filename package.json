@@ -65,7 +65,7 @@
     "react-stripe-checkout": "^1.8.0",
     "reactfire": "^0.6.0",
     "request-promise": "^2.0.1",
-    "serve-favicon": "~2.3.0",
+    "serve-favicon": "^2.3.0",
     "stripe": "^4.5.0",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.9",
