@@ -117,6 +117,7 @@ var Challenge = Radium(React.createClass({
                     {this.isOwner() ? [
                         <div onClick={this.onEdit} style={menuStyle} key="edit">Edit</div>,
                         <Confirm
+                            key="confirm"
                             onConfirm={this.onDelete}
                             body="Are you sure you want to delete this challenge? It can't be undone"
                             confirmText="Confirm"
