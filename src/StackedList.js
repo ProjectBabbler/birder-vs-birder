@@ -19,10 +19,10 @@ var StackedList = React.createClass({
                 borderRadius: 5,
                 color: 'white',
             }}>
-                {sorted.map(m => {
+                {sorted.map((m, i) => {
                     var value = m.value || 0;
                     return (
-                        <div key={m.label} style={{
+                        <div key={i} style={{
                             display: 'flex',
                             justifyContent: 'space-between',
                             alignItems: 'center',
