@@ -29,13 +29,15 @@ var InviteEmail = (props) => {
             <h4>{props.challenge.name}</h4>
             <h5>{props.challenge.time} list for {props.challenge.code}</h5>
             <table style={body} align="center" width="100%" cellPadding="0" cellSpacing="0">
-                <tr>
-                    <td align="center">
-                        <div>
-                            <a style={button} href={acceptLink}>Accept Challenge</a>
-                        </div>
-                    </td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td align="center">
+                            <div>
+                                <a style={button} href={acceptLink}>Accept Challenge</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </Layout>
     );
