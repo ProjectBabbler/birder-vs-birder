@@ -1,11 +1,11 @@
 var React = require('react');
-var { Button, Modal, DropdownButton, MenuItem, Input, ButtonGroup, Alert } = require('react-bootstrap');
+var { Button, Modal, DropdownButton, MenuItem, Input, Alert } = require('react-bootstrap');
 var LocationsSearch = require('./LocationsSearch');
-var emailValidator = require('email-validator');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var LoadingOverlay = require('./LoadingOverlay');
 var axios = require('axios');
+var FriendsList = require('./FriendsList');
 
 
 var CreateChallengeModal = React.createClass({
@@ -19,7 +19,6 @@ var CreateChallengeModal = React.createClass({
             timeFrame: this.props.timeFrame || 'life',
             friends: new Set(),
             name: this.props.name || '',
-            email: '',
             loading: false,
             error: null,
         };
@@ -49,66 +48,16 @@ var CreateChallengeModal = React.createClass({
         });
     },
 
-    validateEmail() {
-        var email = this.refs.emailInput.getValue();
-        if (email.length && !emailValidator.validate(email)) {
-            return 'error';
-        }
-        return;
-    },
-
     nameChange() {
         this.setState({
             name: this.refs.nameInput.getValue(),
         });
     },
 
-    emailChange() {
+    onFriendsChange(friends) {
         this.setState({
-            emailState: this.validateEmail(),
-            email: this.refs.emailInput.getValue(),
+            friends,
         });
-    },
-
-    addFriend(e) {
-        e.preventDefault();
-
-        if (this.validateEmail() == 'error') {
-            return;
-        }
-        var email = this.refs.emailInput.getValue();
-
-        this.state.friends.add(email);
-        this.setState({
-            friends: this.state.friends,
-            email: '',
-        });
-    },
-
-    removeFriend(email) {
-        this.state.friends.delete(email);
-        this.setState({
-            friends: this.state.friends,
-        });
-    },
-
-    renderFriend(email) {
-        return (
-            <ButtonGroup key={email} bsSize="small" style={{
-                marginRight: 5,
-            }}>
-                <Button>{email}</Button>
-                <Button onClick={this.removeFriend.bind(this, email)}>X</Button>
-            </ButtonGroup>
-        );
-    },
-
-    renderFriends() {
-        var content = [];
-        this.state.friends.forEach((email) => {
-            content.push(this.renderFriend(email));
-        });
-        return content;
     },
 
     onCreate() {
@@ -213,23 +162,11 @@ var CreateChallengeModal = React.createClass({
                         <MenuItem eventKey="1" onClick={this.updateTimeFrame.bind(this, 'life')}>Life List</MenuItem>
                         <MenuItem eventKey="2" onClick={this.updateTimeFrame.bind(this, 'year')}>Year List</MenuItem>
                     </DropdownButton>
-                    <h4>Friends</h4>
-                    <p>Add some friends to compete in this challenge with. Don't worry you can add people once the challenge as been created too.</p>
-
-                    <form onSubmit={this.addFriend}>
-                        <Input
-                            bsStyle={this.state.emailState}
-                            value={this.state.email}
-                            type="text"
-                            onChange={this.emailChange}
-                            placeholder="Add a friend by email"
-                            ref="emailInput"
-                            buttonAfter={
-                                <Button type="submit">Add</Button>
-                            }
-                        />
-                    </form>
-                    {this.renderFriends()}
+                    <FriendsList
+                        friends={this.state.friends}
+                        onFriendsChange={this.onFriendsChange}
+                        message="Add some friends to compete in this challenge with. Don't worry you can add people once the challenge as been created too."
+                    />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.close}>Close</Button>
