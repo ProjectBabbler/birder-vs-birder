@@ -10,6 +10,7 @@ var EditChallengeModal = require('./EditChallengeModal');
 var StackedList = require('./StackedList');
 var { Link } = require('react-router');
 var UserUtils = require('../utils/UserUtils');
+var AddFriendsModal = require('./AddFriendsModal');
 
 
 
@@ -25,6 +26,7 @@ var Challenge = Radium(React.createClass({
             members: [],
             deleting: false,
             editing: false,
+            inviting: false,
         };
     },
 
@@ -85,11 +87,13 @@ var Challenge = Radium(React.createClass({
         });
     },
 
-    renderSettings() {
-        if (!this.isOwner()) {
-            return;
-        }
+    onInvite() {
+        this.setState({
+            inviting: true,
+        });
+    },
 
+    renderSettings() {
         var menuStyle = {
             display: 'block',
             padding: '3px 20px',
@@ -109,14 +113,17 @@ var Challenge = Radium(React.createClass({
         return (
             <div>
                 <DropdownButton title={<Glyphicon glyph="cog" />} id={`delete-${this.props.id}`} bsSize="xsmall">
-                    <div onClick={this.onEdit} style={menuStyle} key="edit">Edit</div>
-                    <Confirm
-                        onConfirm={this.onDelete}
-                        body="Are you sure you want to delete this challenge? It can't be undone"
-                        confirmText="Confirm"
-                        title={`Delete "${this.props.challenge.name}"`}>
-                        <div style={menuStyle} key="delete">Delete</div>
-                    </Confirm>
+                    <div onClick={this.onInvite} style={menuStyle} key="invite">Invite</div>
+                    {this.isOwner() ? [
+                        <div onClick={this.onEdit} style={menuStyle} key="edit">Edit</div>,
+                        <Confirm
+                            onConfirm={this.onDelete}
+                            body="Are you sure you want to delete this challenge? It can't be undone"
+                            confirmText="Confirm"
+                            title={`Delete "${this.props.challenge.name}"`}>
+                            <div style={menuStyle} key="delete">Delete</div>
+                        </Confirm>
+                    ] : null}
                 </DropdownButton>
                 {this.state.editing ? (
                     <EditChallengeModal
@@ -125,6 +132,14 @@ var Challenge = Radium(React.createClass({
                         challengeId={this.props.challengeId}
                         onClose={() => {
                             this.setState({ editing: false, });
+                        }}
+                    />
+                ) : null}
+                {this.state.inviting ? (
+                    <AddFriendsModal
+                        challengeId={this.props.challengeId}
+                        onClose={() => {
+                            this.setState({ inviting: false, });
                         }}
                     />
                 ) : null}

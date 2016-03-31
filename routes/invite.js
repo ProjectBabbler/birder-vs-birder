@@ -33,6 +33,10 @@ router.post('/', (req, res) => {
         var challenge = sub.val();
         var invites = challenge.invites;
         for (var key in invites) {
+            if (invites[key].sent) {
+                continue;
+            }
+
             var email = invites[key].email;
             ps.push(firebaseRef.child('users').orderByChild('email').equalTo(email).once('value').then(userSub => {
                 return new Promise((resolve, reject) => {
