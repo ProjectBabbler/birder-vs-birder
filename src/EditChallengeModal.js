@@ -1,7 +1,6 @@
 var React = require('react');
 var CreateChallengeModal = require('./CreateChallengeModal');
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
+var birdLocations = require('bird-locations');
 
 var EditChallengeModal = React.createClass({
     render() {
@@ -31,17 +30,15 @@ var Wrapper = React.createClass({
     },
 
     componentWillMount() {
-        firebaseRef.child('ebird/locations')
-            .child(this.props.challenge.code)
-            .once('value')
-            .then((sub) => {
-                this.setState({
-                    location: {
-                        value: this.props.challenge.code,
-                        label: `${sub.val().name} - (${this.props.challenge.code})`,
-                    },
-                });
+        birdLocations.getByCode(this.props.challenge.code).then(loc => {
+            this.setState({
+                location: {
+                    value: this.props.challenge.code,
+                    label: birdLocations.getNiceName(loc),
+                    location: loc,
+                },
             });
+        });
     },
 
     render() {
