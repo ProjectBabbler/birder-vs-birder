@@ -1,6 +1,6 @@
 var React = require('react');
 var { Button, Modal, DropdownButton, MenuItem, Input, Alert } = require('react-bootstrap');
-var LocationsSearch = require('./LocationsSearch');
+var LocationsSearch = require('bird-locations/lib/search');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var LoadingOverlay = require('./LoadingOverlay');
