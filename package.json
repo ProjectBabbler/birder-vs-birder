@@ -31,7 +31,7 @@
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-1": "^6.3.13",
     "bird-list": "0.0.2",
-    "bird-locations": "^0.1.1",
+    "bird-locations": "^0.1.2",
     "body-parser": "^1.15.0",
     "compression": "^1.6.1",
     "cryptr": "^1.0.0",
