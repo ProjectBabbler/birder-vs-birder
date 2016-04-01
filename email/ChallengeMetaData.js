@@ -11,7 +11,7 @@ var ChallengeMetaData = (props) => {
                             <h3>Updates for "{props.challenge.name}"</h3>
                         </a>
                         <p>
-                            {props.challenge.time} life for {props.challenge.code}
+                            {props.challenge.time} list for {props.challenge.code}
                         </p>
                     </td>
                 </tr>
