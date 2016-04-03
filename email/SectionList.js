@@ -32,9 +32,7 @@ var SectionList = (props) => {
     };
 
     return (
-        <table style={{
-            width: '100%',
-        }}>
+        <div>
             <p style={titleStyle}>
                 Nice job on your {props.list} lists.  Here are all the places you got new birds.
             </p>
@@ -52,7 +50,7 @@ var SectionList = (props) => {
                     {props.lineItems.map(renderRow)}
                 </tbody>
             </table>
-        </table>
+        </div>
     );
 };
 
