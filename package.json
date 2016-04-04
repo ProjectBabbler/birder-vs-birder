@@ -71,7 +71,7 @@
     "stripe": "^4.5.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.12.9",
-    "webpack-config-merger": "^0.0.5",
+    "webpack-config-merger": "^0.0.5"
   },
   "devDependencies": {
     "eslint": "^2.6.0",
