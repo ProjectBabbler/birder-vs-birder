@@ -12,6 +12,8 @@ var MainContent = require('./MainContent');
 var ChallengePage = require('./ChallengePage');
 var DonatePage = require('./DonatePage');
 var ThankYouPage = require('./ThankYouPage');
+var SettingsPage = require('./SettingsPage');
+var UserPages = require('./UserPages');
 
 render(
     <Router history={browserHistory}>
@@ -23,6 +25,9 @@ render(
                 <Route path="donate" component={DonatePage} />
                 <Route path="thankyou" component={ThankYouPage} />
                 <Route path="challenge" component={ChallengePage} />
+                <Route path="user/:userId" component={UserPages}>
+                    <Route path="settings" component={SettingsPage} />
+                </Route>
             </Route>
             <Route path="*" component={App} />
         </Route>
