@@ -1,5 +1,5 @@
 var React = require('react');
-var { Nav, Navbar, NavItem } = require('react-bootstrap');
+var { Nav, Navbar, NavItem, NavDropdown, MenuItem } = require('react-bootstrap');
 var { LinkContainer } = require('react-router-bootstrap');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
@@ -14,6 +14,17 @@ var Header = React.createClass({
 
     logOut() {
         firebaseRef.unauth();
+    },
+
+    getUserDropdown() {
+        return (
+            <NavDropdown key="user" eventKey={3} title={this.context.userData.ebird_username} id="nav-dropdown">
+                <LinkContainer key="signin" to={{ pathname: `/user/${this.context.authData.uid}/settings` }}>
+                    <MenuItem eventKey="3.1">Settings</MenuItem>
+                </LinkContainer>
+                <MenuItem eventKey="3.2" onClick={this.logOut}>Log out</MenuItem>
+            </NavDropdown>
+        );
     },
 
     getNavItems() {
@@ -31,17 +42,14 @@ var Header = React.createClass({
                 </LinkContainer>
             );
         } else if (this.context.userData) {
-            navItems.push(
-                <NavItem key="log out" onClick={this.logOut}>
-                    Log out of {this.context.userData.ebird_username}
-                </NavItem>
-            );
-            navItems.push(
-                <NavItem key="donate">
-                    <Donate />
-                </NavItem>
-            );
+            navItems.push(this.getUserDropdown());
         }
+
+        navItems.push(
+            <NavItem key="donate">
+                <Donate />
+            </NavItem>
+        );
 
         return navItems;
     },

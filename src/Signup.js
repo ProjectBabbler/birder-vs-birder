@@ -2,9 +2,10 @@ var React = require('react');
 var { Input, ButtonInput, Alert } = require('react-bootstrap');
 var axios = require('axios');
 var LoadingOverlay = require('./LoadingOverlay');
-var emailValidator = require('email-validator');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
+var EmailForm = require('./EmailForm');
+
 
 
 var SignIn = React.createClass({
@@ -88,14 +89,6 @@ var SignIn = React.createClass({
         e.preventDefault();
     },
 
-    validateEmail() {
-        var email = this.state.email;
-        if (email.length && !emailValidator.validate(email)) {
-            return 'error';
-        }
-        return;
-    },
-
     render() {
         return (
             <div>
@@ -106,7 +99,7 @@ var SignIn = React.createClass({
                     </Alert>
                 ) : null}
                 <form onSubmit={this.onSubmit}>
-                    <Input ref="email" type="email" label="Email" placeholder="Email" value={this.state.email} onChange={this.onFormChange.bind(this, 'email')} bsStyle={this.validateEmail()} />
+                    <EmailForm ref="email" value={this.state.email} onChange={this.onFormChange.bind(this, 'email')} />
                     <Input ref="fullname" type="text" label="Full name" placeholder="Full name" value={this.state.fullname} onChange={this.onFormChange.bind(this, 'fullname')} />
                     <Input ref="username" type="text" label="Username" placeholder="Enter Ebird Username" value={this.state.username} onChange={this.onFormChange.bind(this, 'username')} />
                     <Input ref="password" name="password" type="password" label="Password" placeholder="Enter Ebird Password" value={this.state.password} onChange={this.onFormChange.bind(this, 'password')} />
