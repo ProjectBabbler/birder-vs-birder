@@ -8,8 +8,9 @@ addons:
   firefox: '42.0'
   hosts:
     - www.birdervsbirder.com
-  packages:
-    - nginx-extras
+  apt:
+    packages:
+      - nginx-extras
 
 env:
   global:
