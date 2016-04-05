@@ -7,7 +7,7 @@
     "start-debug": "DEBUG=birder-vs-birder:* npm start",
     "postinstall": "gulp",
     "dev": "heroku local web -f Procfile.local",
-    "test": "nightwatch"
+    "test": "nightwatch --config nightwatch.json -e default"
   },
   "repository": {
     "type": "git",
