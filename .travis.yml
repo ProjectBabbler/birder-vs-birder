@@ -10,7 +10,7 @@ addons:
     - www.birdervsbirder.com
   apt:
     packages:
-      - nginx-extras
+       - nginx-extras
 
 env:
   global:
