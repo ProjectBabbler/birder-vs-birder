@@ -6,11 +6,6 @@ sudo: required
 
 addons:
   firefox: '42.0'
-  hosts:
-    - www.birdervsbirder.com
-  apt:
-    packages:
-      - nginx-extras
 
 env:
   global:
@@ -24,9 +19,5 @@ before_install:
 
 before_script:
     - npm run start-debug &
-    - sudo cp TravisNginx.conf /etc/nginx/nginx.conf
-    - sudo /etc/init.d/nginx restart
-    - sudo nginx -t
     - npm install -g nightwatch
-    - ping -c 1 www.birdervsbirder.com
-    - curl http://www.birdervsbirder.com
+    - curl http://localhost:5000
