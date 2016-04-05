@@ -28,5 +28,5 @@ before_script:
     - sudo /etc/init.d/nginx restart
     - sudo nginx -t
     - npm install -g nightwatch
-    - ping -c 1 http://www.birdervsbirder.com
-    - curl http:///www.birdervsbirder.com
+    - ping -c 1 www.birdervsbirder.com
+    - curl http://www.birdervsbirder.com
