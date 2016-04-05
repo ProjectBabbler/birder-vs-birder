@@ -4,7 +4,7 @@ module.exports = {
 
         browser
             .url(baseUrl)
-            .expect.element('body').text.to.contain('Birder Vs Birder').after(50000);
+            .expect.element('.navbar-brand').text.to.contain('Birder Vs Birder').after(50000);
         browser
             .end();
     },
