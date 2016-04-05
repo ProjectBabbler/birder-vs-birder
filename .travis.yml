@@ -5,9 +5,9 @@ node_js:
 sudo: required
 
 addons:
-  firefox: '42.0'
+  firefox: '45.0'
   hosts:
-    - www.birdervsbirder.com
+    - www-local.birdervsbirder.com
   apt:
     packages:
       - nginx-extras
@@ -28,5 +28,5 @@ before_script:
     - sudo /etc/init.d/nginx restart
     - sudo nginx -t
     - npm install -g nightwatch
-    - ping -c 1 www.birdervsbirder.com
-    - curl http://www.birdervsbirder.com
+    - ping -c 1 www-local.birdervsbirder.com
+    - curl http://www-local.birdervsbirder.com
