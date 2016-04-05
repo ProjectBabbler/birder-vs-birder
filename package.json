@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Birder vs Birder.  Challenge your friends big years and life lists",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node ./www",
     "start-debug": "DEBUG=birder-vs-birder:* npm start",
     "postinstall": "gulp",
     "dev": "heroku local web -f Procfile.local",
@@ -70,6 +70,7 @@
     "serve-favicon": "^2.3.0",
     "stripe": "^4.5.0",
     "style-loader": "^0.13.1",
+    "swig": "^1.4.2",
     "webpack": "^1.12.9",
     "webpack-config-merger": "^0.0.5"
   },
