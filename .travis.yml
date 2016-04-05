@@ -13,5 +13,5 @@ before_install:
 
 before_script:
     - npm install -g nightwatch
-    - npm run start &
+    - npm run start-debug &
     - sleep 15
