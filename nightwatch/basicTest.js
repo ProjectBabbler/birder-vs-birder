@@ -1,6 +1,6 @@
 module.exports = {
     'Test basic content renders': (browser) => {
-        var baseUrl = 'http://localhost:5000';
+        var baseUrl = 'http://localhost:8000';
 
         browser
             .url(baseUrl)
