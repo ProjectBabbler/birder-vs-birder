@@ -69,6 +69,7 @@
     "serve-favicon": "^2.3.0",
     "stripe": "^4.5.0",
     "style-loader": "^0.13.1",
+    "swig": "^1.4.2",
     "webpack": "^1.12.9",
     "webpack-config-merger": "^0.0.5",
     "webpack-dev-middleware": "^1.6.1"

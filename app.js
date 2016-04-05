@@ -8,13 +8,16 @@ var challengeLists = require('./routes/challengeLists');
 var donate = require('./routes/donate');
 var compression = require('compression');
 var favicon = require('serve-favicon');
-
+var swig = require('swig')
 
 
 
 var app = express();
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(compression());
+app.engine('html', swig.renderFile);
+app.set('view engine', 'html');
+app.set('views', __dirname);
 
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -38,7 +41,7 @@ app.use('/api/challengeLists', challengeLists);
 app.use('/api/donate', donate);
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.render('index');
 });
 
 module.exports = app;

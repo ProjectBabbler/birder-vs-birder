@@ -4,10 +4,11 @@
  * Module dependencies.
  */
 
-require('newrelic');
+var newrelic = require('newrelic');
 var app = require('./app');
 var debug = require('debug')('birder-vs-birder:server');
 var http = require('http');
+app.locals.newrelic = newrelic;
 
 /**
  * Get port from environment and store in Express.
