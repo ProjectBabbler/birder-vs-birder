@@ -1,6 +1,6 @@
 module.exports = {
     'Test basic content renders': (browser) => {
-        var baseUrl = 'http://localhost:8000';
+        var baseUrl = 'http://www.birdervsbirder.com';
 
         browser
             .url(baseUrl)
