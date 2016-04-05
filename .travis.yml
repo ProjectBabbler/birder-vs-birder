@@ -12,6 +12,7 @@ before_install:
         --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 2560x1440x16
 
 before_script:
+    - export NODE_ENV=production
     - npm install -g nightwatch
-    - npm run start-debug &
+    - npm run start &
     - sleep 15
