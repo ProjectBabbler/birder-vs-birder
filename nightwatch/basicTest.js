@@ -4,7 +4,7 @@ module.exports = {
 
         browser
             .url(baseUrl)
-            .expect.element('body').text.to.contain('Birder Vs Birder').after(2000);
+            .expect.element('body').text.to.contain('Birder Vs Birder').after(20000);
         browser
             .end();
     },
