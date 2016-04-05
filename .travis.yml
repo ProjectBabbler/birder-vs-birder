@@ -18,4 +18,6 @@ before_install:
 before_script:
     - npm install -g nightwatch
     - npm run start &
-    - sleep 15
+    - sleep 2
+    - ping -c 1 http://localhost:5000
+    - curl http://localhost:5000

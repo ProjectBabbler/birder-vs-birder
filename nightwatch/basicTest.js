@@ -4,12 +4,6 @@ module.exports = {
 
         browser
             .url(baseUrl)
-            .getLogTypes((result) => {
-                console.log(result);
-            })
-            .getLog('browser', (result) => {
-                console.log(result);
-            })
             .expect.element('.navbar-brand').text.to.contain('Birder Vs Birder').after(20000);
         browser
             .end();
