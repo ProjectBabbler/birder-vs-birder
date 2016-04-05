@@ -5,9 +5,7 @@ node_js:
 addons:
   firefox: '42.0'
 
-env:
-  global:
-    - NODE_ENV=production
+sudo: true
 
 before_install:
     - export DISPLAY=:99.0
