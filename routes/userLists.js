@@ -1,26 +1,26 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
-var ChallengeUtils = require('../utils/ChallengeUtils');
 var userListsUtils = require('./userListsUtils');
+var UserUtils = require('../utils/UserUtils');
 
 
 router.use(bodyParser.json());
 router.post('/', (req, res) => {
-    var challengeId = req.body.challengeId;
-    if (!challengeId) {
+    var userId = req.body.userId;
+    if (!userId) {
         res.status(404);
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({
-            message: 'No challenge id',
+            message: 'No user id',
         }));
         return;
     }
 
-    ChallengeUtils.getMetaData(challengeId).then(metaData => {
-        return ChallengeUtils.getUsers(challengeId).then((users) => {
-            return userListsUtils.getLists(users, metaData.code, metaData.time);
-        });
+    UserUtils.getUserData(userId).then(data => {
+        return userListsUtils.getLists([{
+            data: data,
+        }], 'WORLD', 'life');
     }).then((results) => {
         res.status(200);
         res.setHeader('Content-Type', 'application/json');

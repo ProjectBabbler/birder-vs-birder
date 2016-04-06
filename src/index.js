@@ -7,13 +7,14 @@ var Base = require('./Base');
 var SignInPage = require('./SignInPage');
 var SignupPage = require('./SignupPage');
 var Accept = require('./Accept');
-var { Router, Route, browserHistory } = require('react-router');
+var { Router, Route, browserHistory, IndexRoute } = require('react-router');
 var MainContent = require('./MainContent');
 var ChallengePage = require('./ChallengePage');
 var DonatePage = require('./DonatePage');
 var ThankYouPage = require('./ThankYouPage');
 var SettingsPage = require('./SettingsPage');
 var UserPages = require('./UserPages');
+var UserPage = require('./UserPage');
 
 render(
     <Router history={browserHistory}>
@@ -27,6 +28,7 @@ render(
                 <Route path="challenge" component={ChallengePage} />
                 <Route path="user/:userId" component={UserPages}>
                     <Route path="settings" component={SettingsPage} />
+                    <IndexRoute component={UserPage} />
                 </Route>
             </Route>
             <Route path="*" component={App} />
