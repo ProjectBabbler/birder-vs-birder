@@ -23,7 +23,6 @@
     "babel-cli": "^6.6.5",
     "babel-core": "^6.7.4",
     "babel-loader": "^6.2.4",
-    "babel-plugin-transform-proto-to-assign": "^6.6.5",
     "babel-plugin-transform-react-constant-elements": "^6.3.13",
     "babel-plugin-transform-react-inline-elements": "^6.6.5",
     "babel-polyfill": "^6.7.4",
