@@ -2,6 +2,8 @@ var ebirdToFirebase = require('../routes/ebirdToFirebase');
 var webshot = require('webshot');
 var UserUtils = require('../utils/UserUtils');
 var ReactDOMServer = require('react-dom/server');
+var ListBadge = require('../bin/shared/ListBadge');
+var React = require('react');
 
 
 
@@ -32,9 +34,15 @@ var UserManager = {
                 }));
 
                 webshot(
-                    html,
+                    `<html><body>${html}</body></html>`,
                     `public/static/images/fb_share/share_screen_${key}.png`,
-                    {siteType:'html'},
+                    {
+                        siteType: 'html',
+                        screenSize: {
+                            width: 275,
+                            height: 350,
+                        }
+                    },
                     (err) => {
                         console.log('snapshot taken for ' + key);
                         if (err) {

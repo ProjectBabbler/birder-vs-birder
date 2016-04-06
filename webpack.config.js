@@ -11,7 +11,7 @@ module.exports = {
     loaders: [{
       test: /\.jsx?/,
       loaders: ['babel'],
-      include: [path.join(__dirname, 'src'), path.join(__dirname, 'utils')]
+      include: [path.join(__dirname, 'src'), path.join(__dirname, 'utils'), path.join(__dirname, 'shared')]
     }, {
       test: /\.css$/, // Only .css files
       loader: 'style!css' // Run both loaders

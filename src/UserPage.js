@@ -3,7 +3,8 @@ var LoadingOverlay = require('./LoadingOverlay');
 var axios = require('axios');
 var BirdListGraph = require('./BirdListGraph');
 var UserUtils = require('../utils/UserUtils');
-var ListBadge = require('./ListBadge');
+var ListBadge = require('../shared/ListBadge');
+var DocMeta = require('react-doc-meta');
 
 
 var UserPage = React.createClass({
@@ -69,6 +70,14 @@ var UserPage = React.createClass({
             <div style={{
                 position: 'relative',
             }}>
+                <DocMeta
+                    tags={[
+                        {
+                            property: 'og:image',
+                            content: `http://www.birdervsbirder.com/static/images/fb_share/share_screen_${this.state.userData._key}.png`,
+                        }
+                    ]}
+                />
                 <LoadingOverlay isOpened={this.state.loading} />
                 <div style={{
                     position: 'absolute',
