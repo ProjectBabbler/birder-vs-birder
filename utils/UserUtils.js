@@ -55,10 +55,8 @@ var UserUtils = {
                 if (snap) {
                     var data = snap.val();
                     for (var key in data) {
-                        return {
-                            ...data[key],
-                            _key: key,
-                        };
+                        data[key]._key = key;
+                        return data[key];
                     }
                 } else {
                     return null;
