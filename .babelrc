@@ -8,7 +8,6 @@
       "compact": true,
       "plugins": [
         "transform-react-constant-elements",
-        "transform-react-inline-elements",
       ]
     }
   }
