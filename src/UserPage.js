@@ -6,6 +6,17 @@ var UserUtils = require('../utils/UserUtils');
 var ListBadge = require('../shared/ListBadge');
 var DocMeta = require('react-doc-meta');
 
+import {
+  ShareButtons,
+  generateShareIcon
+} from 'react-share';
+
+const {
+  FacebookShareButton,
+} = ShareButtons;
+const FacebookIcon = generateShareIcon('facebook');
+
+
 
 var UserPage = React.createClass({
     contextTypes: {
@@ -61,6 +72,25 @@ var UserPage = React.createClass({
         });
     },
 
+    renderFBButton() {
+        return (
+            <FacebookShareButton
+                url={`http://www.birdervsbirder.com/user/${this.props.params.username}`}
+                title={'Birder Vs Birder'}>
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                }}>
+                    <FacebookIcon
+                        size={32}
+                        round={true}
+                    />
+                    <a style={{marginLeft: 5}}>Share on Facebook</a>
+                </div>
+            </FacebookShareButton>
+        );
+    },
+
     render() {
         if (!this.state.userData || !this.state.totals) {
             return <LoadingOverlay isOpened={true} />;
@@ -86,8 +116,10 @@ var UserPage = React.createClass({
                     fontStyle: 'italic',
                 }}>
                     Graphs updated every 4 hours
+                    <br/>
+                    {this.renderFBButton()}
                 </div>
-                <h3>{this.state.userData.fullname}</h3>
+                <h3 style={{marginBottom: 30}}>{this.state.userData.fullname}</h3>
                 <div style={{
                     display: 'flex',
                     justifyContent: 'space-between',
