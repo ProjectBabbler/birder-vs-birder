@@ -7,7 +7,7 @@ var ListBadge = React.createClass({
                 ...this.props.style,
                 width: 250,
                 height: 325,
-                backgroundImage: 'url("/static/images/parrot.jpg")',
+                backgroundImage: 'url("http://www.birdervsbirder.com/static/images/parrot.jpg")',
                 backgroundSize: 'contain',
                 borderRadius: 200,
                 border: '5px solid goldenrod',

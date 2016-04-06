@@ -1,6 +1,8 @@
 var ebirdToFirebase = require('../routes/ebirdToFirebase');
 var webshot = require('webshot');
 var UserUtils = require('../utils/UserUtils');
+var ReactDOMServer = require('react-dom/server');
+
 
 
 var UserManager = {
@@ -23,8 +25,14 @@ var UserManager = {
             }).then(snap => {
                 var totals = snap.val();
                 var world = totals.WORLD.life;
+
+                var html = ReactDOMServer.renderToStaticMarkup(React.createElement(ListBadge, {
+                    total: world,
+                    list: 'World',
+                }));
+
                 webshot(
-                    `<html><body>WORLD ${world}</body></html>`,
+                    html,
                     `public/static/images/fb_share/share_screen_${key}.png`,
                     {siteType:'html'},
                     (err) => {
