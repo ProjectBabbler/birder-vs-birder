@@ -5,6 +5,8 @@ var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var { Link } = require('react-router');
 var Donate = require('./Donate');
+import { browserHistory } from 'react-router';
+
 
 var Header = React.createClass({
     contextTypes: {
@@ -14,15 +16,21 @@ var Header = React.createClass({
 
     logOut() {
         firebaseRef.unauth();
+        browserHistory.push({
+            pathname: '/',
+        });
     },
 
     getUserDropdown() {
         return (
             <NavDropdown key="user" eventKey={3} title={this.context.userData.ebird_username} id="nav-dropdown">
-                <LinkContainer key="signin" to={{ pathname: `/user/${this.context.authData.uid}/settings` }}>
-                    <MenuItem eventKey="3.1">Settings</MenuItem>
+                <LinkContainer key="profile" onlyActiveOnIndex={true} to={{ pathname: `/user/${this.context.authData.uid}` }}>
+                    <MenuItem eventKey="3.1">Profile</MenuItem>
                 </LinkContainer>
-                <MenuItem eventKey="3.2" onClick={this.logOut}>Log out</MenuItem>
+                <LinkContainer key="signin" to={{ pathname: `/user/${this.context.authData.uid}/settings` }}>
+                    <MenuItem eventKey="3.2">Settings</MenuItem>
+                </LinkContainer>
+                <MenuItem eventKey="3.3" onClick={this.logOut}>Log out</MenuItem>
             </NavDropdown>
         );
     },

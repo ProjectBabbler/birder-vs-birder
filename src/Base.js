@@ -14,7 +14,7 @@ var Base = React.createClass({
         userData: React.PropTypes.object,
     },
 
-    getChildContext: function() {
+    getChildContext() {
         return {
             authData: this.state.authData,
             userData: this.state.userData,
@@ -65,30 +65,16 @@ var Base = React.createClass({
     },
 
     onAuthCallback(authData) {
-        /*
-        axios.post('/api/ebirdListScrape', {
-            userId: authData.uid,
-        }).then((result) => {
-        }).catch((err) => {
-            console.log(err);
-        });
-        /*axios.post('/api/ebirdScrape', {
-            userId: authData.uid,
-        }).then((result) => {
-        }).catch((err) => {
-            console.log(err);
-        });*/
-
         this.setState({
             authData: authData,
         }, this.listenForUserData);
     },
 
-    componentDidUnMount() {
+    componentWillUnmount() {
         firebaseRef.offAuth(this.onAuthCallback);
     },
 
-    render () {
+    render() {
         return (
             <div>
                 <Header />

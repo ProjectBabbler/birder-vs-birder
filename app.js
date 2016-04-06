@@ -5,10 +5,11 @@ var ebirdScrape = require('./routes/ebirdScrape');
 var ebirdListScrape = require('./routes/ebirdListScrape');
 var invite = require('./routes/invite');
 var challengeLists = require('./routes/challengeLists');
+var userLists = require('./routes/userLists');
 var donate = require('./routes/donate');
 var compression = require('compression');
 var favicon = require('serve-favicon');
-var swig = require('swig')
+var swig = require('swig');
 
 
 
@@ -38,6 +39,7 @@ app.use('/api/ebirdScrape', ebirdScrape);
 app.use('/api/ebirdListScrape', ebirdListScrape);
 app.use('/api/emailInvites', invite);
 app.use('/api/challengeLists', challengeLists);
+app.use('/api/userLists', userLists);
 app.use('/api/donate', donate);
 
 app.get('*', (req, res) => {

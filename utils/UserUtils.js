@@ -32,6 +32,19 @@ var UserManager = {
             .child(uid)
             .child(moment().startOf('day').subtract(7, 'days').valueOf());
     },
+
+    getUserData(uid) {
+        return firebaseRef
+            .child('users')
+            .child(uid)
+            .once('value').then(snap => {
+                if (snap) {
+                    return snap.val();
+                } else {
+                    return null;
+                }
+            });
+    },
 };
 
 module.exports = UserManager;
