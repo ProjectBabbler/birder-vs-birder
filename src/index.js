@@ -16,7 +16,7 @@ var SettingsPage = require('./SettingsPage');
 var UserPages = require('./UserPages');
 var UserPage = require('./UserPage');
 
-render(
+render((
     <Router history={browserHistory}>
         <Route component={Base}>
             <Route component={MainContent}>
@@ -34,4 +34,4 @@ render(
             <Route path="*" component={App} />
         </Route>
     </Router>
-, document.getElementById('root'));
+), document.getElementById('root'));
