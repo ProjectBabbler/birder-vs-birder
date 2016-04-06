@@ -14,7 +14,7 @@ var Base = React.createClass({
         userData: React.PropTypes.object,
     },
 
-    getChildContext: function() {
+    getChildContext() {
         return {
             authData: this.state.authData,
             userData: this.state.userData,
@@ -84,11 +84,11 @@ var Base = React.createClass({
         }, this.listenForUserData);
     },
 
-    componentDidUnMount() {
+    componentWillUnmount() {
         firebaseRef.offAuth(this.onAuthCallback);
     },
 
-    render () {
+    render() {
         return (
             <div>
                 <Header />

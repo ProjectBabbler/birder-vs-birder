@@ -72,7 +72,9 @@
     "swig": "^1.4.2",
     "webpack": "^1.12.9",
     "webpack-config-merger": "^0.0.5",
-    "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-middleware": "^1.6.1"
+  },
+  "devDependencies": {
     "eslint": "^2.7.0",
     "eslint-plugin-react": "^4.2.3",
     "webpack-dev-middleware": "^1.5.1",
