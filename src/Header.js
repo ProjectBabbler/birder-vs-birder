@@ -5,6 +5,8 @@ var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var { Link } = require('react-router');
 var Donate = require('./Donate');
+import { browserHistory } from 'react-router';
+
 
 var Header = React.createClass({
     contextTypes: {
@@ -14,6 +16,9 @@ var Header = React.createClass({
 
     logOut() {
         firebaseRef.unauth();
+        browserHistory.push({
+            pathname: '/',
+        });
     },
 
     getUserDropdown() {
