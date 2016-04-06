@@ -1,13 +1,13 @@
 var React = require('react');
 
-var UserPages = React.createClass({
+var PrivateUserPages = React.createClass({
     contextTypes: {
         authData: React.PropTypes.object,
         userData: React.PropTypes.object,
     },
 
     render() {
-        if (!this.context.authData || !this.context.userData || this.props.params.userId != this.context.authData.uid) {
+        if (!this.context.authData || !this.context.userData || this.props.params.username != this.context.userData.ebird_username) {
             return <div/>;
         } else {
             return this.props.children;
@@ -15,4 +15,4 @@ var UserPages = React.createClass({
     },
 });
 
-module.exports = UserPages;
+module.exports = PrivateUserPages;

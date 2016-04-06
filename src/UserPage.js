@@ -2,6 +2,7 @@ var React = require('react');
 var LoadingOverlay = require('./LoadingOverlay');
 var axios = require('axios');
 var BirdListGraph = require('./BirdListGraph');
+var UserUtils = require('../utils/UserUtils');
 
 
 var UserPage = React.createClass({
@@ -27,7 +28,7 @@ var UserPage = React.createClass({
         });
 
         axios.post('/api/userLists', {
-            userId: props.params.userId,
+            username: props.params.username,
         }).then((results) => {
             this.setState({
                 lists: results.data,
@@ -39,9 +40,19 @@ var UserPage = React.createClass({
                 loading: false,
             });
         });
+
+        UserUtils.getUserByName(props.params.username).then((user) => {
+            this.setState({
+                userData: user,
+            });
+        });
     },
 
     render() {
+        if (!this.state.userData) {
+            return <LoadingOverlay isOpened={true} />;
+        }
+
         return (
             <div>
                 <LoadingOverlay isOpened={this.state.loading} />
@@ -51,7 +62,7 @@ var UserPage = React.createClass({
                 }}>
                     Graphs updated every 4 hours
                 </div>
-                <h3>{this.context.userData.fullname}</h3>
+                <h3>{this.state.userData.fullname}</h3>
                 <BirdListGraph lists={this.state.lists} title="World Bird List" />
             </div>
         );

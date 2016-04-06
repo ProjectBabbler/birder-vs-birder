@@ -45,6 +45,23 @@ var UserManager = {
                 }
             });
     },
+
+    getUserByName(username) {
+        return firebaseRef
+            .child('users')
+            .orderByChild('ebird_username')
+            .equalTo(username)
+            .once('value').then(snap => {
+                if (snap) {
+                    var data = snap.val();
+                    for (var key in data) {
+                        return data[key];
+                    }
+                } else {
+                    return null;
+                }
+            });
+    },
 };
 
 module.exports = UserManager;
