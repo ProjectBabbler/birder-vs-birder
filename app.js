@@ -22,7 +22,7 @@ app.set('views', __dirname);
 
 
 app.use(express.static(path.join(__dirname, 'public')));
-if (app.get('env') === 'development'  || true) {
+if (app.get('env') === 'development') {
     var webpack = require('webpack');
     var config = require('./webpack.config.dev');
     var compiler = webpack(config);
