@@ -3,6 +3,7 @@ var LoadingOverlay = require('./LoadingOverlay');
 var axios = require('axios');
 var BirdListGraph = require('./BirdListGraph');
 var UserUtils = require('../utils/UserUtils');
+var ListBadge = require('./ListBadge');
 
 
 var UserPage = React.createClass({
@@ -15,6 +16,8 @@ var UserPage = React.createClass({
         return {
             loading: false,
             lists: null,
+            userData: null,
+            totals: null,
         };
     },
 
@@ -45,25 +48,54 @@ var UserPage = React.createClass({
             this.setState({
                 userData: user,
             });
+
+            UserUtils.getRecentTotalsRef(user._key).then(totalsRef => {
+                return totalsRef.once('value');
+            }).then(snap => {
+                var totals = snap.val();
+                this.setState({
+                    totals,
+                });
+            });
         });
     },
 
     render() {
-        if (!this.state.userData) {
+        if (!this.state.userData || !this.state.totals) {
             return <LoadingOverlay isOpened={true} />;
         }
 
         return (
-            <div>
+            <div style={{
+                position: 'relative',
+            }}>
                 <LoadingOverlay isOpened={this.state.loading} />
                 <div style={{
-                    textAlign: 'right',
+                    position: 'absolute',
+                    right: 0,
+                    top: 0,
                     fontStyle: 'italic',
                 }}>
                     Graphs updated every 4 hours
                 </div>
                 <h3>{this.state.userData.fullname}</h3>
-                <BirdListGraph lists={this.state.lists} title="World Bird List" />
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                }}>
+                    <div style={{
+                        flexGrow: 1
+                    }}>
+                        <ListBadge
+                            style={{
+                                margin: 30,
+                            }}
+                            total={this.state.totals.WORLD.life}
+                            list="World"
+                        />
+                    </div>
+                    <BirdListGraph lists={this.state.lists} title="World Bird List" />
+                </div>
             </div>
         );
     },

@@ -72,7 +72,8 @@
     "swig": "^1.4.2",
     "webpack": "^1.12.9",
     "webpack-config-merger": "^0.0.5",
-    "webpack-dev-middleware": "^1.6.1"
+    "webpack-dev-middleware": "^1.6.1",
+    "webshot": "^0.18.0"
   },
   "devDependencies": {
     "eslint": "^2.7.0",

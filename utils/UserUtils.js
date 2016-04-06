@@ -11,7 +11,7 @@ var getKey = (val) => {
     }
 };
 
-var UserManager = {
+var UserUtils = {
     getRecentTotalsRef(uid) {
         var userRef = firebaseRef.child('ebird/totals').child(uid);
         return userRef.orderByKey().limitToLast(1).once('value').then(snap => {
@@ -55,7 +55,10 @@ var UserManager = {
                 if (snap) {
                     var data = snap.val();
                     for (var key in data) {
-                        return data[key];
+                        return {
+                            ...data[key],
+                            _key: key,
+                        };
                     }
                 } else {
                     return null;
@@ -64,4 +67,4 @@ var UserManager = {
     },
 };
 
-module.exports = UserManager;
+module.exports = UserUtils;
