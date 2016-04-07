@@ -50,6 +50,8 @@ app.get('/user/:username', (req, res) => {
             if (imageData) {
                 res.render('user', {
                     userBadgeUrl: `${imageData.url}?version=${imageData.version}`,
+                    userName: userData.fullname,
+                    userUrl: `https://www.birdervsbirder.com/user/${username}`
                 });
             } else {
                 res.render('user');
