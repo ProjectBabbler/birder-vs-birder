@@ -10,6 +10,7 @@ var donate = require('./routes/donate');
 var compression = require('compression');
 var favicon = require('serve-favicon');
 var swig = require('swig');
+var UserUtils = require('./utils/UserUtils');
 
 
 
@@ -18,7 +19,7 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(compression());
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
-app.set('views', __dirname);
+app.set('views', path.join(__dirname, 'templates'));
 
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -41,6 +42,15 @@ app.use('/api/emailInvites', invite);
 app.use('/api/challengeLists', challengeLists);
 app.use('/api/userLists', userLists);
 app.use('/api/donate', donate);
+
+app.get('/user/:username', (req, res) => {
+    var username = req.params.username;
+    UserUtils.getUserByName(username).then(userData => {
+        res.render('user', {
+            userKey: userData._key,
+        });
+    });
+});
 
 app.get('*', (req, res) => {
     res.render('index');
