@@ -37,6 +37,10 @@ var UserPage = React.createClass({
         this.getUserData();
     },
 
+    componentWillReceiveProps(nextProps) {
+        this.getUserData(nextProps);
+    },
+
     getUserData(props=this.props) {
         this.setState({
             loading: true,
