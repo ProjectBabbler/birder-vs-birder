@@ -63,6 +63,28 @@ var UserUtils = {
                 }
             });
     },
+
+    saveFBShareImage(uid, data) {
+        return firebaseRef
+            .child('users')
+            .child(uid)
+            .child('shareImage')
+            .set(data);
+    },
+
+    getFBShareImage(uid) {
+        return firebaseRef
+            .child('users')
+            .child(uid)
+            .child('shareImage')
+            .once('value').then(snap => {
+                if (snap) {
+                    return snap.val();
+                } else {
+                    return null;
+                }
+            });
+    },
 };
 
 module.exports = UserUtils;

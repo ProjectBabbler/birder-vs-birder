@@ -4,6 +4,7 @@ var UserUtils = require('../utils/UserUtils');
 var ReactDOMServer = require('react-dom/server');
 var ListBadge = require('../bin/shared/ListBadge');
 var React = require('react');
+var cloudinary = require('cloudinary');
 
 
 
@@ -20,6 +21,7 @@ var UserManager = {
     },
 
     takeShareScreenShot(key, data) {
+        var file = `public/static/images/fb_share/share_screen_${key}.png`;
         return new Promise((resolve, reject) => {
             console.log('Taking snaphot for ' + key);
             UserUtils.getRecentTotalsRef(key).then(totalsRef => {
@@ -35,7 +37,7 @@ var UserManager = {
 
                 webshot(
                     `<html><body>${html}</body></html>`,
-                    `public/static/images/fb_share/share_screen_${key}.png`,
+                    file,
                     {
                         siteType: 'html',
                         screenSize: {
@@ -52,6 +54,22 @@ var UserManager = {
                         }
                     }
                 );
+            });
+        }).then(() => {
+            return new Promise((resolve, reject) => {
+                UserUtils.getFBShareImage(key).then(imageData => {
+                    var options = {};
+
+                    if (imageData) {
+                        options = {
+                            public_id: imageData.public_id,
+                        };
+                    }
+
+                    cloudinary.uploader.upload(file, (result) => {
+                        UserUtils.saveFBShareImage(key, result).then(resolve).catch(reject);
+                    }, options);
+                });
             });
         });
     },

@@ -46,8 +46,14 @@ app.use('/api/donate', donate);
 app.get('/user/:username', (req, res) => {
     var username = req.params.username;
     UserUtils.getUserByName(username).then(userData => {
-        res.render('user', {
-            userKey: userData._key,
+        UserUtils.getFBShareImage(userData._key).then(imageData => {
+            if (imageData) {
+                res.render('user', {
+                    userBadgeUrl: `${imageData.url}?version=${imageData.version}`,
+                });
+            } else {
+                res.render('user');
+            }
         });
     });
 });

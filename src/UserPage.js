@@ -104,7 +104,7 @@ var UserPage = React.createClass({
                     tags={[
                         {
                             property: 'og:image',
-                            content: `http://www.birdervsbirder.com/static/images/fb_share/share_screen_${this.state.userData._key}.png`,
+                            content: this.state.userData.shareImage.url,
                         }
                     ]}
                 />
