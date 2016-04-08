@@ -25,7 +25,7 @@ before_script:
     - npm start &
     - sudo cp TravisNginx.conf /etc/nginx/nginx.conf
     - sudo /etc/init.d/nginx restart
-    - sudo nginx -t
+    - sudo nginx -t 
     - npm install -g nightwatch
     - ping -c 1 www-local.birdervsbirder.com
     - curl http://www-local.birdervsbirder.com
