@@ -51,6 +51,11 @@ var Header = React.createClass({
                 </LinkContainer>
             );
         } else if (this.context.userData) {
+            navItems.push(
+                <LinkContainer key="dashboard" to={{ pathname: '/' }}>
+                    <NavItem eventKey={3}>Dashboard</NavItem>
+                </LinkContainer>
+            );
             navItems.push(this.getUserDropdown());
         }
 
@@ -68,7 +73,7 @@ var Header = React.createClass({
             <Navbar fixedTop={true}>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <Link to={{ pathname: '/' }}>
+                        <Link to={{ pathname: '/home' }}>
                             Birder Vs Birder
                         </Link>
                     </Navbar.Brand>

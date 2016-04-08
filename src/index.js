@@ -15,10 +15,12 @@ var ThankYouPage = require('./ThankYouPage');
 var SettingsPage = require('./SettingsPage');
 var PrivateUserPages = require('./PrivateUserPages');
 var UserPage = require('./UserPage');
+var WelcomePage = require('./WelcomePage');
 
 render((
     <Router history={browserHistory}>
         <Route component={Base}>
+            <Route path="home" component={WelcomePage} />
             <Route component={MainContent}>
                 <Route path="signin" component={SignInPage} />
                 <Route path="signup" component={SignupPage} />
