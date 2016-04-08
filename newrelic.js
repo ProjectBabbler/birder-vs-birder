@@ -5,11 +5,14 @@ var Keys = require('./src/Keys');
  * See lib/config.defaults.js in the agent distribution for a more complete
  * description of configuration variables and their potential values.
  */
+
+
+var appName = "production" !== process.env.NODE_ENV ? 'DEV: Birder Vs Birder' : 'Birder Vs Birder';
 exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['Birder Vs Birder'],
+  app_name: [appName],
   /**
    * Your New Relic license key.
    */

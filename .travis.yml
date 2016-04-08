@@ -22,7 +22,7 @@ before_install:
     - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 2560x1440x16
 
 before_script:
-    - npm run start &
+    - npm start &
     - sudo cp TravisNginx.conf /etc/nginx/nginx.conf
     - sudo /etc/init.d/nginx restart
     - sudo nginx -t

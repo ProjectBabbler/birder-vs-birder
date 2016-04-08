@@ -13,7 +13,7 @@ var ChallengePage = require('./ChallengePage');
 var DonatePage = require('./DonatePage');
 var ThankYouPage = require('./ThankYouPage');
 var SettingsPage = require('./SettingsPage');
-var UserPages = require('./UserPages');
+var PrivateUserPages = require('./PrivateUserPages');
 var UserPage = require('./UserPage');
 
 render((
@@ -26,8 +26,10 @@ render((
                 <Route path="donate" component={DonatePage} />
                 <Route path="thankyou" component={ThankYouPage} />
                 <Route path="challenge" component={ChallengePage} />
-                <Route path="user/:userId" component={UserPages}>
-                    <Route path="settings" component={SettingsPage} />
+                <Route path="user/:username">
+                    <Route component={PrivateUserPages}>
+                        <Route path="settings" component={SettingsPage} />
+                    </Route>
                     <IndexRoute component={UserPage} />
                 </Route>
             </Route>

@@ -7,17 +7,17 @@ var UserUtils = require('../utils/UserUtils');
 
 router.use(bodyParser.json());
 router.post('/', (req, res) => {
-    var userId = req.body.userId;
-    if (!userId) {
+    var username = req.body.username;
+    if (!username) {
         res.status(404);
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({
-            message: 'No user id',
+            message: 'No user name',
         }));
         return;
     }
 
-    UserUtils.getUserData(userId).then(data => {
+    UserUtils.getUserByName(username).then(data => {
         return userListsUtils.getLists([{
             data: data,
         }], 'WORLD', 'life');

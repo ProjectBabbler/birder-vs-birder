@@ -22,12 +22,13 @@ var Header = React.createClass({
     },
 
     getUserDropdown() {
+        var baseUserUrl = `/user/${this.context.userData.ebird_username}`;
         return (
             <NavDropdown key="user" eventKey={3} title={this.context.userData.ebird_username} id="nav-dropdown">
-                <LinkContainer key="profile" onlyActiveOnIndex={true} to={{ pathname: `/user/${this.context.authData.uid}` }}>
+                <LinkContainer key="profile" onlyActiveOnIndex={true} to={{ pathname: baseUserUrl }}>
                     <MenuItem eventKey="3.1">Profile</MenuItem>
                 </LinkContainer>
-                <LinkContainer key="signin" to={{ pathname: `/user/${this.context.authData.uid}/settings` }}>
+                <LinkContainer key="signin" to={{ pathname: `${baseUserUrl}/settings` }}>
                     <MenuItem eventKey="3.2">Settings</MenuItem>
                 </LinkContainer>
                 <MenuItem eventKey="3.3" onClick={this.logOut}>Log out</MenuItem>

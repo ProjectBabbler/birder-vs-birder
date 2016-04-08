@@ -5,10 +5,18 @@ var babel = require('gulp-babel');
 
 gulp.task('default', ['webpack', 'build']);
 
-gulp.task('build', () => {
+gulp.task('build', ['build-emails', 'build-shared']);
+
+gulp.task('build-emails', () => {
     return gulp.src('./email/*.js')
         .pipe(babel())
         .pipe(gulp.dest('./bin/email'));
+});
+
+gulp.task('build-shared', () => {
+    return gulp.src('./shared/*.js')
+        .pipe(babel())
+        .pipe(gulp.dest('./bin/shared'));
 });
 
 gulp.task('webpack', (callback) => {
