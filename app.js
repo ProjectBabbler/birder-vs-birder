@@ -11,6 +11,7 @@ var compression = require('compression');
 var favicon = require('serve-favicon');
 var swig = require('swig');
 var UserUtils = require('./utils/UserUtils');
+var Keys = require('./src/Keys');
 
 
 
@@ -20,6 +21,7 @@ app.use(compression());
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'templates'));
+app.use(require('prerender-node').set('prerenderToken', Keys.PRERENDER_TOKEN));
 
 
 app.use(express.static(path.join(__dirname, 'public')));
