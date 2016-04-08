@@ -1,6 +1,6 @@
 module.exports = {
     'Renders welcome page on / and /home': (browser) => {
-        var baseUrl = 'http://www-local.birdervsbirder.com/';
+        var baseUrl = browser.globals.baseUrl;
 
         browser
             .url(baseUrl)
