@@ -72,7 +72,7 @@ var Header = React.createClass({
         return (
             <Navbar fixedTop={true}>
                 <Navbar.Header>
-                    <Navbar.Brand>
+                    <Navbar.Brand className="test-nav-brand">
                         <Link to={{ pathname: '/home' }}>
                             Birder Vs Birder
                         </Link>
