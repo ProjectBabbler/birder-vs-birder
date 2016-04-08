@@ -1,5 +1,7 @@
 {
   "src_folders" : ["nightwatch"],
+  "custom_commands_path": "nightwatch/commands",
+  "globals_path": "nightwatch/globals/globals.js",
   "live_output": true,
   "test_workers" : {
     "enabled" : true,
@@ -23,7 +25,8 @@
         "browserName": "firefox",
         "javascriptEnabled": true,
         "acceptSslCerts": true
-      }
+      },
+      "exclude" : ["nightwatch/commands/*", "nightwatch/globals/*"]
     }
   }
 }

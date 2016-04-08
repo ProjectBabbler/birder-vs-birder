@@ -54,9 +54,9 @@ var SignIn = React.createClass({
                         {this.state.error || 'Sorry, something went wrong'}
                     </Alert>
                 ) : null}
-                <form onSubmit={this.onSubmit}>
-                    <Input ref="email" type="text" label="Email" placeholder="Enter Email" value={this.state.email} onChange={this.onFormChange.bind(this, 'email')} required={true} />
-                    <Input ref="password" name="password" type="password" label="Password" placeholder="Enter Ebird Password" value={this.state.password} onChange={this.onFormChange.bind(this, 'password')} required={true} />
+                <form id="test-login-form" onSubmit={this.onSubmit}>
+                    <Input id="test-username" ref="email" type="text" label="Email" placeholder="Enter Email" value={this.state.email} onChange={this.onFormChange.bind(this, 'email')} required={true} />
+                    <Input id="test-password" ref="password" name="password" type="password" label="Password" placeholder="Enter Ebird Password" value={this.state.password} onChange={this.onFormChange.bind(this, 'password')} required={true} />
                     <ButtonInput type="submit" bsStyle="primary" value="Sign In" />
                 </form>
             </div>
