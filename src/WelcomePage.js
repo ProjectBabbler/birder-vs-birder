@@ -40,7 +40,7 @@ var WelcomePage = React.createClass({
                     color: 'white',
                     padding: 100,
                 }}>
-                    <Image style={styles.logo} src="/static/images/logo.png" circle={true} />
+                    <Image className="test-logo" style={styles.logo} src="/static/images/logo.png" circle={true} />
                     <h1 style={styles.main}>Birder Vs Birder</h1>
                     {this.renderLine()}
                     <h1>It's not just for the birds</h1>
