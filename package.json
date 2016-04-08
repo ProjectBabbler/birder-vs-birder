@@ -55,6 +55,7 @@
     "newrelic": "^1.26.2",
     "ord": "^0.1.1",
     "postmark": "^1.2.1",
+    "prerender-node": "^2.2.1",
     "radium": "^0.17.1",
     "react": "^15.0.0",
     "react-bootstrap": "^0.28.5",
