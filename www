@@ -5,6 +5,7 @@
  */
 
 var newrelic = require('newrelic');
+require('babel-register')({});
 var app = require('./app');
 var debug = require('debug')('birder-vs-birder:server');
 var http = require('http');

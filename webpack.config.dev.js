@@ -12,6 +12,11 @@ module.exports = mergeWebpackConfig(require('./webpack.config.js'), {
   ],
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'BABEL_ENV': JSON.stringify('development/client')
+      }
+    })
   ]
 });
