@@ -1,0 +1,29 @@
+{
+  "src_folders" : ["nightwatch"],
+  "live_output": true,
+  "test_workers" : {
+    "enabled" : true,
+    "workers" : 5
+  },
+
+  "selenium" : {
+    "start_process" : true,
+    "server_path" : "selenium-server-standalone-2.53.0.jar"
+  },
+
+  "test_settings" : {
+    "launch_url" : "http://localhost:5000",
+    "default" : {
+      "silent": true,
+      "screenshots" : {
+        "enabled" : false,
+        "path" : ""
+      },
+      "desiredCapabilities": {
+        "browserName": "firefox",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true
+      }
+    }
+  }
+}

@@ -6,7 +6,8 @@
     "start": "node ./www",
     "start-debug": "DEBUG=birder-vs-birder:* npm start",
     "postinstall": "gulp",
-    "dev": "heroku local web -f Procfile.local"
+    "dev": "heroku local web -f Procfile.local",
+    "test": "nightwatch"
   },
   "repository": {
     "type": "git",
@@ -75,12 +76,12 @@
     "swig": "^1.4.2",
     "webpack": "^1.12.9",
     "webpack-config-merger": "^0.0.5",
-    "webpack-dev-middleware": "^1.6.1",
     "webshot": "^0.18.0"
   },
   "devDependencies": {
     "eslint": "^2.7.0",
     "eslint-plugin-react": "^4.2.3",
+    "nightwatch": "^0.8.18",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-hot-middleware": "^2.10.0"
   },

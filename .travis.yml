@@ -1,0 +1,31 @@
+language: node_js
+node_js:
+- '5.10'
+
+sudo: required
+
+addons:
+  firefox: '45.0'
+  hosts:
+    - www-local.birdervsbirder.com
+  apt:
+    packages:
+      - nginx-extras
+
+env:
+  global:
+    - NODE_ENV=production
+
+before_install:
+    - export DISPLAY=:99.0
+    - sh -e /etc/init.d/xvfb start
+    - /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 2560x1440x16
+
+before_script:
+    - npm start &
+    - sudo cp TravisNginx.conf /etc/nginx/nginx.conf
+    - sudo /etc/init.d/nginx restart
+    - sudo nginx -t
+    - npm install -g nightwatch
+    - ping -c 1 www-local.birdervsbirder.com
+    - curl http://www-local.birdervsbirder.com
