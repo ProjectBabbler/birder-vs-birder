@@ -23,14 +23,14 @@ var UserUtils = {
         return firebaseRef
             .child('ebird/totals')
             .child(uid)
-            .child(moment().startOf('day').subtract(1, 'days').valueOf());
+            .child(moment.utc().startOf('day').subtract(1, 'days').valueOf());
     },
 
     getLastWeekTotalsRef(uid) {
         return firebaseRef
             .child('ebird/totals')
             .child(uid)
-            .child(moment().startOf('day').subtract(7, 'days').valueOf());
+            .child(moment.utc().startOf('day').subtract(7, 'days').valueOf());
     },
 
     getUserData(uid) {

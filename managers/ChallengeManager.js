@@ -14,7 +14,7 @@ var ChallengeManager = {
                 .child('challenges')
                 .child(cid)
                 .child('snapshots')
-                .child(moment().startOf('day').valueOf())
+                .child(moment.utc().startOf('day').valueOf())
                 .set(snapshot).then((r) => {
                     console.log(`Saved snapshot for challenge ${cid}`);
                     return r;
