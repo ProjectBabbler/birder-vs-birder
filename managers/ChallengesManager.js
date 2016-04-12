@@ -4,7 +4,7 @@ var Keys = require('../src/Keys');
 var ChallengeManager = require('./ChallengeManager');
 
 
-var UsersManager = {
+var ChallengesManager = {
     updateSnapshots: () => {
         var ref = firebaseRef.child('challenges');
         return ref.authWithCustomToken(Keys.firebase).then(() => {
@@ -35,4 +35,4 @@ var UsersManager = {
     },
 };
 
-module.exports = UsersManager;
+module.exports = ChallengesManager;
