@@ -5,7 +5,7 @@ var ChallengesManager = require('../managers/ChallengesManager');
 
 UsersManager.updateTotals().then(() => {
     // If Sunday
-    if (moment().day() == 0) {
+    if (moment().day() == 1) {
         return UsersManager.emailWeekly();
     } else {
         return;
