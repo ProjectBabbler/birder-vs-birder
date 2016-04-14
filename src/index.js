@@ -19,7 +19,7 @@ var WelcomePage = require('./WelcomePage');
 
 render((
     <Router history={browserHistory}>
-        <Route component={Base}>
+        <Route path="/" component={Base}>
             <Route path="home" component={WelcomePage} />
             <Route component={MainContent}>
                 <Route path="signin" component={SignInPage} />
@@ -35,6 +35,7 @@ render((
                     <IndexRoute component={UserPage} />
                 </Route>
             </Route>
+            <IndexRoute component={App} />
             <Route path="*" component={App} />
         </Route>
     </Router>

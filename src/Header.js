@@ -52,7 +52,7 @@ var Header = React.createClass({
             );
         } else if (this.context.userData) {
             navItems.push(
-                <LinkContainer key="dashboard" to={{ pathname: '/' }}>
+                <LinkContainer onlyActiveOnIndex={true} key="dashboard" to={{ pathname: '/' }}>
                     <NavItem eventKey={3}>Dashboard</NavItem>
                 </LinkContainer>
             );
