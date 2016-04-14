@@ -73,7 +73,7 @@ var ChallengePage = React.createClass({
                 speciesData: hash,
             });
         }).catch(e => {
-            console.log(e);
+            console.error(e);
         });
     },
 

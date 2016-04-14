@@ -26,7 +26,7 @@ router.post('/', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(results));
     }).catch((e) => {
-        console.log(e);
+        console.error(e);
         res.status(500);
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({

@@ -45,7 +45,7 @@ var Accept = React.createClass({
                 pathname: '/',
             });
         }).catch((e) => {
-            console.log(e);
+            console.error(e);
             this.setState({
                 loading: false,
             });
