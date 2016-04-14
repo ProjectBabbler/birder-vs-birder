@@ -25,6 +25,23 @@ var CleanUpManager = {
             return Promise.all(ps).then(() => {
                 console.log('Old Challenge Snapshots Removed');
             });
+        }).then(() => {
+            return ref.child('ebird/totals').once('value');
+        }).then((s) => {
+            var ps = [];
+            s.forEach(totals => {
+                var dates = totals.val();
+                var twoWeeksOld = moment.utc().startOf('day').subtract(14, 'days').valueOf();
+                for (var date in dates) {
+                    if (date < twoWeeksOld) {
+                        ps.push(ref.child('ebird/totals').child(totals.key()).child(date).set(null));
+                    }
+                }
+            });
+
+            return Promise.all(ps).then(() => {
+                console.log('Old User Totals Removed');
+            });
         });
     },
 };
