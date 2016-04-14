@@ -41,7 +41,7 @@ var UsersManager = {
                             .then(resolve)
                             .catch((e) => {
                                 // Log the error, but don't block all updates.
-                                console.log(e);
+                                console.error(e);
                             })
                             .then(resolve);
                     });

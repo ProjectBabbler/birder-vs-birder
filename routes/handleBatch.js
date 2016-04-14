@@ -20,6 +20,6 @@ UsersManager.updateTotals().then(() => {
 }).then(() => {
     process.exit(0);
 }).catch(e => {
-    console.log(e);
+    console.error(e);
     process.exit(1);
 });

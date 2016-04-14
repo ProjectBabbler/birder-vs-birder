@@ -70,7 +70,7 @@ var Challenge = Radium(React.createClass({
         ps.push(this.challengesRef.set(null));
 
         Promise.all(ps).catch((e) => {
-            console.log(e);
+            console.error(e);
             this.setState({
                 deleting: false,
             });
