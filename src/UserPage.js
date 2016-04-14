@@ -104,14 +104,16 @@ var UserPage = React.createClass({
             <div style={{
                 position: 'relative',
             }}>
-                <DocMeta
-                    tags={[
-                        {
-                            property: 'og:image',
-                            content: this.state.userData.shareImage.url,
-                        }
-                    ]}
-                />
+                { this.state.userData.shareImage ? (
+                    <DocMeta
+                        tags={[
+                            {
+                                property: 'og:image',
+                                content: this.state.userData.shareImage.url,
+                            }
+                        ]}
+                    />
+                ) : null}
                 <LoadingOverlay isOpened={this.state.loading} />
                 <div style={{
                     position: 'absolute',
