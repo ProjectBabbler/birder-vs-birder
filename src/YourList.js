@@ -46,9 +46,14 @@ var YourLists = React.createClass({
     },
 
     componentWillMount() {
-        UserUtils.getRecentTotalsRef(this.context.authData.uid).then(ref => {
-            this.bindAsObject(ref, 'totals');
-        });
+        var bindTotals = () => {
+            UserUtils.getRecentTotalsRef(this.context.authData.uid).then(ref => {
+                this.bindAsObject(ref, 'totals');
+            }).catch(e => {
+                window.setTimeout(bindTotals, 1000);
+            });
+        };
+        bindTotals();
     },
 
     getTableHeader(label, key) {
