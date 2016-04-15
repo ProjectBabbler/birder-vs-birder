@@ -5,7 +5,7 @@
   "live_output": true,
   "test_workers" : {
     "enabled" : true,
-    "workers" : 5
+    "workers" : 1
   },
 
   "selenium" : {
