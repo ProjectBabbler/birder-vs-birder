@@ -7,7 +7,7 @@ exports.command = function() {
         .setValue('#test-username', 'greg@boostable.com')
         .setValue('#test-password', 'babblebabble')
         .submitForm('#test-login-form')
-        .pause(1000);
+        .waitForElementNotPresent('#test-login-form', 10000);
 
     return this;
 };
