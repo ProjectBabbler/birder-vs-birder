@@ -1,7 +1,7 @@
 var React = require('react');
 var { Nav, NavItem, Table, Glyphicon } = require('react-bootstrap');
 var ReactFireMixin = require('reactfire');
-var CircularProgress = require('material-ui/lib/circular-progress');
+var CircularProgress = require('material-ui/CircularProgress');
 var UserUtils = require('../utils/UserUtils');
 
 var TABS = {
