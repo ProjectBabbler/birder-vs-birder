@@ -16,9 +16,9 @@ addons:
       - g++-4.8
 
 env:
-  - CXX=g++-4.8
   global:
     - NODE_ENV=production
+    - CXX=g++-4.8
 
 before_install:
     - export DISPLAY=:99.0
