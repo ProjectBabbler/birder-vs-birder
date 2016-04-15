@@ -24,9 +24,9 @@ var Header = React.createClass({
     getUserDropdown() {
         var baseUserUrl = `/user/${this.context.userData.ebird_username}`;
         return (
-            <NavDropdown key="user" eventKey={3} title={this.context.userData.ebird_username} id="nav-dropdown">
+            <NavDropdown className="test-nav-user-dropdown" key="user" eventKey={3} title={this.context.userData.ebird_username} id="nav-dropdown">
                 <LinkContainer key="profile" onlyActiveOnIndex={true} to={{ pathname: baseUserUrl }}>
-                    <MenuItem eventKey="3.1">Profile</MenuItem>
+                    <MenuItem className="test-profile-link" eventKey="3.1">Profile</MenuItem>
                 </LinkContainer>
                 <LinkContainer key="signin" to={{ pathname: `${baseUserUrl}/settings` }}>
                     <MenuItem eventKey="3.2">Settings</MenuItem>
