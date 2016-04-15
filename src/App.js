@@ -2,6 +2,10 @@ var React = require('react');
 var Dashboard = require('./Dashboard');
 var WelcomePage = require('./WelcomePage');
 var MainContent = require('./MainContent');
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
+
 
 
 var App = React.createClass({
@@ -22,4 +26,14 @@ var App = React.createClass({
     },
 });
 
-module.exports = App;
+var Wrapper = React.createClass({
+    render() {
+        return (
+            <MuiThemeProvider muiTheme={getMuiTheme()}>
+                <App {...this.props} />
+            </MuiThemeProvider>
+        );
+    },
+});
+
+module.exports = Wrapper;

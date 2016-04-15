@@ -1,5 +1,5 @@
 var React = require('react');
-var CircularProgress = require('material-ui/CircularProgress');
+import CircularProgress from 'material-ui/CircularProgress';
 
 var LoadingOverlay = React.createClass({
     propTypes: {
