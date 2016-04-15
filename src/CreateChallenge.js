@@ -21,13 +21,22 @@ var CreateChallenge = React.createClass({
     },
 
     render() {
+        var button = (
+            <Button
+                bsStyle="primary"
+                onClick={this.open}>
+                Create Challenge
+            </Button>
+        );
+
+        if (this.props.children) {
+            button = React.cloneElement(React.Children.only(this.props.children), {
+                onClick: this.open,
+            });
+        }
         return (
-            <div>
-                <Button
-                    bsStyle="primary"
-                    onClick={this.open}>
-                    Create Challenge
-                </Button>
+            <div style={this.props.style}>
+                {button}
                 {this.state.showModal ? (
                     <CreateChallengeModal onClose={this.close} />
                 ): null}
