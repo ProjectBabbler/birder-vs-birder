@@ -3,7 +3,7 @@ var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
 var Challenge = require('./Challenge');
-var CircularProgress = require('material-ui/lib/circular-progress');
+var CircularProgress = require('material-ui/CircularProgress');
 
 
 var ChallengeList = React.createClass({
