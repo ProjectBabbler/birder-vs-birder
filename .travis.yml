@@ -9,10 +9,14 @@ addons:
   hosts:
     - www-local.birdervsbirder.com
   apt:
+    sources:
+      - ubuntu-toolchain-r-test
     packages:
       - nginx-extras
+      - g++-4.8
 
 env:
+  - CXX=g++-4.8
   global:
     - NODE_ENV=production
 
