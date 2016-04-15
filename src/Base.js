@@ -5,6 +5,8 @@ var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
 var Footer = require('./Footer');
 var Ad = require('./Ad');
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 var Base = React.createClass({
     mixins: [ReactFireMixin],
@@ -91,4 +93,14 @@ var Base = React.createClass({
     }
 });
 
-module.exports = Base;
+var Wrapper = React.createClass({
+    render() {
+        return (
+            <MuiThemeProvider muiTheme={getMuiTheme()}>
+                <Base {...this.props} />
+            </MuiThemeProvider>
+        );
+    },
+});
+
+module.exports = Wrapper;

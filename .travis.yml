@@ -5,16 +5,20 @@ node_js:
 sudo: required
 
 addons:
-  firefox: '45.0'
+  firefox: 'latest'
   hosts:
     - www-local.birdervsbirder.com
   apt:
+    sources:
+      - ubuntu-toolchain-r-test
     packages:
       - nginx-extras
+      - g++-4.8
 
 env:
   global:
     - NODE_ENV=production
+    - CXX=g++-4.8
 
 before_install:
     - export DISPLAY=:99.0

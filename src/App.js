@@ -7,7 +7,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 
 
-
 var App = React.createClass({
     contextTypes: {
         authData: React.PropTypes.object,
