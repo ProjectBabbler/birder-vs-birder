@@ -1,8 +1,13 @@
 var React = require('react');
 var StackedList = require('./StackedList');
-var { Image } = require('react-bootstrap');
+var { Image, Button } = require('react-bootstrap');
+var { Link } = require('react-router');
 
 var WelcomePage = React.createClass({
+    contextTypes: {
+        authData: React.PropTypes.object,
+    },
+
     renderLine() {
         return (
             <div
@@ -108,6 +113,18 @@ var WelcomePage = React.createClass({
                         an organization built upon leveraging technology to enchance nature experiences
                     </p>
                 </div>
+                {!this.context.authData ? (
+                    <div style={{
+                        padding: 100
+                    }}>
+                        <div style={{
+                            textAlign: 'center',
+                        }}>
+                            <h1 style={styles.main}><Link to={{pathname: '/signup'}}>Sign Up Now</Link>  Its free</h1>
+                            {this.renderLine()}
+                        </div>
+                    </div>
+                ) : null}
             </div>
         );
     },
