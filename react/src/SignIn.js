@@ -15,7 +15,7 @@ var SignIn = React.createClass({
         };
     },
 
-    onFormChange(e, key) {
+    onFormChange(key, e) {
         this.setState({
             [key]: e.target.value,
         });
