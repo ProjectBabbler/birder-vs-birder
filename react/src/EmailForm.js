@@ -1,5 +1,5 @@
 var React = require('react');
-var { Input } = require('react-bootstrap');
+var { FormControl, FormGroup } = require('react-bootstrap');
 var emailValidator = require('email-validator');
 
 
@@ -19,7 +19,9 @@ var EmailForm = React.createClass({
 
     render() {
         return (
-            <Input {...this.props} ref="email" type="email" label="Email" placeholder="Email" bsStyle={this.validateEmail()} />
+            <FormGroup>
+                <FormControl {...this.props} ref="email" type="email" label="Email" placeholder="Email" bsStyle={this.validateEmail()} />
+            </FormGroup>
         );
     },
 });

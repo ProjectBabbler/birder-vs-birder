@@ -1,5 +1,5 @@
 var React = require('react');
-var { Button, Modal, DropdownButton, MenuItem, Input, Alert } = require('react-bootstrap');
+var { Button, Modal, DropdownButton, MenuItem, FormControl, FormGroup, Alert } = require('react-bootstrap');
 var LocationsSearch;
 if (process.env.BROWSER) {
     LocationsSearch = require('bird-locations/lib/search');
@@ -155,13 +155,15 @@ var CreateChallengeModal = React.createClass({
                     <h4>Location for your Challenge</h4>
                     <LocationsSearch value={this.state.location} onChange={this.updateLocation} />
                     <h4>Name</h4>
-                    <Input
-                        type="text"
-                        placeholder={this.getNamePlaceholder()}
-                        ref="nameInput"
-                        onChange={this.nameChange}
-                        value={this.state.name}
-                    />
+                    <FormGroup>
+                        <FormControl
+                            type="text"
+                            placeholder={this.getNamePlaceholder()}
+                            ref="nameInput"
+                            onChange={this.nameChange}
+                            value={this.state.name}
+                        />
+                    </FormGroup>
                     <h4>Time Frame</h4>
                     <DropdownButton title={this.getTimeFrameTitle()} id="timeFrameDropdown">
                         <MenuItem eventKey="1" onClick={this.updateTimeFrame.bind(this, 'life')}>Life List</MenuItem>

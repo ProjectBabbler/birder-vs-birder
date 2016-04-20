@@ -1,5 +1,5 @@
 var React = require('react');
-var { Input, ButtonInput, Alert } = require('react-bootstrap');
+var { FormControl, FormGroup, Button, Alert } = require('react-bootstrap');
 var LoadingOverlay = require('./LoadingOverlay');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
@@ -83,8 +83,12 @@ var SettingsPage = React.createClass({
                 <LoadingOverlay isOpened={this.state.loading} />
                 <h3>Settings</h3>
                 <form onSubmit={this.onSave}>
-                    <Input ref="fullname" type="text" label="Full name" placeholder="Full name" value={this.state.fullname} onChange={this.onFormChange.bind(this, 'fullname')} />
-                    <ButtonInput type="submit" bsStyle="primary" value="Save" />
+                    <FormGroup>
+                        <FormControl ref="fullname" type="text" label="Full name" placeholder="Full name" value={this.state.fullname} onChange={this.onFormChange.bind(this, 'fullname')} />
+                    </FormGroup>
+                    <Button type="submit" bsStyle="primary">
+                        Save
+                    </Button>
                 </form>
             </div>
         );

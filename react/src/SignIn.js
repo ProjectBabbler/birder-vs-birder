@@ -1,5 +1,5 @@
 var React = require('react');
-var { Input, ButtonInput, Alert } = require('react-bootstrap');
+var { FormControl, FormGroup, Button, Alert } = require('react-bootstrap');
 var LoadingOverlay = require('./LoadingOverlay');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
@@ -55,9 +55,15 @@ var SignIn = React.createClass({
                     </Alert>
                 ) : null}
                 <form id="test-login-form" onSubmit={this.onSubmit}>
-                    <Input id="test-username" ref="email" type="text" label="Email" placeholder="Enter Email" value={this.state.email} onChange={this.onFormChange.bind(this, 'email')} required={true} />
-                    <Input id="test-password" ref="password" name="password" type="password" label="Password" placeholder="Enter Ebird Password" value={this.state.password} onChange={this.onFormChange.bind(this, 'password')} required={true} />
-                    <ButtonInput type="submit" bsStyle="primary" value="Sign In" />
+                    <FormGroup>
+                        <FormControl id="test-username" ref="email" type="text" label="Email" placeholder="Enter Email" value={this.state.email} onChange={this.onFormChange.bind(this, 'email')} required={true} />
+                    </FormGroup>
+                    <FormGroup>
+                        <FormControl id="test-password" ref="password" name="password" type="password" label="Password" placeholder="Enter Ebird Password" value={this.state.password} onChange={this.onFormChange.bind(this, 'password')} required={true} />
+                    </FormGroup>
+                    <Button type="submit" bsStyle="primary">
+                        Sign In
+                    </Button>
                 </form>
             </div>
         );

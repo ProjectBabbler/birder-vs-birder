@@ -1,5 +1,5 @@
 var React = require('react');
-var { Button, Input, ButtonGroup } = require('react-bootstrap');
+var { Button, FormControl, FormGroup, ButtonGroup } = require('react-bootstrap');
 var emailValidator = require('email-validator');
 
 var FriendsList = React.createClass({
@@ -72,17 +72,19 @@ var FriendsList = React.createClass({
                 <h4>Friends</h4>
                 <p>{this.props.message}</p>
                 <form onSubmit={this.addFriend}>
-                    <Input
-                        bsStyle={this.state.emailState}
-                        value={this.state.email}
-                        type="text"
-                        onChange={this.emailChange}
-                        placeholder="Add a friend by email"
-                        ref="emailInput"
-                        buttonAfter={
-                            <Button type="submit">Add</Button>
-                        }
-                    />
+                    <FormGroup>
+                        <FormControl
+                            bsStyle={this.state.emailState}
+                            value={this.state.email}
+                            type="text"
+                            onChange={this.emailChange}
+                            placeholder="Add a friend by email"
+                            ref="emailInput"
+                            buttonAfter={
+                                <Button type="submit">Add</Button>
+                            }
+                        />
+                    </FormGroup>
                 </form>
                 {this.renderFriends()}
             </div>

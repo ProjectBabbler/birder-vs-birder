@@ -1,6 +1,6 @@
 var React = require('react');
 var StripeCheckout = require('react-stripe-checkout');
-var { Button, Input } = require('react-bootstrap');
+var { Button, FormControl, FormGroup } = require('react-bootstrap');
 var axios = require('axios');
 import { browserHistory } from 'react-router';
 var LoadingOverlay = require('./LoadingOverlay');
@@ -82,14 +82,16 @@ var DonatePage = React.createClass({
                     width: 150,
                     margin: 'auto',
                 }}>
-                    <Input
-                        label="Amount"
-                        ref="amount"
-                        onChange={this.onAmountChange}
-                        type="text"
-                        addonBefore="$"
-                        value={this.state.amount}
-                    />
+                    <FormGroup>
+                        <FormControl
+                            label="Amount"
+                            ref="amount"
+                            onChange={this.onAmountChange}
+                            type="text"
+                            addonBefore="$"
+                            value={this.state.amount}
+                        />
+                    </FormGroup>
                 </div>
                 {this.renderDonate()}
             </div>
