@@ -63,7 +63,6 @@ var SettingsPage = React.createClass({
             <div>
                 {this.state.saved ? (
                     <Alert
-                        dismissAfter={2000}
                         onDismiss={this.onSavedDismiss}
                         bsStyle="success">
                         Your profile has been updated
