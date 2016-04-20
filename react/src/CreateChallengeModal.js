@@ -53,9 +53,9 @@ var CreateChallengeModal = React.createClass({
         });
     },
 
-    nameChange() {
+    nameChange(e) {
         this.setState({
-            name: this.refs.nameInput.getValue(),
+            name: e.target.value,
         });
     },
 

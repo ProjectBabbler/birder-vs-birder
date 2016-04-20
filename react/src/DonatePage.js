@@ -62,9 +62,9 @@ var DonatePage = React.createClass({
         );
     },
 
-    onAmountChange(value) {
+    onAmountChange(e) {
         this.setState({
-            amount: parseInt(this.refs.amount.getValue()) || 0,
+            amount: parseInt(e.target.value) || 0,
         });
     },
 

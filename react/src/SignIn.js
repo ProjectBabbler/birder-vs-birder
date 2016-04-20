@@ -15,9 +15,9 @@ var SignIn = React.createClass({
         };
     },
 
-    onFormChange(key) {
+    onFormChange(e, key) {
         this.setState({
-            [key]: this.refs[key].getValue(),
+            [key]: e.target.value,
         });
     },
 

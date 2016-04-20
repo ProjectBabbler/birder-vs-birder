@@ -1,5 +1,5 @@
 var React = require('react');
-var { Input, ButtonInput, Alert } = require('react-bootstrap');
+var { FormControl, FormGroup, Button, Alert } = require('react-bootstrap');
 var axios = require('axios');
 var LoadingOverlay = require('./LoadingOverlay');
 var Firebase = require('firebase');
@@ -20,9 +20,9 @@ var SignIn = React.createClass({
         };
     },
 
-    onFormChange(key) {
+    onFormChange(key, e) {
         this.setState({
-            [key]: this.refs[key].getValue(),
+            [key]: e.target.value,
         });
     },
 
@@ -100,10 +100,18 @@ var SignIn = React.createClass({
                 ) : null}
                 <form id="test-signup-form" onSubmit={this.onSubmit}>
                     <EmailForm id="test-email" ref="email" value={this.state.email} onChange={this.onFormChange.bind(this, 'email')} />
-                    <Input id="test-fullname" ref="fullname" type="text" label="Full name" placeholder="Full name" value={this.state.fullname} onChange={this.onFormChange.bind(this, 'fullname')} />
-                    <Input id="test-username" ref="username" type="text" label="Username" placeholder="Enter Ebird Username" value={this.state.username} onChange={this.onFormChange.bind(this, 'username')} />
-                    <Input id="test-password" ref="password" name="password" type="password" label="Password" placeholder="Enter Ebird Password" value={this.state.password} onChange={this.onFormChange.bind(this, 'password')} />
-                    <ButtonInput type="submit" bsStyle="primary" value="Sign Up" />
+                    <FormGroup>
+                        <FormControl id="test-fullname" ref="fullname" type="text" label="Full name" placeholder="Full name" value={this.state.fullname} onChange={this.onFormChange.bind(this, 'fullname')} />
+                    </FormGroup>
+                    <FormGroup>
+                        <FormControl id="test-username" ref="username" type="text" label="Username" placeholder="Enter Ebird Username" value={this.state.username} onChange={this.onFormChange.bind(this, 'username')} />
+                    </FormGroup>
+                    <FormGroup>
+                        <FormControl id="test-password" ref="password" name="password" type="password" label="Password" placeholder="Enter Ebird Password" value={this.state.password} onChange={this.onFormChange.bind(this, 'password')} />
+                    </FormGroup>
+                    <Button type="submit" bsStyle="primary">
+                        Sign Up
+                    </Button>
                 </form>
             </div>
         );

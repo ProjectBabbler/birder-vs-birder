@@ -9,27 +9,26 @@ var FriendsList = React.createClass({
         };
     },
 
-    validateEmail() {
-        var email = this.refs.emailInput.getValue();
+    validateEmail(email) {
         if (email.length && !emailValidator.validate(email)) {
             return 'error';
         }
         return;
     },
 
-    emailChange() {
+    emailChange(e) {
         this.setState({
-            emailState: this.validateEmail(),
-            email: this.refs.emailInput.getValue(),
+            emailState: this.validateEmail(e.target.value),
+            email: e.target.value,
         });
     },
 
     addFriend(e) {
         e.preventDefault();
 
-        var email = this.refs.emailInput.getValue();
+        var email = e.target.value;
 
-        if (!email || this.validateEmail() == 'error') {
+        if (!email || this.validateEmail(email) == 'error') {
             return;
         }
 

@@ -13,14 +13,10 @@ var EmailForm = React.createClass({
         return;
     },
 
-    getValue() {
-        return this.refs.email.getValue();
-    },
-
     render() {
         return (
-            <FormGroup>
-                <FormControl {...this.props} ref="email" type="email" label="Email" placeholder="Email" bsStyle={this.validateEmail()} />
+            <FormGroup validationState={this.validateEmail()}>
+                <FormControl {...this.props} ref="email" type="email" label="Email" placeholder="Email" />
             </FormGroup>
         );
     },
