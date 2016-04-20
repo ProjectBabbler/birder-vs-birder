@@ -1,4 +1,4 @@
-var Keys = require('../src/Keys');
+var Keys = require('../utils/Keys');
 var ebird = require('ebird');
 var Cryptr = require('cryptr');
 var cryptr = new Cryptr(Keys.cryptr);

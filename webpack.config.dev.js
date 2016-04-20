@@ -8,7 +8,7 @@ module.exports = mergeWebpackConfig(require('./webpack.config.js'), {
   },
   entry: [
     'webpack-hot-middleware/client',
-    './src/index'
+    './react/src/index'
   ],
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

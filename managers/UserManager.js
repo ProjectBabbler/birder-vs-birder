@@ -1,8 +1,8 @@
 var ebirdToFirebase = require('../routes/ebirdToFirebase');
 var webshot = require('webshot');
-var UserUtils = require('../utils/UserUtils');
+var UserUtils = require('../bin/react/utils/UserUtils');
 var ReactDOMServer = require('react-dom/server');
-var ListBadge = require('../bin/shared/ListBadge');
+var ListBadge = require('../bin/react/src/ListBadge');
 var React = require('react');
 var cloudinary = require('cloudinary');
 

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
-var Keys = require('../src/Keys');
+var Keys = require('../utils/Keys');
 var stripe = require('stripe')(Keys.stripe);
 
 router.use(bodyParser.json());

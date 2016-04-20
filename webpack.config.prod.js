@@ -4,7 +4,7 @@ var mergeWebpackConfig = require('webpack-config-merger');
 
 module.exports = mergeWebpackConfig(require('./webpack.config.js'), {
   entry: [
-    './src/index'
+    './react/src/index'
   ],
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),

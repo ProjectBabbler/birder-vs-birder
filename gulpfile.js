@@ -5,18 +5,12 @@ var babel = require('gulp-babel');
 
 gulp.task('default', ['webpack', 'build']);
 
-gulp.task('build', ['build-emails', 'build-shared']);
+gulp.task('build', ['compile-js']);
 
-gulp.task('build-emails', () => {
-    return gulp.src('./email/*.js')
+gulp.task('compile-js', () => {
+    return gulp.src('./react/**/*.js')
         .pipe(babel())
-        .pipe(gulp.dest('./bin/email'));
-});
-
-gulp.task('build-shared', () => {
-    return gulp.src('./shared/*.js')
-        .pipe(babel())
-        .pipe(gulp.dest('./bin/shared'));
+        .pipe(gulp.dest('./bin/react'));
 });
 
 gulp.task('webpack', (callback) => {

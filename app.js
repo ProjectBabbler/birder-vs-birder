@@ -10,7 +10,7 @@ var donate = require('./routes/donate');
 var compression = require('compression');
 var favicon = require('serve-favicon');
 var swig = require('swig');
-var UserUtils = require('./utils/UserUtils');
+var UserUtils = require('./bin/react/utils/UserUtils');
 
 
 

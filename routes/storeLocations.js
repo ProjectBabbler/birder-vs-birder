@@ -1,6 +1,6 @@
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
-var Keys = require('../src/Keys');
+var Keys = require('../utils/Keys');
 var request = require('request-promise');
 
 var ref = firebaseRef.child('ebird/locations');

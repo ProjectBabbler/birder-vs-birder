@@ -3,7 +3,7 @@ var LoadingOverlay = require('./LoadingOverlay');
 var axios = require('axios');
 var BirdListGraph = require('./BirdListGraph');
 var UserUtils = require('../utils/UserUtils');
-var ListBadge = require('../shared/ListBadge');
+var ListBadge = require('./ListBadge');
 var DocMeta = require('react-doc-meta');
 
 import {

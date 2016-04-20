@@ -1,7 +1,7 @@
 var postmark = require('postmark');
-var Keys = require('../src/Keys');
+var Keys = require('../utils/Keys');
 var client = new postmark.Client(Keys.postmark);
-var TestEmail = require('../bin/email/TestEmail');
+var TestEmail = require('../bin/react/email/TestEmail');
 var ReactDOMServer = require('react-dom/server');
 var React = require('react');
 

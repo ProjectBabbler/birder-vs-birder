@@ -1,4 +1,4 @@
-var Keys = require('./src/Keys');
+var Keys = require('./utils/Keys');
 /**
  * New Relic agent configuration.
  *

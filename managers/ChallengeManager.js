@@ -2,7 +2,7 @@
 
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
-var ChallengeUtils = require('../utils/ChallengeUtils');
+var ChallengeUtils = require('../bin/react/utils/ChallengeUtils');
 var moment = require('moment');
 var emailChallenge = require('../routes/emailChallenge');
 

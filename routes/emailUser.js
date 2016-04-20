@@ -1,11 +1,11 @@
 var postmark = require('postmark');
-var Keys = require('../src/Keys');
+var Keys = require('../utils/Keys');
 var client = new postmark.Client(Keys.postmark);
 var moment = require('moment');
-var UpdateEmail = require('../bin/email/UpdateEmail');
+var UpdateEmail = require('../bin/react/email/UpdateEmail');
 var ReactDOMServer = require('react-dom/server');
 var React = require('react');
-var UserUtils = require('../utils/UserUtils');
+var UserUtils = require('../bin/react/utils/UserUtils');
 
 var getMessageForList = (uid, list) => {
     return Promise.all([
