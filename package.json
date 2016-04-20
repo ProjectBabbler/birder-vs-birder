@@ -45,7 +45,7 @@
     "firebase": "^2.4.2",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.2",
-    "history": "^2.0.2",
+    "history": "^2.1.0",
     "humanname": "^0.2.2",
     "iron-cache": "^0.2.3",
     "limiter": "^1.1.0",
