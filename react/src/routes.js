@@ -13,6 +13,7 @@ var SettingsPage = require('./SettingsPage');
 var PrivateUserPages = require('./PrivateUserPages');
 var UserPage = require('./UserPage');
 var WelcomePage = require('./WelcomePage');
+var AuthWrapper = require('./AuthWrapper');
 
 module.exports = (
     <Router history={browserHistory}>
@@ -24,7 +25,9 @@ module.exports = (
                 <Route path="accept" component={Accept} />
                 <Route path="donate" component={DonatePage} />
                 <Route path="thankyou" component={ThankYouPage} />
-                <Route path="challenge" component={ChallengePage} />
+                <Route component={AuthWrapper}>
+                    <Route path="challenge" component={ChallengePage} />
+                </Route>
                 <Route path="user/:username">
                     <Route component={PrivateUserPages}>
                         <Route path="settings" component={SettingsPage} />

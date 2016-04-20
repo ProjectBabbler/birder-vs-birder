@@ -1,5 +1,11 @@
 import { render } from 'react-dom';
 require('babel-polyfill');
 var routes = require('./routes');
+var ContextProvider = require('./ContextProvider');
+var React = require('react');
 
-render(routes, document.getElementById('root'));
+render((
+    <ContextProvider>
+        {routes}
+    </ContextProvider>
+), document.getElementById('root'));

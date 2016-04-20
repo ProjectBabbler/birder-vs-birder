@@ -7,9 +7,14 @@ var Footer = require('./Footer');
 var Ad = require('./Ad');
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+var cookie = require('cookie-dough')();
 
 var Base = React.createClass({
     mixins: [ReactFireMixin],
+
+    contextTypes: {
+        signedIn: React.PropTypes.bool,
+    },
 
     childContextTypes: {
         authData: React.PropTypes.object,
@@ -25,7 +30,7 @@ var Base = React.createClass({
 
     getInitialState() {
         return {
-            authData: null,
+            authData: this.context.signedIn ? {} : null,
             userData: null,
             adKey: 0,
         };
@@ -49,7 +54,7 @@ var Base = React.createClass({
     },
 
     listenForUserData() {
-        if (this.state.authData) {
+        if (this.state.authData && this.state.authData.uid) {
             var ref = firebaseRef.child('users').child(this.state.authData.uid);
             if (!this.bound) {
                 this.bindAsObject(ref, 'userData');
@@ -67,6 +72,7 @@ var Base = React.createClass({
     },
 
     onAuthCallback(authData) {
+        cookie.set('signedIn', !!(authData != null));
         this.setState({
             authData: authData,
         }, this.listenForUserData);

@@ -15,6 +15,9 @@ import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import routes from './bin/react/src/routes';
 var React = require('react');
+var CookieDough = require('cookie-dough');
+var cookieParser = require('cookie-parser');
+import ContextProvider from './bin/react/src/ContextProvider';
 
 
 var app = express();
@@ -24,6 +27,7 @@ app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'templates'));
 app.use(require('prerender-node'));
+app.use(cookieParser());
 
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -65,6 +69,8 @@ app.get('/user/:username', (req, res) => {
 });
 
 app.get('*', (req, res) => {
+    var cookie = new CookieDough(req);
+    var signedIn = cookie.get('signedIn') === 'true';
     // Note that req.url here should be the full URL path from
     // the original request, including the query string.
     match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
@@ -77,7 +83,14 @@ app.get('*', (req, res) => {
             // your "not found" component or route respectively, and send a 404 as
             // below, if you're using a catch-all route.
             res.render('index', {
-                reactHtml: renderToString(React.createElement(RouterContext, renderProps)),
+                reactHtml: renderToString(React.createElement(
+                    ContextProvider,
+                    {
+                        signedIn: signedIn,
+                        radiumConfig: {userAgent: req.headers['user-agent']},
+                    },
+                    React.createElement(RouterContext, renderProps)
+                )),
             });
         } else {
             res.status(404).send('Not found');

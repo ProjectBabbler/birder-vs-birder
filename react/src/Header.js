@@ -38,7 +38,6 @@ var Header = React.createClass({
 
     getNavItems() {
         var navItems = [];
-
         if (!this.context.authData) {
             navItems.push(
                 <LinkContainer key="signin" to={{ pathname: '/signin' }}>
