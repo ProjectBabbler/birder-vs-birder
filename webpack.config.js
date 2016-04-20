@@ -16,5 +16,12 @@ module.exports = {
       test: /\.css$/, // Only .css files
       loader: 'style!css' // Run both loaders
     }]
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'BROWSER': true,
+      }
+    })
+  ]
 };

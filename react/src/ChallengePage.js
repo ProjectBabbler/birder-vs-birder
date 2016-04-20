@@ -4,7 +4,9 @@ var LoadingOverlay = require('./LoadingOverlay');
 var axios = require('axios');
 var Challenge = require('./Challenge');
 var ReactDataGrid = require('react-data-grid');
-require('react-data-grid/themes/react-data-grid.css');
+if (process.env.BROWSER) {
+    require('react-data-grid/themes/react-data-grid.css');
+}
 var birdList = require('bird-list');
 var BirdListGraph = require('./BirdListGraph');
 

@@ -4,7 +4,7 @@ public/static/images/fb_share/
 logs
 *.log
 npm-debug.log*
-bin
+bin/
 tests_output/
 public/static/bundle.js
 

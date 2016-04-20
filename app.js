@@ -11,7 +11,10 @@ var compression = require('compression');
 var favicon = require('serve-favicon');
 var swig = require('swig');
 var UserUtils = require('./bin/react/utils/UserUtils');
-
+import { renderToString } from 'react-dom/server';
+import { match, RouterContext } from 'react-router';
+import routes from './bin/react/src/routes';
+var React = require('react');
 
 
 var app = express();
@@ -62,7 +65,24 @@ app.get('/user/:username', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-    res.render('index');
+    // Note that req.url here should be the full URL path from
+    // the original request, including the query string.
+    match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
+        if (error) {
+            res.status(500).send(error.message);
+        } else if (redirectLocation) {
+            res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+        } else if (renderProps) {
+            // You can also check renderProps.components or renderProps.routes for
+            // your "not found" component or route respectively, and send a 404 as
+            // below, if you're using a catch-all route.
+            res.render('index', {
+                reactHtml: renderToString(React.createElement(RouterContext, renderProps)),
+            });
+        } else {
+            res.status(404).send('Not found');
+        }
+    });
 });
 
 module.exports = app;

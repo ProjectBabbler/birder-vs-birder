@@ -1,42 +1,7 @@
-import React from 'react';
 import { render } from 'react-dom';
 require('babel-polyfill');
 require('../styles/CustomStyles.css');
-var App = require('./App');
-var Base = require('./Base');
-var SignInPage = require('./SignInPage');
-var SignupPage = require('./SignupPage');
-var Accept = require('./Accept');
-var { Router, Route, browserHistory, IndexRoute } = require('react-router');
-var MainContent = require('./MainContent');
-var ChallengePage = require('./ChallengePage');
-var DonatePage = require('./DonatePage');
-var ThankYouPage = require('./ThankYouPage');
-var SettingsPage = require('./SettingsPage');
-var PrivateUserPages = require('./PrivateUserPages');
-var UserPage = require('./UserPage');
-var WelcomePage = require('./WelcomePage');
 
-render((
-    <Router history={browserHistory}>
-        <Route path="/" component={Base}>
-            <Route path="home" component={WelcomePage} />
-            <Route component={MainContent}>
-                <Route path="signin" component={SignInPage} />
-                <Route path="signup" component={SignupPage} />
-                <Route path="accept" component={Accept} />
-                <Route path="donate" component={DonatePage} />
-                <Route path="thankyou" component={ThankYouPage} />
-                <Route path="challenge" component={ChallengePage} />
-                <Route path="user/:username">
-                    <Route component={PrivateUserPages}>
-                        <Route path="settings" component={SettingsPage} />
-                    </Route>
-                    <IndexRoute component={UserPage} />
-                </Route>
-            </Route>
-            <IndexRoute component={App} />
-            <Route path="*" component={App} />
-        </Route>
-    </Router>
-), document.getElementById('root'));
+var routes = require('./routes');
+
+render(routes, document.getElementById('root'));
