@@ -101,7 +101,7 @@ var Layout = (props) => {
                                         <tbody>
                                             <tr>
                                                 <td style={emailMasthead}>
-                                                    <a style={emailMastheadName}>Birder Vs Birder</a>
+                                                    <a style={emailMastheadName} href="http://www.birdervsbirder.com/">Birder Vs Birder</a>
                                                 </td>
                                             </tr>
                                             <tr>
