@@ -33,8 +33,7 @@ var WelcomePage = React.createClass({
             },
 
             logo: {
-                backgroundColor: '#2c3e50',
-                width: 250,
+                width: 300,
             },
         };
 
@@ -45,7 +44,7 @@ var WelcomePage = React.createClass({
                     color: 'white',
                     padding: 100,
                 }}>
-                    <Image className="test-logo" style={styles.logo} src="/static/images/logo.png" circle={true} />
+                    <img className="test-logo" style={styles.logo} src="/static/images/logo.svg" />
                     <h1 style={styles.main}>Birder Vs Birder</h1>
                     {this.renderLine()}
                     <h1>It's not just for the birds</h1>
