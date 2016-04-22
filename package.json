@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/ProjectBabbler/birder-vs-birder#readme",
   "dependencies": {
-    "axios": "^0.9.1",
+    "axios": "^0.10.0",
     "babel-cli": "^6.7.5",
     "babel-core": "^6.7.6",
     "babel-loader": "^6.2.4",
