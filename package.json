@@ -5,7 +5,6 @@
   "scripts": {
     "start": "node ./www",
     "start-debug": "DEBUG=birder-vs-birder:* npm start",
-    "postinstall": "gulp",
     "dev": "heroku local web -f Procfile.local",
     "test": "nightwatch"
   },

@@ -3,9 +3,8 @@ var gutil = require('gulp-util');
 var webpack = require('webpack');
 var babel = require('gulp-babel');
 
-gulp.task('default', ['webpack', 'build']);
-
-gulp.task('build', ['compile-js']);
+gulp.task('build', ['webpack', 'compile-js']);
+gulp.task('build-local', ['compile-js']);
 
 gulp.task('compile-js', () => {
     return gulp.src('./react/**/*.js')
