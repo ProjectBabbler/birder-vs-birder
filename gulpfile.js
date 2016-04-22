@@ -4,7 +4,7 @@ var webpack = require('webpack');
 var babel = require('gulp-babel');
 
 gulp.task('build', ['compile-js']);
-gulp.task('heroku:build', ['webpack', 'compile-js']);
+gulp.task('heroku:production', ['webpack', 'compile-js']);
 
 gulp.task('compile-js', () => {
     return gulp.src('./react/**/*.js')
