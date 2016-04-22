@@ -5,7 +5,7 @@ module.exports = {
         browser
             .url(baseUrl)
             .assert.urlEquals(baseUrl)
-            .expect.element('.test-logo').to.have.attribute('src').which.contains('logo.png');
+            .expect.element('.test-logo').to.have.attribute('src').which.contains('logo.svg');
         browser
             .click('.test-nav-brand')
             .assert.urlEquals(baseUrl + 'home')

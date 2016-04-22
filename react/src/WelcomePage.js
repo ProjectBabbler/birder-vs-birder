@@ -1,6 +1,5 @@
 var React = require('react');
 var StackedList = require('./StackedList');
-var { Image, Button } = require('react-bootstrap');
 var { Link } = require('react-router');
 
 var WelcomePage = React.createClass({
