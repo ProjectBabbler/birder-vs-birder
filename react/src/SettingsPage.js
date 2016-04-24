@@ -1,9 +1,8 @@
 var React = require('react');
-var { FormControl, FormGroup, Button, Alert } = require('react-bootstrap');
+var { FormControl, FormGroup, Button, Alert, Checkbox } = require('react-bootstrap');
 var LoadingOverlay = require('./LoadingOverlay');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
-
 
 var SettingsPage = React.createClass({
     contextTypes: {
@@ -13,7 +12,9 @@ var SettingsPage = React.createClass({
 
     getInitialState() {
         return {
-            fullname: this.context.userData.fullname,
+            userData: {
+                ...this.context.userData,
+            },
             loading: false,
             saved: false,
         };
@@ -21,7 +22,19 @@ var SettingsPage = React.createClass({
 
     onFormChange(key, e) {
         this.setState({
-            [key]: e.target.value,
+            userData: {
+                ...this.state.userData,
+                [key]: e.target.value,
+            },
+        });
+    },
+
+    onToggleChange(key) {
+        this.setState({
+            userData: {
+                ...this.state.userData,
+                [key]: !this.state.userData[key],
+            },
         });
     },
 
@@ -36,7 +49,9 @@ var SettingsPage = React.createClass({
         var userRef = firebaseRef.child('users').child(this.context.authData.uid);
 
         Promise.all([
-            userRef.child('fullname').set(this.state.fullname),
+            userRef.child('fullname').set(this.state.userData.fullname),
+            userRef.child('emailChallengeRankChange').set(this.state.userData.emailChallengeRankChange),
+            userRef.child('emailChallengeChange').set(this.state.userData.emailChallengeChange),
         ]).then(() => {
             this.setState({
                 saved: true,
@@ -83,9 +98,29 @@ var SettingsPage = React.createClass({
                 <h3>Settings</h3>
                 <form onSubmit={this.onSave}>
                     <FormGroup>
-                        <FormControl ref="fullname" type="text" label="Full name" placeholder="Full name" value={this.state.fullname} onChange={this.onFormChange.bind(this, 'fullname')} />
+                        <FormControl
+                            ref="fullname"
+                            type="text"
+                            label="Full name"
+                            placeholder="Full name"
+                            value={this.state.userData.fullname}
+                            onChange={this.onFormChange.bind(this, 'fullname')}
+                        />
                     </FormGroup>
-                    <Button type="submit" bsStyle="primary">
+                    <h3>Emails</h3>
+                    <Checkbox
+                        onChange={this.onToggleChange.bind(this, 'emailChallengeRankChange')}
+                        checked={this.state.userData.emailChallengeRankChange}>
+                        Send email when the rankings of a challenge changes
+                    </Checkbox>
+                    {/*  TODO: Add this checkbock once the feature is built
+                    <Checkbox
+                        onChange={this.onToggleChange.bind(this, 'emailChallengeChange')}
+                        checked={this.state.userData.emailChallengeChange}>
+                        Send email when challenge has an update
+                    </Checkbox>
+                    */}
+                    <Button type="submit" bsStyle="primary" style={{marginTop: 20}}>
                         Save
                     </Button>
                 </form>

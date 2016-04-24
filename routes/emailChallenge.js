@@ -7,6 +7,8 @@ var React = require('react');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var moment = require('moment');
+var UserUtils = require('../bin/react/utils/UserUtils');
+
 
 
 module.exports = (challengeKey, challenge, changes) => {
@@ -16,7 +18,12 @@ module.exports = (challengeKey, challenge, changes) => {
     for (var key in challenge.members) {
         ps.push(firebaseRef.child('users').child(key).once('value').then(snap => {
             var user = snap.val();
+            user = UserUtils.populateWithDefaults(user);
             var email = user.email;
+
+            if (!user.emailChallengeRankChange) {
+                return;
+            }
 
             var htmlBody = ReactDOMServer.renderToStaticMarkup(React.createElement(ChallengeEmail, {
                 changes: changes,

@@ -85,6 +85,18 @@ var UserUtils = {
                 }
             });
     },
+
+    populateWithDefaults(data) {
+        if (!data) {
+            return data;
+        }
+
+        return {
+            emailChallengeRankChange: true,
+            emailChallengeChange: true,
+            ...data,
+        };
+    }
 };
 
 module.exports = UserUtils;

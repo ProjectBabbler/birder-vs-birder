@@ -8,6 +8,7 @@ var Ad = require('./Ad');
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 var cookie = require('cookie-dough')();
+var UserUtils = require('../utils/UserUtils');
 
 var Base = React.createClass({
     mixins: [ReactFireMixin],
@@ -24,7 +25,7 @@ var Base = React.createClass({
     getChildContext() {
         return {
             authData: this.state.authData,
-            userData: this.state.userData,
+            userData: UserUtils.populateWithDefaults(this.state.userData),
         };
     },
 
