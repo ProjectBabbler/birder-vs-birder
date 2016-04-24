@@ -28,7 +28,7 @@ var Header = React.createClass({
                 <LinkContainer key="profile" onlyActiveOnIndex={true} to={{ pathname: baseUserUrl }}>
                     <MenuItem className="test-profile-link" eventKey="3.1">Profile</MenuItem>
                 </LinkContainer>
-                <LinkContainer key="signin" to={{ pathname: `${baseUserUrl}/settings` }}>
+                <LinkContainer key="signin" to={{ pathname: '/settings' }}>
                     <MenuItem eventKey="3.2">Settings</MenuItem>
                 </LinkContainer>
                 <MenuItem eventKey="3.3" onClick={this.logOut}>Log out</MenuItem>

@@ -7,7 +7,7 @@ var PrivateUserPages = React.createClass({
     },
 
     render() {
-        if (!this.context.authData || !this.context.userData || this.props.params.username != this.context.userData.ebird_username) {
+        if (!this.context.authData || !this.context.userData) {
             return <div/>;
         } else {
             return this.props.children;

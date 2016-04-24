@@ -28,10 +28,10 @@ module.exports = (
                 <Route component={AuthWrapper}>
                     <Route path="challenge" component={ChallengePage} />
                 </Route>
+                <Route component={PrivateUserPages}>
+                    <Route path="settings" component={SettingsPage} />
+                </Route>
                 <Route path="user/:username">
-                    <Route component={PrivateUserPages}>
-                        <Route path="settings" component={SettingsPage} />
-                    </Route>
                     <IndexRoute component={UserPage} />
                 </Route>
             </Route>

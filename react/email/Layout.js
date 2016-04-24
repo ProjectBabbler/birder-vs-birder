@@ -57,7 +57,7 @@ var Layout = (props) => {
     var emailFooter = {
         width: 570,
         margin: '0 auto',
-        padding: 0,
+        padding: 35,
         textAlign: 'center'
     };
 
@@ -67,10 +67,6 @@ var Layout = (props) => {
         lineHeight: '1.5em',
         fontSize: 12,
         textAlign: 'center'
-    };
-
-    var contentCell = {
-        padding: 35
     };
 
     var donateButton = {
@@ -132,8 +128,13 @@ var Layout = (props) => {
                                                     <table style={emailFooter} align="center" width="570" cellPadding="0" cellSpacing="0">
                                                         <tbody>
                                                             <tr>
-                                                                <td style={contentCell}>
+                                                                <td>
                                                                     <p style={emailFooterP}>© 2016 Birder Vs Birder. All rights reserved.</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="http://www.birdervsbirder.com/settings">update subscription preferences</a>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
