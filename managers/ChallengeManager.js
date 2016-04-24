@@ -52,7 +52,8 @@ var ChallengeManager = {
         var currentSnap = toArray(snapshots[current]);
         var lastSnap = toArray(snapshots[last]);
 
-        var foundChange = false;
+        var rankChange = false;
+        var numbersChange = false;
         var changes = [];
         for (let i = 0; i < currentSnap.length; i++) {
             let userKey = currentSnap[i].userKey;
@@ -72,16 +73,23 @@ var ChallengeManager = {
             changes.push(data);
 
             if (index != i) {
-                foundChange = true;
+                rankChange = true;
+            }
+
+            if (data.lastTotal != data.currentTotal) {
+                numbersChange = true;
             }
         }
 
-        if (!foundChange) {
+        if (!rankChange && !numbersChange) {
             // No changes, so no email to send.
             return;
         }
 
-        return emailChallenge(challengeKey, challenge, changes).then(() => {
+        return emailChallenge(challengeKey, challenge, changes, {
+            rankChange,
+            numbersChange,
+        }).then(() => {
             console.log(`Send change emails for ${challenge.name}`);
         });
     },

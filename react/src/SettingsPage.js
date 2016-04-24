@@ -113,13 +113,11 @@ var SettingsPage = React.createClass({
                         checked={this.state.userData.emailChallengeRankChange}>
                         Send email when the rankings of a challenge changes
                     </Checkbox>
-                    {/*  TODO: Add this checkbock once the feature is built
                     <Checkbox
                         onChange={this.onToggleChange.bind(this, 'emailChallengeChange')}
                         checked={this.state.userData.emailChallengeChange}>
                         Send email when challenge has an update
                     </Checkbox>
-                    */}
                     <Button type="submit" bsStyle="primary" style={{marginTop: 20}}>
                         Save
                     </Button>

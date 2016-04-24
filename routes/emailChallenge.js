@@ -11,7 +11,7 @@ var UserUtils = require('../bin/react/utils/UserUtils');
 
 
 
-module.exports = (challengeKey, challenge, changes) => {
+module.exports = (challengeKey, challenge, changes, changeTypes) => {
     var ps = [];
     var subject = `Challenge Updates for ${challenge.name} on ${moment().format('MMMM Do YYYY')} - Birder Vs Birder`;
 
@@ -21,7 +21,10 @@ module.exports = (challengeKey, challenge, changes) => {
             user = UserUtils.populateWithDefaults(user);
             var email = user.email;
 
-            if (!user.emailChallengeRankChange) {
+            var wantsRankChange = changeTypes.rankChange && user.emailChallengeRankChange;
+            var wantsChange = changeTypes.numbersChange && user.emailChallengeChange;
+
+            if (!wantsChange && !wantsRankChange) {
                 return;
             }
 
