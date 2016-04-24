@@ -1,4 +1,6 @@
 var React = require('react');
+var Styles = require('./Styles');
+var DiffArrow = require('./DiffArrow');
 
 var SectionList = (props) => {
     var titleStyle = {
@@ -16,17 +18,18 @@ var SectionList = (props) => {
     }
 
     var renderRow = (row, i) => {
-        var rowStyles = {};
-        if (i % 2 == 1) {
-            rowStyles = {
-                backgroundColor: '#f9f9f9',
-            };
-        }
+        var rowStyle = i % 2 == 0 ? Styles.table.evenRow : Styles.table.oddRow;
+
         return (
-            <tr key={i} style={rowStyles}>
+            <tr
+                key={i}
+                style={{
+                    ...Styles.table.tr,
+                    ...rowStyle
+                }}>
                 <td>{row.name}</td>
-                <td>{row.oldLife} + {row.newLife - row.oldLife} = {row.newLife}</td>
-                <td>{row.oldYear} + {row.newYear - row.oldYear} = {row.newYear}</td>
+                <td>{row.newLife} <DiffArrow last={row.oldLife} current={row.newLife} /></td>
+                <td>{row.oldYear} <DiffArrow last={row.oldYear} current={row.newYear} /></td>
             </tr>
         );
     };

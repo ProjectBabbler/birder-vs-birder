@@ -23,3 +23,7 @@ gulp.task('webpack', (callback) => {
         callback();
     });
 });
+
+gulp.task('watch', () => {
+    gulp.watch(['./react/**'], ['compile-js']);
+});

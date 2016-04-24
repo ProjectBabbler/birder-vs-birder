@@ -1,21 +1,8 @@
 var React = require('react');
+var Styles = require('./Styles');
+var DiffArrow = require('./DiffArrow');
 
 var renderRow = (userKey, change, i) => {
-    var styles = {
-        baseStyles: {
-            fontSize: '16px',
-            borderTop: '1px solid #d7d7d7',
-            height: 60,
-        },
-        evenRow: {
-            backgroundColor: '#ececec',
-        },
-        oddRow: {
-            backgroundColor: '#f9f9f9',
-        },
-    };
-
-
     var nameStyles;
     if (userKey == change.userKey) {
         nameStyles = {
@@ -43,41 +30,18 @@ var renderRow = (userKey, change, i) => {
             </span>
         );
     } else {
-        var diff = change.lastIndex - change.currentIndex;
-        if (diff != 0) {
-            if (diff > 0) {
-                diffArrow = (
-                    <span style={{
-                        ...diffStyle,
-                        color: '#86b400'
-                    }}>
-                        <img src="http://www.birdervsbirder.com/static/images/movementUp.png" />
-                        {diff}
-                    </span>
-                );
-            } else {
-                diffArrow = (
-                    <span style={{
-                        ...diffStyle,
-                        color: '#c60000'
-                    }}>
-                        <img src="http://www.birdervsbirder.com/static/images/movementDown.png" />
-                        {diff}
-                    </span>
-                );
-            }
-        }
+        diffArrow = <DiffArrow rank={true} last={change.lastIndex} current={change.currentIndex} />;
     }
 
-    var rowStyle = i % 2 == 0 ? styles.evenRow : styles.oddRow;
+    var rowStyle = i % 2 == 0 ? Styles.table.evenRow : Styles.table.oddRow;
 
     return (
-        <tr style={{
-            ...styles.baseStyles,
+        <tr key={i} style={{
+            ...Styles.table.tr,
             ...rowStyle
         }}>
             <td style={{
-                whiteSpace: 'nowrap',
+                ...Styles.table.td,
             }}>
                 {change.currentIndex + 1}
                 {diffArrow}
@@ -92,7 +56,7 @@ var renderRow = (userKey, change, i) => {
     );
 };
 
-var ChallengeMetaData = (props) => {
+var ChallengeList = (props) => {
     return (
         <table>
             <thead>
@@ -109,4 +73,4 @@ var ChallengeMetaData = (props) => {
     );
 };
 
-module.exports = ChallengeMetaData;
+module.exports = ChallengeList;
