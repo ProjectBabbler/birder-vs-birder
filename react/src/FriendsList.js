@@ -1,5 +1,5 @@
 var React = require('react');
-var { Button, FormControl, FormGroup, ButtonGroup } = require('react-bootstrap');
+var { Button, FormControl, FormGroup, ButtonGroup, InputGroup } = require('react-bootstrap');
 var emailValidator = require('email-validator');
 
 var FriendsList = React.createClass({
@@ -26,7 +26,7 @@ var FriendsList = React.createClass({
     addFriend(e) {
         e.preventDefault();
 
-        var email = e.target.value;
+        var email = this.state.email;
 
         if (!email || this.validateEmail(email) == 'error') {
             return;
@@ -71,18 +71,19 @@ var FriendsList = React.createClass({
                 <h4>Friends</h4>
                 <p>{this.props.message}</p>
                 <form onSubmit={this.addFriend}>
-                    <FormGroup>
-                        <FormControl
-                            bsStyle={this.state.emailState}
-                            value={this.state.email}
-                            type="text"
-                            onChange={this.emailChange}
-                            placeholder="Add a friend by email"
-                            ref="emailInput"
-                            buttonAfter={
-                                <Button type="submit">Add</Button>
-                            }
-                        />
+                    <FormGroup validationState={this.state.emailState}>
+                        <InputGroup>
+                            <FormControl
+                                value={this.state.email}
+                                type="text"
+                                onChange={this.emailChange}
+                                placeholder="Add a friend by email"
+                                ref="emailInput"
+                            />
+                            <InputGroup.Button>
+                                <Button onClick={this.addFriend} type="submit">Add</Button>
+                            </InputGroup.Button>
+                        </InputGroup>
                     </FormGroup>
                 </form>
                 {this.renderFriends()}

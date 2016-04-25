@@ -8,6 +8,10 @@ var FriendsList = require('./FriendsList');
 
 
 var AddFriendsModal = React.createClass({
+    contextTypes: {
+        authData: React.PropTypes.object.isRequired,
+    },
+
     getInitialState() {
         return {
             friends: new Set(),
@@ -32,12 +36,12 @@ var AddFriendsModal = React.createClass({
         });
 
         var ref = firebaseRef.child('challenges').child(this.props.challengeId);
-
         var ps = [];
         this.state.friends.forEach(email => {
             var r = ref.child('invites').push();
             ps.push(r.set({
                 email: email,
+                invitee: this.context.authData.uid,
                 sent: false,
             }));
         });
