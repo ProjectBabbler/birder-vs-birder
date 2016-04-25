@@ -5,8 +5,6 @@ var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
 var Footer = require('./Footer');
 var Ad = require('./Ad');
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 var cookie = require('cookie-dough')();
 var UserUtils = require('../utils/UserUtils');
 
@@ -100,14 +98,4 @@ var Base = React.createClass({
     }
 });
 
-var Wrapper = React.createClass({
-    render() {
-        return (
-            <MuiThemeProvider muiTheme={getMuiTheme()}>
-                <Base {...this.props} />
-            </MuiThemeProvider>
-        );
-    },
-});
-
-module.exports = Wrapper;
+module.exports = Base;

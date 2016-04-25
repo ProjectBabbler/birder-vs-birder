@@ -88,6 +88,7 @@ app.get('*', (req, res) => {
                     {
                         signedIn: signedIn,
                         radiumConfig: {userAgent: req.headers['user-agent']},
+                        userAgent: req.headers['user-agent'],
                     },
                     React.createElement(RouterContext, renderProps)
                 )),

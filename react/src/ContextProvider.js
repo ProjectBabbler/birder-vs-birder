@@ -1,6 +1,8 @@
 var React = require('react');
 var cookie = require('cookie-dough')();
 var Radium = require('radium');
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 var ContextProvider = Radium(React.createClass({
     childContextTypes: {
@@ -18,7 +20,13 @@ var ContextProvider = Radium(React.createClass({
     },
 
     render() {
-        return this.props.children;
+        return (
+            <MuiThemeProvider muiTheme={getMuiTheme({}, {
+                userAgent: this.props.userAgent,
+            })}>
+                {this.props.children}
+            </MuiThemeProvider>
+        );
     },
 }));
 
