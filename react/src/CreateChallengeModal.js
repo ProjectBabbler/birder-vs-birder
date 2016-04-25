@@ -160,7 +160,6 @@ var CreateChallengeModal = React.createClass({
                         <FormControl
                             type="text"
                             placeholder={this.getNamePlaceholder()}
-                            ref="nameInput"
                             onChange={this.nameChange}
                             value={this.state.name}
                         />

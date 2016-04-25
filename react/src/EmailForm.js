@@ -16,7 +16,7 @@ var EmailForm = React.createClass({
     render() {
         return (
             <FormGroup validationState={this.validateEmail()}>
-                <FormControl {...this.props} ref="email" type="email" label="Email" placeholder="Email" />
+                <FormControl {...this.props} type="email" label="Email" placeholder="Email" />
             </FormGroup>
         );
     },

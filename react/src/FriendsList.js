@@ -78,7 +78,6 @@ var FriendsList = React.createClass({
                                 type="text"
                                 onChange={this.emailChange}
                                 placeholder="Add a friend by email"
-                                ref="emailInput"
                             />
                             <InputGroup.Button>
                                 <Button onClick={this.addFriend} type="submit">Add</Button>

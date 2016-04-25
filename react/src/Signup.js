@@ -101,13 +101,13 @@ var SignIn = React.createClass({
                 <form id="test-signup-form" onSubmit={this.onSubmit}>
                     <EmailForm id="test-email" ref="email" value={this.state.email} onChange={this.onFormChange.bind(this, 'email')} />
                     <FormGroup>
-                        <FormControl id="test-fullname" ref="fullname" type="text" label="Full name" placeholder="Full name" value={this.state.fullname} onChange={this.onFormChange.bind(this, 'fullname')} />
+                        <FormControl id="test-fullname" type="text" label="Full name" placeholder="Full name" value={this.state.fullname} onChange={this.onFormChange.bind(this, 'fullname')} />
                     </FormGroup>
                     <FormGroup>
-                        <FormControl id="test-username" ref="username" type="text" label="Username" placeholder="Enter Ebird Username" value={this.state.username} onChange={this.onFormChange.bind(this, 'username')} />
+                        <FormControl id="test-username" type="text" label="Username" placeholder="Enter Ebird Username" value={this.state.username} onChange={this.onFormChange.bind(this, 'username')} />
                     </FormGroup>
                     <FormGroup>
-                        <FormControl id="test-password" ref="password" name="password" type="password" label="Password" placeholder="Enter Ebird Password" value={this.state.password} onChange={this.onFormChange.bind(this, 'password')} />
+                        <FormControl id="test-password" name="password" type="password" label="Password" placeholder="Enter Ebird Password" value={this.state.password} onChange={this.onFormChange.bind(this, 'password')} />
                     </FormGroup>
                     <Button type="submit" bsStyle="primary">
                         Sign Up

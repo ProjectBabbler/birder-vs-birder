@@ -99,7 +99,6 @@ var SettingsPage = React.createClass({
                 <form onSubmit={this.onSave}>
                     <FormGroup>
                         <FormControl
-                            ref="fullname"
                             type="text"
                             label="Full name"
                             placeholder="Full name"
