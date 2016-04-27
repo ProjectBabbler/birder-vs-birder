@@ -1,13 +1,7 @@
-var userId = Math.random();
-
 module.exports = {
-    after: function(browser) {
-        browser.removeUser(userId);
-    },
-
     'Sign Up, go to dashboard, and loads your lists': (browser) => {
         var baseUrl = browser.globals.baseUrl;
-
+        var userId = Math.random();
         browser
             .newTestUser(userId)
             // Rediect to dashboard
@@ -21,7 +15,8 @@ module.exports = {
             .expect.element('body').text.to.contains('Western Hemisphere').after(10000);
         browser
             .expect.element('body').text.to.contains('ABA Area');
-        browser
-            .end();
+        browser.removeUser(userId, () => {
+            browser.end();
+        });
     },
 };
