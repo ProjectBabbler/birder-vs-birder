@@ -26,7 +26,6 @@ app.use(compression());
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'templates'));
-app.use(require('prerender-node'));
 app.use(cookieParser());
 
 
