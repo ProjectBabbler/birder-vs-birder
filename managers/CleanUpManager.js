@@ -51,6 +51,10 @@ var CleanUpManager = {
             s.forEach(user => {
                 var userData = user.val();
                 if (userData.email.indexOf('projectbabbler+test+') == 0) {
+                    ps.push(ref.removeUser({
+                        email: userData.email,
+                        password: 'babblebabble',
+                    }));
                     ps.push(ref.child('users').child(user.key()).set(null));
                     ps.push(ref.child('ebird/totals').child(user.key()).set(null));
                     var password = cryptr.decrypt(userData.ebird_password);

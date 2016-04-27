@@ -23,8 +23,6 @@ module.exports = {
             .click('.modal-footer .btn-danger')
             .expect.element('body').text.not.to.contain('Life List for San Francisco').after(2000);
 
-        browser.removeUser(userId, () => {
-            browser.end();
-        });
+        browser.end();
     },
 };

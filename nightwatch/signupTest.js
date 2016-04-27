@@ -1,9 +1,9 @@
 module.exports = {
     'Sign Up, go to dashboard, and loads your lists': (browser) => {
         var baseUrl = browser.globals.baseUrl;
-        var userId = Math.random();
+
         browser
-            .newTestUser(userId)
+            .newTestUser()
             // Rediect to dashboard
             .assert.urlEquals(baseUrl)
             // Your list header loads
@@ -15,8 +15,6 @@ module.exports = {
             .expect.element('body').text.to.contains('Western Hemisphere').after(10000);
         browser
             .expect.element('body').text.to.contains('ABA Area');
-        browser.removeUser(userId, () => {
-            browser.end();
-        });
+        browser.end();
     },
 };

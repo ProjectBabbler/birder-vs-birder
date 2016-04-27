@@ -1,7 +1,7 @@
-exports.command = function(id) {
+exports.command = function() {
     this.deleteCookies();
     var baseUrl = this.globals.baseUrl + 'signup';
-    id = id || Math.random();
+    var id = Math.random();
     this
         .url(baseUrl)
         .waitForElementPresent('#test-username', 10000)
