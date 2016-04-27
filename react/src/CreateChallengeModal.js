@@ -154,7 +154,7 @@ var CreateChallengeModal = React.createClass({
                         </Alert>
                     ) : null}
                     <h4>Location for your Challenge</h4>
-                    <LocationsSearch value={this.state.location} onChange={this.updateLocation} />
+                    <LocationsSearch className="test-location-search" value={this.state.location} onChange={this.updateLocation} />
                     <h4>Name</h4>
                     <FormGroup>
                         <FormControl
@@ -177,7 +177,7 @@ var CreateChallengeModal = React.createClass({
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={this.close}>Close</Button>
-                    <Button type="submit" bsStyle="primary" onClick={this.onCreate}>{this.props.edit ? 'Save' : 'Create'}</Button>
+                    <Button className="test-submit-challenge-button" type="submit" bsStyle="primary" onClick={this.onCreate}>{this.props.edit ? 'Save' : 'Create'}</Button>
                 </Modal.Footer>
             </Modal>
         );

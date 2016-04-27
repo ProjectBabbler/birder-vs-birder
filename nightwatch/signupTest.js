@@ -1,9 +1,15 @@
+var userId = Math.random();
+
 module.exports = {
+    after: function(browser) {
+        browser.removeUser(userId);
+    },
+
     'Sign Up, go to dashboard, and loads your lists': (browser) => {
         var baseUrl = browser.globals.baseUrl;
 
         browser
-            .newTestUser()
+            .newTestUser(userId)
             // Rediect to dashboard
             .assert.urlEquals(baseUrl)
             // Your list header loads

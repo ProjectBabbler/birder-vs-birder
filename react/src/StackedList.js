@@ -48,7 +48,7 @@ var StackedList = React.createClass({
                                     {m.label}
                                 </div>
                             </div>
-                            <div style={{
+                            <div className="test-stacked-value" style={{
                                 width: 50,
                                 textAlign: 'right',
                             }}>

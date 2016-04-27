@@ -1,11 +1,11 @@
-exports.command = function() {
+exports.command = function(id) {
     this.deleteCookies();
     var baseUrl = this.globals.baseUrl + 'signup';
-    var rand = Math.random();
+    id = id || Math.random();
     this
         .url(baseUrl)
         .waitForElementPresent('#test-username', 10000)
-        .setValue('#test-email', `projectbabbler+test+${rand}@gmail.com`)
+        .setValue('#test-email', `projectbabbler+test+${id}@gmail.com`)
         .setValue('#test-fullname', 'Felix Powers')
         .setValue('#test-username', 'projectbabblertest2')
         .setValue('#test-password', 'babblebabble')

@@ -112,7 +112,11 @@ var Challenge = Radium(React.createClass({
 
         return (
             <div>
-                <DropdownButton title={<Glyphicon glyph="cog" />} id={`delete-${this.props.id}`} bsSize="xsmall">
+                <DropdownButton
+                    className="test-challenge-menu-dropdown"
+                    title={<Glyphicon glyph="cog" />}
+                    id={`delete-${this.props.id}`}
+                    bsSize="xsmall">
                     <div onClick={this.onInvite} style={menuStyle} key="invite">Invite</div>
                     {this.isOwner() ? [
                         <div onClick={this.onEdit} style={menuStyle} key="edit">Edit</div>,
@@ -122,7 +126,7 @@ var Challenge = Radium(React.createClass({
                             body="Are you sure you want to delete this challenge? It can't be undone"
                             confirmText="Confirm"
                             title={`Delete "${this.props.challenge.name}"`}>
-                            <div style={menuStyle} key="delete">Delete</div>
+                            <div className="test-delete-challenge" style={menuStyle} key="delete">Delete</div>
                         </Confirm>
                     ] : null}
                 </DropdownButton>

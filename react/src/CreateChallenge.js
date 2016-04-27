@@ -23,6 +23,7 @@ var CreateChallenge = React.createClass({
     render() {
         var button = (
             <Button
+                className="test-create-challenge-button"
                 bsStyle="primary"
                 onClick={this.open}>
                 Create Challenge
