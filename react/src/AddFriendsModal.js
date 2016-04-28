@@ -41,7 +41,7 @@ var AddFriendsModal = React.createClass({
             var r = ref.child('invites').push();
             ps.push(r.set({
                 email: email,
-                invitee: this.context.authData.uid,
+                inviter: this.context.authData.uid,
                 sent: false,
             }));
         });
@@ -49,12 +49,12 @@ var AddFriendsModal = React.createClass({
             return axios.post('/api/emailInvites', {
                 challengeId: ref.key(),
             });
-        }).catch((e) => {
-            this.setState({
-                error: e,
-            });
         }).then(() => {
             this.close();
+        }).catch((e) => {
+            this.setState({
+                error: e.data,
+            });
         }).then(() => {
             this.setState({
                 loading: false,
@@ -69,7 +69,7 @@ var AddFriendsModal = React.createClass({
                 <Modal.Body>
                     {this.state.error ? (
                         <Alert bsStyle="danger">
-                            {this.state.error || 'Sorry, something went wrong'}
+                            {this.state.error.message || 'Sorry, something went wrong'}
                         </Alert>
                     ) : null}
                     <FriendsList

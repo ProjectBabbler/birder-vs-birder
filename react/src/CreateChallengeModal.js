@@ -104,7 +104,7 @@ var CreateChallengeModal = React.createClass({
                 var r = ref.child('invites').push();
                 ps.push(r.set({
                     email: email,
-                    invitee: this.context.authData.uid,
+                    inviter: this.context.authData.uid,
                     sent: false,
                 }));
             });

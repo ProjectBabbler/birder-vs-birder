@@ -38,19 +38,23 @@ router.post('/', (req, res) => {
             }
 
             var email = invites[key].email;
-            ps.push(firebaseRef.child('users').orderByChild('email').equalTo(email).once('value').then(userSub => {
+            var inviterId = invites[key].inviter;
+
+            ps.push(firebaseRef.child('users').child(inviterId).once('value').then(inviterSub => {
                 return new Promise((resolve, reject) => {
-                    var user = userSub.val();
+                    var inviter = inviterSub.val();
+
+                    var name = inviter.fullname || 'A Friend';
 
                     client.sendEmail({
                         From: 'info@birdervsbirder.com',
                         To: email,
-                        Subject: "You've been invited to a birder vs birder challenge",
+                        Subject: `${name} has invited to a Birder Vs Birder challenge`,
                         HtmlBody: ReactDOMServer.renderToStaticMarkup(React.createElement(InviteEmail, {
                             challenge: challenge,
                             challengeId: challengeId,
-                            user: user,
                             email: email,
+                            inviter: inviter,
                         })),
                     }, (error, success) => {
                         if (error) {
@@ -75,7 +79,7 @@ router.post('/', (req, res) => {
         res.status(500);
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({
-            message: e,
+            message: 'Sorry, we could not sent invites to this challenge.  Please try again later',
         }));
     });
 });
