@@ -5,7 +5,7 @@ exports.command = function() {
         .url(baseUrl)
         .waitForElementPresent('#test-username', 5000)
         .setValue('#test-username', 'greg@boostable.com')
-        .setValue('#test-password', 'babblebabble')
+        .setValue('#test-password', process.env.TRAVIS_SAMPLE_PASSWORD)
         .submitForm('#test-login-form')
         .waitForElementNotPresent('#test-login-form', 10000);
 

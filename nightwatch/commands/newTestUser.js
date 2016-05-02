@@ -8,7 +8,7 @@ exports.command = function() {
         .setValue('#test-email', `projectbabbler+test+${id}@gmail.com`)
         .setValue('#test-fullname', 'Felix Powers')
         .setValue('#test-username', 'projectbabblertest2')
-        .setValue('#test-password', 'babblebabble')
+        .setValue('#test-password', process.env.TRAVIS_SAMPLE_PASSWORD)
         .submitForm('#test-signup-form')
         .waitForElementNotPresent('#test-signup-form', 10000);
 
