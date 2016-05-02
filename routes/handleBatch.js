@@ -13,6 +13,8 @@ CleanUpManager.cleanUpOldData().then(() => {
         return;
     }
 }).then(() => {
+    return UsersManager.takeShareScreenShots();
+}).then(() => {
     return ChallengesManager.updateSnapshots();
 }).then(() => {
     return ChallengesManager.emailChanges();
