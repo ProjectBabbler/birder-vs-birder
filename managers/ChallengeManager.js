@@ -19,10 +19,14 @@ var ChallengeManager = {
                     console.log(`Saved snapshot for challenge ${cid}`);
                     return r;
                 });
+        }).catch(e => {
+            // Catch error but don't let it stop the process.
+            console.error(e);
         });
     },
 
     emailChanges(challengeKey, challenge) {
+        console.log(`Analyzing ${challengeKey} for challenge email`);
         var snapshots = challenge.snapshots;
         var keys = Object.keys(snapshots).sort();
         if (keys.length < 2) {
@@ -86,11 +90,16 @@ var ChallengeManager = {
             return;
         }
 
+        console.log(`${challengeKey} had changes`);
+
         return emailChallenge(challengeKey, challenge, changes, {
             rankChange,
             numbersChange,
         }).then(() => {
             console.log(`Send change emails for ${challenge.name}`);
+        }).catch(e => {
+            // Catch error but don't let it stop the process.
+            console.error(e);
         });
     },
 };

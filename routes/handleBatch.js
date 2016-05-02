@@ -3,8 +3,9 @@ var UsersManager = require('../managers/UsersManager');
 var ChallengesManager = require('../managers/ChallengesManager');
 var CleanUpManager = require('../managers/CleanUpManager');
 
-
-UsersManager.updateTotals().then(() => {
+CleanUpManager.cleanUpOldData().then(() => {
+    return UsersManager.updateTotals();
+}).then(() => {
     // If Sunday
     if (moment().day() == 1) {
         return UsersManager.emailWeekly();
