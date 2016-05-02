@@ -31,7 +31,7 @@ class ebirdToFirebase {
         var handleData = (list, data) => {
             if (data) {
                 var totalsRef = firebaseRef.child('ebird/totals');
-                totalsRef = totalsRef.child(this.uid).child(moment().startOf('day').valueOf());
+                totalsRef = totalsRef.child(this.uid).child(moment().utc().startOf('day').valueOf());
                 return new Promise((resolve, reject) => {
                     var ps = [];
                     data.forEach(row => {
