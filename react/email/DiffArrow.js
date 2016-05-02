@@ -31,7 +31,7 @@ var DiffArrow = (props) => {
                 }}>
                     {props.rank ? (
                         <img src="http://www.birdervsbirder.com/static/images/movementDown.png" />
-                    ) : '-'}
+                    ) : null}
                     {diff}
                 </span>
             );

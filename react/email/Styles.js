@@ -14,6 +14,7 @@ module.exports = {
 
         td: {
             whiteSpace: 'nowrap',
+            padding: 10,
         }
     },
 };

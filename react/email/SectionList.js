@@ -27,9 +27,21 @@ var SectionList = (props) => {
                     ...Styles.table.tr,
                     ...rowStyle
                 }}>
-                <td>{row.name}</td>
-                <td>{row.newLife} <DiffArrow last={row.oldLife} current={row.newLife} /></td>
-                <td>{row.oldYear} <DiffArrow last={row.oldYear} current={row.newYear} /></td>
+                <td style={{
+                    ...Styles.table.td,
+                }}>
+                    {row.name}
+                </td>
+                <td style={{
+                    ...Styles.table.td,
+                }}>
+                    {row.newLife} <DiffArrow last={row.oldLife} current={row.newLife} />
+                </td>
+                <td style={{
+                    ...Styles.table.td,
+                }}>
+                    {row.oldYear} <DiffArrow last={row.oldYear} current={row.newYear} />
+                </td>
             </tr>
         );
     };

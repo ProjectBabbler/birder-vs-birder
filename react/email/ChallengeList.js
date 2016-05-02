@@ -10,11 +10,6 @@ var renderRow = (userKey, change, i) => {
         };
     }
 
-    var totalString;
-    if (change.currentTotal != change.lastTotal && change.lastTotal) {
-        totalString = `(added ${change.currentTotal - change.lastTotal} from yesterday)`;
-    }
-
     var diffArrow;
     var diffStyle = {
         margin: 5,
@@ -46,11 +41,16 @@ var renderRow = (userKey, change, i) => {
                 {change.currentIndex + 1}
                 {diffArrow}
             </td>
-            <td style={nameStyles}>
+            <td style={{
+                ...Styles.table.td,
+                ...nameStyles
+            }}>
                 {change.name}
             </td>
-            <td>
-                {change.currentTotal} {totalString}
+            <td style={{
+                ...Styles.table.td,
+            }}>
+                {change.currentTotal} <DiffArrow last={change.lastTotal} current={change.currentTotal} />
             </td>
         </tr>
     );
