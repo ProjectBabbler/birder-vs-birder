@@ -13,6 +13,10 @@ var getCacheKey = (user, code, time) => {
 module.exports = {
     getLists: (users, code, time) => {
         var ps = users.map(user => {
+            if (!user.data) {
+                return;
+            }
+
             var cacheKey = getCacheKey(user, code, time);
 
             return new Promise((resolve, reject) => {
@@ -41,7 +45,7 @@ module.exports = {
                             };
                             var config = {
                                 value: JSON.stringify(data),
-                                expires_in: 60 * 60 * 4, // 4 hours
+                                expires_in: 60 * 60 * 4, // 24 hours
                             };
                             client.put('birdLists', cacheKey, config, (err, res) => {
                                 if (err) {

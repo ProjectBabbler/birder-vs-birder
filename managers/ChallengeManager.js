@@ -5,6 +5,7 @@ var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ChallengeUtils = require('../bin/react/utils/ChallengeUtils');
 var moment = require('moment');
 var emailChallenge = require('../routes/emailChallenge');
+var userListsUtils = require('../utils/userListsUtils');
 
 var ChallengeManager = {
     updateSnapshot(cid) {
@@ -19,6 +20,18 @@ var ChallengeManager = {
                     console.log(`Saved snapshot for challenge ${cid}`);
                     return r;
                 });
+        }).catch(e => {
+            // Catch error but don't let it stop the process.
+            console.error(e);
+        });
+    },
+
+    updateCache(cid) {
+        console.log(`Updating caches for all users of challenge ${cid}`);
+        return ChallengeUtils.getMetaData(cid).then(metaData => {
+            return ChallengeUtils.getUsers(cid).then((users) => {
+                return userListsUtils.getLists(users, metaData.code, metaData.time);
+            });
         }).catch(e => {
             // Catch error but don't let it stop the process.
             console.error(e);

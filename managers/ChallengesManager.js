@@ -20,6 +20,22 @@ var ChallengesManager = {
         });
     },
 
+    updateCache: () => {
+        var ref = firebaseRef.child('challenges');
+        return ref.authWithCustomToken(Keys.firebase).then(() => {
+            return ref.once('value');
+        }).then((s) => {
+            var ps = [];
+            s.forEach(cs => {
+                var key = cs.key();
+                ps.push(ChallengeManager.updateCache(key));
+            });
+
+            return Promise.all(ps);
+        });
+    },
+
+
     emailChanges: () => {
         var ref = firebaseRef.child('challenges');
         return ref.authWithCustomToken(Keys.firebase).then(() => {
