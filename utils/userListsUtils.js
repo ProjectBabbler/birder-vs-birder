@@ -45,7 +45,7 @@ module.exports = {
                             };
                             var config = {
                                 value: JSON.stringify(data),
-                                expires_in: 60 * 60 * 4, // 24 hours
+                                expires_in: 60 * 60 * 4, // 4 hours
                             };
                             client.put('birdLists', cacheKey, config, (err, res) => {
                                 if (err) {
