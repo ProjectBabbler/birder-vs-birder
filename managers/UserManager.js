@@ -6,8 +6,6 @@ var ListBadge = require('../bin/react/src/ListBadge');
 var React = require('react');
 var cloudinary = require('cloudinary');
 
-
-
 var UserManager = {
     fetchTotals(uid) {
         var ebird = new ebirdToFirebase(uid);

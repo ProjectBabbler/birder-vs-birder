@@ -3,6 +3,8 @@ var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var Keys = require('../utils/Keys');
 var UserManager = require('./UserManager');
 var emailUser = require('../routes/emailUser');
+var userListsUtils = require('../utils/userListsUtils');
+
 
 var RateLimiter = require('limiter').RateLimiter;
 var limiter = new RateLimiter(10, 'minute');
@@ -73,6 +75,19 @@ var UsersManager = {
         return getUsers().then(users => {
             var ps = users.map(user => {
                 return UserManager.takeShareScreenShot(user.key, user.data);
+            });
+
+            return Promise.all(ps);
+        });
+    },
+
+    updateCache: () => {
+        return getUsers().then(users => {
+            var ps = users.map(user => {
+                return userListsUtils.getLists(users, 'WORLD', 'life').catch(e => {
+                    // Catch error but don't let it stop the process.
+                    console.error(e);
+                });
             });
 
             return Promise.all(ps);
