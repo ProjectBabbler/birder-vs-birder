@@ -30,7 +30,7 @@ var ChallengeManager = {
         console.log(`Updating caches for all users of challenge ${cid}`);
         return ChallengeUtils.getMetaData(cid).then(metaData => {
             return ChallengeUtils.getUsers(cid).then((users) => {
-                return userListsUtils.getLists(users, metaData.code, metaData.time);
+                return userListsUtils.getLists(users, metaData.code, metaData.time, {force: true});
             });
         }).catch(e => {
             // Catch error but don't let it stop the process.

@@ -84,7 +84,7 @@ var UsersManager = {
     updateCache: () => {
         return getUsers().then(users => {
             var ps = users.map(user => {
-                return userListsUtils.getLists(users, 'WORLD', 'life').catch(e => {
+                return userListsUtils.getLists(users, 'WORLD', 'life', {force: true}).catch(e => {
                     // Catch error but don't let it stop the process.
                     console.error(e);
                 });

@@ -4,57 +4,101 @@ var Cryptr = require('cryptr');
 var cryptr = new Cryptr(Keys.cryptr);
 var ironcache = require('iron-cache');
 var client = ironcache.createClient({ project: Keys.ironcacheProject, token: Keys.ironcacheToken });
+var birdList = require('bird-list');
 
 var getCacheKey = (user, code, time) => {
     return `${user.data.ebird_username}${code}${time}`;
 };
 
+var getCachedData = (user, code, time, options={force: false}) => {
+    return new Promise((resolve, reject) => {
+        if (options.force) {
+            resolve(null);
+            return;
+        }
+
+        var cacheKey = getCacheKey(user, code, time);
+        client.get('birdLists', cacheKey, (err, res) => {
+            if (err) {
+                // Ok if cache fails.
+                resolve(null);
+            } else {
+                var result = JSON.parse(res.value);
+                resolve(result);
+            }
+        });
+    });
+};
+
+var saveCachedData = (data, user, code, time, options={force: false}) => {
+    return new Promise((resolve, reject) => {
+        var config = {
+            value: JSON.stringify(data),
+            expires_in: 60 * 60 * 4, // 4 hours
+        };
+        var cacheKey = getCacheKey(user, code, time);
+        client.put('birdLists', cacheKey, config, (err, res) => {
+            if (err) {
+                console.log(err);
+                // Ok if cache fails.
+            }
+            resolve();
+        });
+    });
+};
+
+
+var scrapeEbird = (user, code, time, options) => {
+    var instance = new ebird();
+    var password = cryptr.decrypt(user.data.ebird_password);
+    return instance.auth(user.data.ebird_username, password).then(() => {
+        return instance.list(code, time);
+    }).then(list => {
+        return {
+            user: user,
+            list: list,
+        };
+    });
+};
+
+var curateData = (data) => {
+    var {list} = data;
+
+    var ps = [];
+
+    list.forEach(s => {
+        ps.push(birdList.getBySpeciesCode(s.speciesCode).then(data => {
+            return {
+                ...s,
+                ...data,
+            };
+        }));
+    });
+
+    return Promise.all(ps).then(results => {
+        return {
+            ...data,
+            list: results,
+        };
+    });
+};
 
 module.exports = {
-    getLists: (users, code, time) => {
+    getLists: (users, code, time, options={force: false}) => {
         var ps = users.map(user => {
             if (!user.data) {
                 return;
             }
-
-            var cacheKey = getCacheKey(user, code, time);
-
-            return new Promise((resolve, reject) => {
-                client.get('birdLists', cacheKey, (err, res) => {
-                    if (err) {
-                        // Ok if cache fails.
-                        resolve(null);
-                    } else {
-                        var result = JSON.parse(res.value);
-                        resolve(result);
-                    }
-                });
-            }).then(result => {
+            return getCachedData(user, code, time, options).then(result => {
                 if (result) {
                     return result;
                 }
 
-                var instance = new ebird();
-                var password = cryptr.decrypt(user.data.ebird_password);
-                return instance.auth(user.data.ebird_username, password).then(() => {
-                    return instance.list(code, time).then(list => {
-                        return new Promise((resolve, reject) => {
-                            var data = {
-                                user: user,
-                                list: list,
-                            };
-                            var config = {
-                                value: JSON.stringify(data),
-                                expires_in: 60 * 60 * 4, // 4 hours
-                            };
-                            client.put('birdLists', cacheKey, config, (err, res) => {
-                                if (err) {
-                                    console.log(err);
-                                    // Ok if cache fails.
-                                }
-                                resolve(data);
-                            });
-                        });
+                return scrapeEbird(user, code, time, options).then(data => {
+                    return curateData(data);
+                }).then(curatedData => {
+                    return saveCachedData(curatedData, user, code, time, options).then(() => {
+                        return curatedData;
                     });
                 });
             });
