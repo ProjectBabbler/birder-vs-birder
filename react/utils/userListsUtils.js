@@ -1,4 +1,5 @@
-var Keys = require('../utils/Keys');
+// This file is in the react folder only because it uses the spread(...) operator.
+var Keys = require('../../../utils/Keys'); // This file will be in the bin folder.
 var ebird = require('ebird');
 var Cryptr = require('cryptr');
 var cryptr = new Cryptr(Keys.cryptr);
