@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 var ChallengeUtils = require('../bin/react/utils/ChallengeUtils');
-var userListsUtils = require('../utils/userListsUtils');
+var userListsUtils = require('../bin/react/utils/userListsUtils');
 
 
 router.use(bodyParser.json());

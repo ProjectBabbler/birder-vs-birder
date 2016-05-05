@@ -3,7 +3,7 @@ var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var Keys = require('../utils/Keys');
 var UserManager = require('./UserManager');
 var emailUser = require('../routes/emailUser');
-var userListsUtils = require('../utils/userListsUtils');
+var userListsUtils = require('../bin/react/utils/userListsUtils');
 
 
 var RateLimiter = require('limiter').RateLimiter;

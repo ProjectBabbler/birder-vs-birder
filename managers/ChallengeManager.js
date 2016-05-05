@@ -5,7 +5,7 @@ var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ChallengeUtils = require('../bin/react/utils/ChallengeUtils');
 var moment = require('moment');
 var emailChallenge = require('../routes/emailChallenge');
-var userListsUtils = require('../utils/userListsUtils');
+var userListsUtils = require('../bin/react/utils/userListsUtils');
 
 var ChallengeManager = {
     updateSnapshot(cid) {
