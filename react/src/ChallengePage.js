@@ -7,7 +7,6 @@ var ReactDataGrid = require('react-data-grid');
 if (process.env.BROWSER) {
     require('react-data-grid/themes/react-data-grid.css');
 }
-var birdList = require('bird-list');
 var BirdListGraph = require('./BirdListGraph');
 
 
@@ -54,57 +53,34 @@ var ChallengePage = React.createClass({
     },
 
     processTableData(lists) {
-        var species = new Set();
-        lists.forEach(list => {
-            list.list.forEach(s => {
-                species.add(s.speciesCode);
+        var species = {};
+        lists.forEach(({list, user}) => {
+            list.forEach(s => {
+                var sp = species[s.speciesCode] || {};
+                sp.bird = s;
+                sp[user.data.ebird_username] = s;
+                species[s.speciesCode] = sp;
             });
         });
 
-        var ps = [];
-        species.forEach(s => {
-            ps.push(birdList.getBySpeciesCode(s));
-        });
-
-        Promise.all(ps).then(results => {
-            var hash = {};
-            results.forEach(d => {
-                hash[d.speciesCode] = d;
-            });
-            this.setState({
-                speciesData: hash,
-            });
-        }).catch(e => {
-            console.error(e);
+        this.setState({
+            bySpecies: Object.values(species),
         });
     },
 
     renderTable() {
-        if (!this.state.lists || !this.state.speciesData) {
+        if (!this.state.lists || !this.state.bySpecies) {
             return;
         }
-        var speciesData = this.state.speciesData;
+        var bySpecies = this.state.bySpecies;
 
-        var rows = new Map();
         var userColumns = this.state.lists.map(list => {
-            list.list.forEach(s => {
-                var key = s.speciesCode;
-                var value = {};
-                if (rows.has(key)) {
-                    value = rows.get(key);
-                }
-
-                value[list.user.data.ebird_username] = true;
-
-                rows.set(key, value);
-            });
-
             return {
                 name: list.user.data.fullname,
                 key: list.user.data.ebird_username,
                 formatter: React.createClass({
                     render() {
-                        if (this.props.value == true) {
+                        if (this.props.value != null) {
                             return (
                                 <div style={{textAlign: 'center'}}>x</div>
                             );
@@ -116,16 +92,8 @@ var ChallengePage = React.createClass({
             };
         });
 
-        rows = Array.from(rows);
-        rows = rows.map(r => {
-            return {
-                bird: r[0],
-                ...r[1],
-            };
-        });
-
-        rows = rows.sort((a, b) => {
-            return speciesData[a.bird].taxonOrder - speciesData[b.bird].taxonOrder;
+        var rows = bySpecies.sort((a, b) => {
+            return a.bird.taxonOrder - b.bird.taxonOrder;
         });
 
         var columns = [
@@ -135,7 +103,7 @@ var ChallengePage = React.createClass({
                 locked: true,
                 formatter: React.createClass({
                     render() {
-                        return <span>{speciesData[this.props.value].comName}</span>;
+                        return <span>{this.props.value.comName}</span>;
                     }
                 }),
             },
