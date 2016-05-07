@@ -19,8 +19,6 @@ CleanUpManager.cleanUpOldData().then(() => {
 }).then(() => {
     return ChallengesManager.emailChanges();
 }).then(() => {
-    return CleanUpManager.cleanUpOldData();
-}).then(() => {
     process.exit(0);
 }).catch(e => {
     console.error(e);
