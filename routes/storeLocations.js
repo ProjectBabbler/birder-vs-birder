@@ -70,5 +70,5 @@ ref.authWithCustomToken(Keys.firebase).then(() => {
     process.exit(0);
 }).catch(e => {
     console.log('Error', e);
-    process.exit(1);
+    process.exitCode = 1;
 });
