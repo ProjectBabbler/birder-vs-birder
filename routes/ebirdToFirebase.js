@@ -28,14 +28,16 @@ class ebirdToFirebase {
     }
 
     totals() {
+        var tempRef = firebaseRef.child('temp/ebird/totals');
+        var totalsRef = firebaseRef.child('ebird/totals');
+        tempRef   =   tempRef.child(this.uid).child(moment().utc().startOf('day').valueOf());
+        totalsRef = totalsRef.child(this.uid).child(moment().utc().startOf('day').valueOf());
         var handleData = (list, data) => {
             if (data) {
-                var totalsRef = firebaseRef.child('ebird/totals');
-                totalsRef = totalsRef.child(this.uid).child(moment().utc().startOf('day').valueOf());
                 return new Promise((resolve, reject) => {
                     var ps = [];
                     data.forEach(row => {
-                        var rowRef = totalsRef.child(row.code);
+                        var rowRef = tempRef.child(row.code);
                         ps.push(rowRef.child('type').set(list));
                         ps.push(rowRef.child('name').set(row.name));
                         row.items.forEach((item) => {
@@ -54,7 +56,19 @@ class ebirdToFirebase {
                 this.ebird.totals.states().then(handleData.bind(this, 'state')),
                 this.ebird.totals.counties().then(handleData.bind(this, 'county')),
                 this.ebird.totals.regions().then(handleData.bind(this, 'region')),
-            ]).then(resolve).catch(reject);
+            ]).then((r) => {
+                return tempRef.once('value').then((snapshot) => {
+                    return totalsRef.set(snapshot.val());
+                }).then(() => {
+                    return tempRef.set(null);
+                }).then(() => {
+                    resolve(r);
+                });
+            }).catch((e) => {
+                return tempRef.set(null).then(() => {
+                    reject(e);
+                });
+            });
         });
     }
 
