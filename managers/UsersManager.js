@@ -5,10 +5,6 @@ var UserManager = require('./UserManager');
 var emailUser = require('../routes/emailUser');
 var userListsUtils = require('../bin/react/utils/userListsUtils');
 
-
-var RateLimiter = require('limiter').RateLimiter;
-var limiter = new RateLimiter(10, 'minute');
-
 var getUsers = () => {
     var ref = firebaseRef.child('users');
     return ref.authWithCustomToken(Keys.firebase).then(() => {
@@ -38,15 +34,13 @@ var UsersManager = {
             s.forEach(cs => {
                 var key = cs.key();
                 ps.push(new Promise((resolve, reject) => {
-                    limiter.removeTokens(1, () => {
-                        UserManager.fetchTotals(key)
-                            .then(resolve)
-                            .catch((e) => {
-                                // Log the error, but don't block all updates.
-                                console.error(e);
-                            })
-                            .then(resolve);
-                    });
+                    UserManager.fetchTotals(key)
+                        .then(resolve)
+                        .catch((e) => {
+                            // Log the error, but don't block all updates.
+                            console.error(e);
+                        })
+                        .then(resolve);
                 }));
             });
 

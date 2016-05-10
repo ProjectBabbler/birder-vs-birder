@@ -5,6 +5,7 @@ var ReactDOMServer = require('react-dom/server');
 var ListBadge = require('../bin/react/src/ListBadge');
 var React = require('react');
 var cloudinary = require('cloudinary');
+var deferred = require('deferred');
 
 var UserManager = {
     fetchTotals(uid) {
@@ -72,5 +73,9 @@ var UserManager = {
         });
     },
 };
+
+for (var key in UserManager) {
+    UserManager[key] = deferred.gate(UserManager[key], 5);
+}
 
 module.exports = UserManager;

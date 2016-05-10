@@ -6,6 +6,8 @@ var ChallengeUtils = require('../bin/react/utils/ChallengeUtils');
 var moment = require('moment');
 var emailChallenge = require('../routes/emailChallenge');
 var userListsUtils = require('../bin/react/utils/userListsUtils');
+var deferred = require('deferred');
+
 
 var ChallengeManager = {
     updateSnapshot(cid) {
@@ -116,5 +118,9 @@ var ChallengeManager = {
         });
     },
 };
+
+for (var key in ChallengeManager) {
+    ChallengeManager[key] = deferred.gate(ChallengeManager[key], 5);
+}
 
 module.exports = ChallengeManager;

@@ -40,6 +40,7 @@
     "cookie-parser": "1.4.1",
     "cryptr": "1.0.0",
     "css-loader": "0.23.1",
+    "deferred": "0.7.5",
     "ebird": "0.5.0",
     "email-validator": "1.0.4",
     "express": "4.13.4",
