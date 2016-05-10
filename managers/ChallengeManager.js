@@ -41,7 +41,7 @@ var ChallengeManager = {
     emailChanges(challengeKey, challenge) {
         console.log(`Analyzing ${challengeKey} for challenge email`);
         var snapshots = challenge.snapshots;
-        var keys = Object.keys(snapshots).sort();
+        var keys = snapshots ? Object.keys(snapshots).sort() : [];
         if (keys.length < 2) {
             return;
         }

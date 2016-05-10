@@ -68,7 +68,7 @@
     "react-router": "2.4.0",
     "react-router-bootstrap": "0.23.0",
     "react-select": "1.0.0-beta13",
-    "react-share": "1.5.0",
+    "react-share": "1.6.0",
     "react-stripe-checkout": "1.8.0",
     "reactfire": "0.7.0",
     "request-promise": "3.0.0",
@@ -82,7 +82,7 @@
   },
   "devDependencies": {
     "eslint": "^2.9.0",
-    "eslint-plugin-react": "^5.0.1",
+    "eslint-plugin-react": "^5.1.1",
     "nightwatch": "^0.8.18",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-hot-middleware": "^2.10.0"
