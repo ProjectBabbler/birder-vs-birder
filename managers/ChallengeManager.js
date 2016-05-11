@@ -6,6 +6,7 @@ var ChallengeUtils = require('../bin/react/utils/ChallengeUtils');
 var moment = require('moment');
 var emailChallenge = require('../routes/emailChallenge');
 var userListsUtils = require('../bin/react/utils/userListsUtils');
+var UserUtils = require('../bin/react/utils/UserUtils');
 var deferred = require('deferred');
 
 
@@ -107,9 +108,26 @@ var ChallengeManager = {
 
         console.log(`${challengeKey} had changes`);
 
-        return emailChallenge(challengeKey, challenge, changes, {
-            rankChange,
-            numbersChange,
+        changes = changes.map(change => {
+            if (change.currentTotal == change.lastTotal) {
+                return change;
+            } else {
+                return UserUtils.getUserData(change.userKey).then(data => {
+                    return userListsUtils.getLists([{
+                        data: data,
+                    }], challenge.code, challenge.time);
+                }).then(lists => {
+                    change.list = lists[0].list;
+                    return change;
+                });
+            }
+        });
+
+        return Promise.all(changes).then(changesWithLists => {
+            return emailChallenge(challengeKey, challenge, changesWithLists, {
+                rankChange,
+                numbersChange,
+            });
         }).then(() => {
             console.log(`Send change emails for ${challenge.name}`);
         }).catch(e => {
