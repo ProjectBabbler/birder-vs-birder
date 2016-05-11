@@ -3,7 +3,10 @@ var UsersManager = require('../managers/UsersManager');
 var ChallengesManager = require('../managers/ChallengesManager');
 var CleanUpManager = require('../managers/CleanUpManager');
 
-CleanUpManager.cleanUpOldData().then(() => {
+CleanUpManager.cleanUpOldData().catch(e => {
+    // Log the error but we can continue with the other steps.
+    console.error(e);
+}).then(() => {
     return UsersManager.updateTotals();
 }).then(() => {
     // If Sunday
