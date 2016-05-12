@@ -84,27 +84,34 @@ var curateData = (data) => {
     });
 };
 
-module.exports = {
-    getLists: (users, code, time, options={force: false}) => {
-        var ps = users.map(user => {
-            if (!user.data) {
-                return;
-            }
-            return getCachedData(user, code, time, options).then(result => {
-                if (result) {
-                    return result;
-                }
+var getList = (user, code, time, options={force: false}) => {
+    if (!user.data) {
+        return;
+    }
+    return getCachedData(user, code, time, options).then(result => {
+        if (result) {
+            return result;
+        }
 
-                return scrapeEbird(user, code, time, options).then(data => {
-                    return curateData(data);
-                }).then(curatedData => {
-                    return saveCachedData(curatedData, user, code, time, options).then(() => {
-                        return curatedData;
-                    });
-                });
+        return scrapeEbird(user, code, time, options).then(data => {
+            return curateData(data);
+        }).then(curatedData => {
+            return saveCachedData(curatedData, user, code, time, options).then(() => {
+                return curatedData;
             });
         });
+    });
+};
 
-        return Promise.all(ps);
-    },
+var getLists = (users, code, time, options={force: false}) => {
+    var ps = users.map(user => {
+        return getList(user, code, time, options);
+    });
+
+    return Promise.all(ps);
+};
+
+module.exports = {
+    getLists,
+    getList,
 };

@@ -6,6 +6,8 @@ var ListBadge = require('../bin/react/src/ListBadge');
 var React = require('react');
 var cloudinary = require('cloudinary');
 var deferred = require('deferred');
+var userListsUtils = require('../bin/react/utils/userListsUtils');
+
 
 var UserManager = {
     fetchTotals(uid) {
@@ -72,6 +74,15 @@ var UserManager = {
             });
         });
     },
+
+    updateCache(user) {
+        return userListsUtils.getList(user, 'WORLD', 'life', {force: true}).then(() => {
+            console.log(`Updated world cache for ${user.key}`);
+        }).catch(e => {
+            // Catch error but don't let it stop the process.
+            console.error(e);
+        });
+    }
 };
 
 for (var key in UserManager) {
