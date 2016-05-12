@@ -8,11 +8,15 @@ var UpdateEmail = (props) => {
         hasUpdates = hasUpdates || m.lineItems.length != 0;
     });
 
+    var titleStyle = {
+        fontSize: '26px',
+    };
+
     var content;
     if (hasUpdates) {
         content = (
             <div>
-                <p>Nice job birding this week.  Here are all your updates</p>
+                <p style={titleStyle}>Nice job birding this week.  Here are all your updates</p>
                 {props.sections.map((s) => {
                     return <SectionList {...s} key={s.list} />;
                 })}
@@ -20,7 +24,7 @@ var UpdateEmail = (props) => {
         );
     } else {
         content = (
-            <p>No new birds this week.  Good luck birding.</p>
+            <p style={titleStyle}>No new birds this week.  Good luck birding.</p>
         );
     }
 
