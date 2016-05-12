@@ -63,7 +63,7 @@
     "react-bootstrap": "0.29.4",
     "react-confirm-bootstrap": "2.0.0",
     "react-currency-masked-input": "1.0.1",
-    "react-data-grid": "0.14.32",
+    "react-data-grid": "0.14.34",
     "react-doc-meta": "0.2.0",
     "react-dom": "15.0.2",
     "react-highcharts": "8.3.0",
