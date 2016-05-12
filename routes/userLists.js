@@ -3,6 +3,7 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var userListsUtils = require('../bin/react/utils/userListsUtils');
 var UserUtils = require('../bin/react/utils/UserUtils');
+var chalk = require('chalk');
 
 
 router.use(bodyParser.json());
@@ -26,7 +27,7 @@ router.post('/', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(results));
     }).catch((e) => {
-        console.error(e);
+        console.error(chalk.red('Error'), e);
         res.status(500);
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({

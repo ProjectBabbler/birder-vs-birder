@@ -3,6 +3,7 @@ var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var Keys = require('../utils/Keys');
 var UserManager = require('./UserManager');
 var emailUser = require('../routes/emailUser');
+var chalk = require('chalk');
 
 var getUsers = () => {
     var ref = firebaseRef.child('users');
@@ -37,7 +38,7 @@ var UsersManager = {
                         .then(resolve)
                         .catch((e) => {
                             // Log the error, but don't block all updates.
-                            console.error(e);
+                            console.error(chalk.red('Error'), e);
                         })
                         .then(resolve);
                 }));

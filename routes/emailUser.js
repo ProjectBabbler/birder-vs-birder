@@ -6,6 +6,7 @@ var UpdateEmail = require('../bin/react/email/UpdateEmail');
 var ReactDOMServer = require('react-dom/server');
 var React = require('react');
 var UserUtils = require('../bin/react/utils/UserUtils');
+var chalk = require('chalk');
 
 var getMessageForList = (uid, list) => {
     return Promise.all([
@@ -56,7 +57,7 @@ module.exports = (uid, email) => {
                 })),
             }, (error, success) => {
                 if (error) {
-                    console.error('Unable to send via postmark: ' + error.message);
+                    console.error(chalk.red('Error'), 'Unable to send via postmark: ' + error.message);
                 } else {
                     console.info('Sent to postmark for delivery');
                 }

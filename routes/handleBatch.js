@@ -2,10 +2,11 @@ var moment = require('moment');
 var UsersManager = require('../managers/UsersManager');
 var ChallengesManager = require('../managers/ChallengesManager');
 var CleanUpManager = require('../managers/CleanUpManager');
+var chalk = require('chalk');
 
 CleanUpManager.cleanUpOldData().catch(e => {
     // Log the error but we can continue with the other steps.
-    console.error(e);
+    console.error(chalk.red('Error'), e);
 }).then(() => {
     return UsersManager.updateTotals();
 }).then(() => {
@@ -24,6 +25,6 @@ CleanUpManager.cleanUpOldData().catch(e => {
 }).then(() => {
     process.exit(0);
 }).catch(e => {
-    console.error(e);
+    console.error(chalk.red('Error'), e);
     process.exitCode = 1;
 });

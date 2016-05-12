@@ -5,6 +5,7 @@ var SignInModal = require('./SignInModal');
 var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var LoadingOverlay = require('./LoadingOverlay');
+var chalk = require('chalk');
 
 
 var Accept = React.createClass({
@@ -45,7 +46,7 @@ var Accept = React.createClass({
                 pathname: '/',
             });
         }).catch((e) => {
-            console.error(e);
+            console.error(chalk.red('Error'), e);
             this.setState({
                 loading: false,
             });

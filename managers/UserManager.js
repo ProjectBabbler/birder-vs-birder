@@ -7,6 +7,7 @@ var React = require('react');
 var cloudinary = require('cloudinary');
 var deferred = require('deferred');
 var userListsUtils = require('../bin/react/utils/userListsUtils');
+var chalk = require('chalk');
 
 
 var UserManager = {
@@ -80,7 +81,7 @@ var UserManager = {
             console.log(`Updated world cache for ${user.key}`);
         }).catch(e => {
             // Catch error but don't let it stop the process.
-            console.error(e);
+            console.error(chalk.red('Error'), e);
         });
     }
 };

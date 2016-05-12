@@ -8,6 +8,7 @@ var emailChallenge = require('../routes/emailChallenge');
 var userListsUtils = require('../bin/react/utils/userListsUtils');
 var UserUtils = require('../bin/react/utils/UserUtils');
 var deferred = require('deferred');
+var chalk = require('chalk');
 
 
 var ChallengeManager = {
@@ -25,7 +26,7 @@ var ChallengeManager = {
                 });
         }).catch(e => {
             // Catch error but don't let it stop the process.
-            console.error(e);
+            console.error(chalk.red('Error'), e);
         });
     },
 
@@ -37,7 +38,7 @@ var ChallengeManager = {
             });
         }).catch(e => {
             // Catch error but don't let it stop the process.
-            console.error(e);
+            console.error(chalk.red('Error'), e);
         });
     },
 
@@ -132,7 +133,7 @@ var ChallengeManager = {
             console.log(`Send change emails for ${challenge.name}`);
         }).catch(e => {
             // Catch error but don't let it stop the process.
-            console.error(e);
+            console.error(chalk.red('Error'), e);
         });
     },
 };

@@ -1,5 +1,6 @@
 var ChallengesManager = require('../managers/ChallengesManager');
 var UsersManager = require('../managers/UsersManager');
+var chalk = require('chalk');
 
 // Only run this on every fourth hour.
 var moment = require('moment');
@@ -11,7 +12,7 @@ if (moment().hour() % 4 != 0) {
     }).then(() => {
         process.exit(0);
     }).catch(e => {
-        console.error(e);
+        console.error(chalk.red('Error'), e);
         process.exitCode = 1;
     });
 }

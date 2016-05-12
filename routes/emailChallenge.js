@@ -8,6 +8,7 @@ var Firebase = require('firebase');
 var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var moment = require('moment');
 var UserUtils = require('../bin/react/utils/UserUtils');
+var chalk = require('chalk');
 
 
 
@@ -42,7 +43,7 @@ module.exports = (challengeKey, challenge, changes, changeTypes) => {
                     HtmlBody: htmlBody,
                 }, (error, success) => {
                     if (error) {
-                        console.error('Unable to send via postmark: ' + error.message);
+                        console.error(chalk.red('Error'), 'Unable to send via postmark: ' + error.message);
                     } else {
                         console.info('Sent to postmark for delivery');
                     }

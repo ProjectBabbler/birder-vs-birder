@@ -9,6 +9,7 @@ require('babel-register')({});
 var app = require('./app');
 var debug = require('debug')('birder-vs-birder:server');
 var http = require('http');
+var chalk = require('chalk');
 app.locals.newrelic = newrelic;
 
 /**
@@ -67,11 +68,11 @@ function onError(error) {
     // handle specific listen errors with friendly messages
     switch (error.code) {
         case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
+            console.error(chalk.red('Error'), bind + ' requires elevated privileges');
             process.exit(1);
             break;
         case 'EADDRINUSE':
-            console.error(bind + ' is already in use');
+            console.error(chalk.red('Error'), bind + ' is already in use');
             process.exit(1);
             break;
         default:

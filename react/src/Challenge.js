@@ -11,6 +11,7 @@ var StackedList = require('./StackedList');
 var { Link } = require('react-router');
 var UserUtils = require('../utils/UserUtils');
 var AddFriendsModal = require('./AddFriendsModal');
+var chalk = require('chalk');
 
 
 
@@ -70,7 +71,7 @@ var Challenge = Radium(React.createClass({
         ps.push(this.challengesRef.set(null));
 
         Promise.all(ps).catch((e) => {
-            console.error(e);
+            console.error(chalk.red('Error'), e);
             this.setState({
                 deleting: false,
             });

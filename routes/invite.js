@@ -9,6 +9,7 @@ var ReactDOMServer = require('react-dom/server');
 var React = require('react');
 var postmark = require('postmark');
 var client = new postmark.Client(Keys.postmark);
+var chalk = require('chalk');
 
 
 
@@ -58,7 +59,7 @@ router.post('/', (req, res) => {
                         })),
                     }, (error, success) => {
                         if (error) {
-                            console.error('Unable to send via postmark: ' + error.message);
+                            console.error(chalk.red('Error'), 'Unable to send via postmark: ' + error.message);
                             resolve();
                         } else {
                             console.info('Sent to postmark for delivery');
@@ -75,7 +76,7 @@ router.post('/', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send();
     }).catch((e) => {
-        console.error(e);
+        console.error(chalk.red('Error'), e);
         res.status(500);
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({
