@@ -24,6 +24,6 @@ gulp.task('webpack', (callback) => {
     });
 });
 
-gulp.task('watch', () => {
+gulp.task('watch', ['build'], () => {
     gulp.watch(['./react/**'], ['compile-js']);
 });
