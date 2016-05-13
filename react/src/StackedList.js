@@ -52,7 +52,7 @@ var StackedList = React.createClass({
                                 width: 50,
                                 textAlign: 'right',
                             }}>
-                                {value}
+                                {m.customValueRender ? m.customValueRender : value}
                             </div>
                         </div>
                     );

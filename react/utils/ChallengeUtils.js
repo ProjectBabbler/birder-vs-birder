@@ -58,7 +58,7 @@ var ChallengeUtils = {
 
             return Promise.all(ps);
         });
-    }
+    },
 };
 
 module.exports = ChallengeUtils;

@@ -5,17 +5,18 @@ var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
 var { Label, DropdownButton, Glyphicon }= require('react-bootstrap');
 var Confirm = require('react-confirm-bootstrap');
-var Radium = require('radium');
 var EditChallengeModal = require('./EditChallengeModal');
 var StackedList = require('./StackedList');
 var { Link } = require('react-router');
 var UserUtils = require('../utils/UserUtils');
 var AddFriendsModal = require('./AddFriendsModal');
 var chalk = require('chalk');
+var InviteeMenu = require('./InviteeMenu');
+var MenuItem = require('./MenuItem');
 
 
 
-var Challenge = Radium(React.createClass({
+var Challenge = React.createClass({
     mixins: [ReactFireMixin],
 
     contextTypes: {
@@ -32,8 +33,8 @@ var Challenge = Radium(React.createClass({
     },
 
     componentWillMount() {
-        this.challengesRef = firebaseRef.child('challenges').child(this.props.id);
-        this.challengesRef.child('members').on('value', snap => {
+        this.challengeRef = firebaseRef.child('challenges').child(this.props.id);
+        this.challengeRef.child('members').on('value', snap => {
             var ps = [];
             snap.forEach(member => {
                 ps.push(new Promise((resolve, reject) => {
@@ -58,6 +59,8 @@ var Challenge = Radium(React.createClass({
                 });
             });
         });
+
+        this.bindAsArray(this.challengeRef.child('invites'), 'invites');
     },
 
     onDelete() {
@@ -68,7 +71,7 @@ var Challenge = Radium(React.createClass({
         this.state.members.forEach(user => {
             ps.push(firebaseRef.child('users').child(user.userKey).child('challenges').child(this.props.id).set(null));
         });
-        ps.push(this.challengesRef.set(null));
+        ps.push(this.challengeRef.set(null));
 
         Promise.all(ps).catch((e) => {
             console.error(chalk.red('Error'), e);
@@ -79,7 +82,7 @@ var Challenge = Radium(React.createClass({
     },
 
     componentWillUnmount() {
-        this.challengesRef.child('members').off('value');
+        this.challengeRef.child('members').off('value');
     },
 
     onEdit() {
@@ -95,22 +98,6 @@ var Challenge = Radium(React.createClass({
     },
 
     renderSettings() {
-        var menuStyle = {
-            display: 'block',
-            padding: '3px 20px',
-            clear: 'both',
-            fontWeight: '400',
-            lineHeight: '1.42857143',
-            color: '#333 !important',
-            whiteSpace: 'nowrap',
-
-            ':hover': {
-                color: '#262626',
-                textDecoration: 'none',
-                backgroundColor: '#f5f5f5',
-            },
-        };
-
         return (
             <div>
                 <DropdownButton
@@ -118,16 +105,16 @@ var Challenge = Radium(React.createClass({
                     title={<Glyphicon glyph="cog" />}
                     id={`delete-${this.props.id}`}
                     bsSize="xsmall">
-                    <div onClick={this.onInvite} style={menuStyle} key="invite">Invite</div>
+                    <MenuItem onClick={this.onInvite} key="invite">Invite</MenuItem>
                     {this.isOwner() ? [
-                        <div onClick={this.onEdit} style={menuStyle} key="edit">Edit</div>,
+                        <MenuItem onClick={this.onEdit} key="edit">Edit</MenuItem>,
                         <Confirm
                             key="confirm"
                             onConfirm={this.onDelete}
                             body="Are you sure you want to delete this challenge? It can't be undone"
                             confirmText="Confirm"
                             title={`Delete "${this.props.challenge.name}"`}>
-                            <div className="test-delete-challenge" style={menuStyle} key="delete">Delete</div>
+                            <MenuItem className="test-delete-challenge" key="delete">Delete</MenuItem>
                         </Confirm>
                     ] : null}
                 </DropdownButton>
@@ -176,6 +163,16 @@ var Challenge = Radium(React.createClass({
             };
         });
 
+        stackedItems = stackedItems.concat(
+            this.state.invites.map(i => {
+                return {
+                    value: 0,
+                    label: i.email,
+                    customValueRender: <InviteeMenu {...i} challengeRef={this.challengeRef} />,
+                };
+            })
+        );
+
         return (
             <HomePanel>
                 <div style={{
@@ -201,7 +198,7 @@ var Challenge = Radium(React.createClass({
             </HomePanel>
         );
     },
-}));
+});
 
 var ChallengeWrapper = React.createClass({
     mixins: [ReactFireMixin],
@@ -213,8 +210,8 @@ var ChallengeWrapper = React.createClass({
     },
 
     componentWillMount() {
-        this.challengesRef = firebaseRef.child('challenges').child(this.props.id);
-        this.bindAsObject(this.challengesRef, 'challenge');
+        this.challengeRef = firebaseRef.child('challenges').child(this.props.id);
+        this.bindAsObject(this.challengeRef, 'challenge');
     },
 
     render() {
