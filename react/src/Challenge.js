@@ -163,15 +163,17 @@ var Challenge = React.createClass({
             };
         });
 
-        stackedItems = stackedItems.concat(
-            this.state.invites.map(i => {
-                return {
-                    value: 0,
-                    label: i.email,
-                    customValueRender: <InviteeMenu {...i} challengeRef={this.challengeRef} />,
-                };
-            })
-        );
+        var inviteItems = this.state.invites.filter(i => {
+            return this.isOwner() || i.inviter == this.context.authData.uid;
+        }).map(i => {
+            return {
+                value: 0,
+                label: i.email,
+                customValueRender: <InviteeMenu {...i} challengeRef={this.challengeRef} />,
+            };
+        });
+
+        stackedItems = stackedItems.concat(inviteItems);
 
         return (
             <HomePanel>
