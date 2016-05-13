@@ -1,4 +1,5 @@
 # Birder Vs Birder
+![Logo](https://github.com/ProjectBabbler/birder-vs-birder/blob/master/public/static/images/logo.png "Birder vs Birder")
 It's not just for the birds.  Track and compete with your friends on who can see the most birds.
 
 ## Set up
