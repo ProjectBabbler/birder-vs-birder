@@ -1,8 +1,10 @@
 # Birder Vs Birder
 <p align="center">
-<img src="https://github.com/ProjectBabbler/birder-vs-birder/blob/master/public/static/images/logo.png"/>
-<br/>
-It's not just for the birds.  Track and compete with your friends on who can see the most birds.
+    <img src="https://github.com/ProjectBabbler/birder-vs-birder/blob/master/public/static/images/logo.png"/>
+    <br/>
+    <strong>It's not just for the birds</strong>
+    <br/>
+    Track and compete with your friends on who can see the most birds.
 </p>
 
 ## Set up
