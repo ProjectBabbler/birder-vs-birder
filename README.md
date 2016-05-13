@@ -28,3 +28,9 @@ After that you can run the dev server
 ```
 npm run dev
 ```
+
+### Running things in the command line or console
+Use heroku to run node on the command line.  This way all the config variables will be loaded into the context correctly.
+```
+heroku local:run node ./optional/file/to/run.js
+```
