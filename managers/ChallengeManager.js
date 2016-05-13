@@ -26,7 +26,7 @@ var ChallengeManager = {
                 });
         }).catch(e => {
             // Catch error but don't let it stop the process.
-            console.error(chalk.red('Error'), e);
+            console.error(chalk.red('Error ChallengeManager.updateSnapshot'), cid, e);
         });
     },
 
