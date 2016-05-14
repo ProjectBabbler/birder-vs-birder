@@ -11,10 +11,6 @@ var removeUser = (ref, userSnapshot) => {
     var ps = [];
     var userData = userSnapshot.val();
     if (userData.email.indexOf('projectbabbler+test+') == 0) {
-        ps.push(ref.removeUser({
-            email: userData.email,
-            password: 'babblebabble',
-        }));
         ps.push(ref.child('users').child(userSnapshot.key()).set(null));
         ps.push(ref.child('ebird/totals').child(userSnapshot.key()).set(null));
         var password = cryptr.decrypt(userData.ebird_password);
