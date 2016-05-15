@@ -36,9 +36,9 @@ var renderRow = (userKey, change, i) => {
         changeList = change.list.sort((a, b) => {
             return new Date(b.date) - new Date(a.date);
         });
-        changeList = changeList.splice(0, 3).map(s => {
+        changeList = changeList.splice(0, Math.min(diff, 3)).map(s => {
             return (
-                <div key={s.commonName}>{s.commonName}</div>
+                <div key={s.commonName} style={{whiteSpace: 'nowrap'}}>{s.commonName}</div>
             );
         });
         if (diff > 3) {
@@ -89,7 +89,7 @@ var ChallengeList = (props) => {
                     <th>Rank</th>
                     <th>Name</th>
                     <th>Total</th>
-                    <th></th>
+                    <th>New Birds</th>
                 </tr>
             </thead>
             <tbody>
