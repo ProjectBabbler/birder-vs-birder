@@ -40,7 +40,7 @@ var SectionList = (props) => {
                 <td style={{
                     ...Styles.table.td,
                 }}>
-                    {row.oldYear} <DiffArrow last={row.oldYear} current={row.newYear} />
+                    {row.newYear} <DiffArrow last={row.oldYear} current={row.newYear} />
                 </td>
             </tr>
         );
