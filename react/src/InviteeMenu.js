@@ -17,7 +17,7 @@ var InviteeMenu = React.createClass({
         this.setState({
             loading: true,
         });
-        this.props.challengeRef.child('invites').child(this.props['.key']).child('sent').set(true)
+        this.props.challengeRef.child('invites').child(this.props['.key']).child('sent').set(false)
             .then(() => {
                 return axios.post('/api/emailInvites', {
                     challengeId: this.props.challengeRef.key(),
