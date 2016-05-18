@@ -67,6 +67,10 @@ app.get('/user/:username', (req, res) => {
     });
 });
 
+app.get('/.well-known/acme-challenge/TYJ9paUmeBdSr5T6tmU8_WHKWBOYbiq781KuqzL2jqM', (req, res) => {
+    res.send('TYJ9paUmeBdSr5T6tmU8_WHKWBOYbiq781KuqzL2jqM.TN326QZJrp-5j7vR5nUTAylRMGZe7UESzpQxl8__itE');
+});
+
 app.get('*', (req, res) => {
     var cookie = new CookieDough(req);
     var signedIn = cookie.get('signedIn') === 'true';
