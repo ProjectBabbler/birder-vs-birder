@@ -11,13 +11,13 @@ var compression = require('compression');
 var favicon = require('serve-favicon');
 var swig = require('swig');
 var UserUtils = require('./bin/react/utils/UserUtils');
-import { renderToString } from 'react-dom/server';
-import { match, RouterContext } from 'react-router';
-import routes from './bin/react/src/routes';
+var { renderToString } = require('react-dom/server');
+var { match, RouterContext } = require('react-router');
+var routes = require('./bin/react/src/routes');
 var React = require('react');
 var CookieDough = require('cookie-dough');
 var cookieParser = require('cookie-parser');
-import ContextProvider from './bin/react/src/ContextProvider';
+var ContextProvider = require('./bin/react/src/ContextProvider');
 
 
 var app = express();
