@@ -87,7 +87,7 @@ var UserManager = {
 };
 
 for (var key in UserManager) {
-    UserManager[key] = deferred.gate(UserManager[key], 5);
+    UserManager[key] = deferred.gate(UserManager[key], 3);
 }
 
 module.exports = UserManager;
