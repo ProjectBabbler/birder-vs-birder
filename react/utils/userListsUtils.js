@@ -6,6 +6,8 @@ var cryptr = new Cryptr(Keys.cryptr);
 var ironcache = require('iron-cache');
 var client = ironcache.createClient({ project: Keys.ironcacheProject, token: Keys.ironcacheToken });
 var birdList = require('bird-list');
+var UserUtils = require('./UserUtils');
+
 
 var getCacheKey = (user, code, time) => {
     return `${user.data.ebird_username}${code}${time}`;
@@ -111,7 +113,18 @@ var getLists = (users, code, time, options={force: false}) => {
     return Promise.all(ps);
 };
 
+var getListByUserId = (uid, code, time, options={force: false}) => {
+    return UserUtils.getUserData(uid).then(data => {
+        return getList({
+            data: data,
+        }, code, time);
+    }).then(list => {
+        return list.list;
+    });
+};
+
 module.exports = {
     getLists,
     getList,
+    getListByUserId,
 };

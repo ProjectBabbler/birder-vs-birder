@@ -7,6 +7,24 @@ var ReactDOMServer = require('react-dom/server');
 var React = require('react');
 var UserUtils = require('../bin/react/utils/UserUtils');
 var chalk = require('chalk');
+var userListsUtils = require('../bin/react/utils/userListsUtils');
+
+var getLists = (uid, code, o, c) => {
+    return Promise.all([
+        userListsUtils.getListByUserId(uid, code, 'life'),
+        userListsUtils.getListByUserId(uid, code, 'year'),
+    ]).then(lists => {
+        return {
+            name: c.name,
+            oldLife: o.life,
+            newLife: c.life,
+            lifeList: lists[0],
+            oldYear: o.year,
+            newYear: c.year,
+            yearList: lists[1],
+        };
+    });
+};
 
 var getMessageForList = (uid, list) => {
     return Promise.all([
@@ -18,25 +36,21 @@ var getMessageForList = (uid, list) => {
         var current = results[0].val();
         var old = results[1].val() || {};
 
-        var rows = [];
+        var rowPromises = [];
         for (var code in current) {
             var c = current[code];
             var o = old[code] || { life: 0, year: 0, };
             if (o.life != c.life || o.year != c.year) {
-                rows.push({
-                    name: c.name,
-                    oldLife: o.life,
-                    newLife: c.life,
-                    oldYear: o.year,
-                    newYear: c.year,
-                });
+                rowPromises.push(getLists(uid, code, o, c));
             }
         }
 
-        return {
-            list,
-            lineItems: rows,
-        };
+        return Promise.all(rowPromises).then(rows => {
+            return {
+                list,
+                lineItems: rows,
+            };
+        });
     });
 };
 

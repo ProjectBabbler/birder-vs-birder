@@ -1,6 +1,7 @@
 var React = require('react');
 var Styles = require('./Styles');
 var DiffArrow = require('./DiffArrow');
+var ListDiff = require('./ListDiff');
 
 var renderRow = (userKey, change, i) => {
     var nameStyles;
@@ -29,26 +30,7 @@ var renderRow = (userKey, change, i) => {
     }
 
     var rowStyle = i % 2 == 0 ? Styles.table.evenRow : Styles.table.oddRow;
-
-    var changeList;
     var diff = change.currentTotal - change.lastTotal;
-    if (diff > 0) {
-        changeList = change.list.sort((a, b) => {
-            return new Date(b.date) - new Date(a.date);
-        });
-        changeList = changeList.splice(0, Math.min(diff, 3)).map(s => {
-            return (
-                <div key={s.commonName} style={{whiteSpace: 'nowrap'}}>{s.commonName}</div>
-            );
-        });
-        if (diff > 3) {
-            if (diff == 4) {
-                changeList.push('plus 1 other');
-            } else {
-                changeList.push(`plus ${diff - 3} others`);
-            }
-        }
-    }
 
     return (
         <tr key={i} style={{
@@ -75,7 +57,7 @@ var renderRow = (userKey, change, i) => {
             <td style={{
                 ...Styles.table.td,
             }}>
-                {changeList}
+                <ListDiff diff={diff} list={change.list} />
             </td>
         </tr>
     );

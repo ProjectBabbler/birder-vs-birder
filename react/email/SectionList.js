@@ -1,6 +1,8 @@
 var React = require('react');
 var Styles = require('./Styles');
 var DiffArrow = require('./DiffArrow');
+var ListDiff = require('./ListDiff');
+
 
 var SectionList = (props) => {
     var titleStyle = {
@@ -40,7 +42,17 @@ var SectionList = (props) => {
                 <td style={{
                     ...Styles.table.td,
                 }}>
+                    <ListDiff diff={row.newLife - row.oldLife} list={row.lifeList} />
+                </td>
+                <td style={{
+                    ...Styles.table.td,
+                }}>
                     {row.newYear} <DiffArrow last={row.oldYear} current={row.newYear} />
+                </td>
+                <td style={{
+                    ...Styles.table.td,
+                }}>
+                    <ListDiff diff={row.newYear - row.oldYear} list={row.yearList} />
                 </td>
             </tr>
         );
@@ -58,7 +70,9 @@ var SectionList = (props) => {
                     <tr>
                         <th style={thStyle}>Name</th>
                         <th style={thStyle}>Life Total</th>
+                        <th style={thStyle}>New Life Birds</th>
                         <th style={thStyle}>Year Total</th>
+                        <th style={thStyle}>New Year Birds</th>
                     </tr>
                 </thead>
                 <tbody>
