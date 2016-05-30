@@ -14,8 +14,9 @@ var SectionList = (props) => {
     };
 
     if (!props.lineItems.length) {
+        // No updates for this section.
         return (
-            <p style={titleStyle}>Sorry no updates for your {props.list} list this week.  Good luck birding.</p>
+            <div />
         );
     }
 
