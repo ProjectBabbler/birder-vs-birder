@@ -58,7 +58,10 @@ var UsersManager = {
                 var userData = cs.val();
                 var userKey = cs.key();
                 console.log(`Gathering and emailing for ${userKey}`);
-                ps.push(emailUser(userKey, userData.email));
+                ps.push(emailUser(userKey, userData.email).catch(e => {
+                    // Log the error, but don't block all updates.
+                    console.error(chalk.red('Error'), userKey, userData.email, e);
+                }));
             });
 
             return Promise.all(ps);
