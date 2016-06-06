@@ -4,6 +4,9 @@ var Keys = require('../utils/Keys');
 var UserManager = require('./UserManager');
 var emailUser = require('../routes/emailUser');
 var chalk = require('chalk');
+var deferred = require('deferred');
+
+emailUser = deferred.gate(emailUser, 3);
 
 var getUsers = () => {
     var ref = firebaseRef.child('users');
