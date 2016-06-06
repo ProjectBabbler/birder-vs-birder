@@ -55,6 +55,7 @@ var getMessageForList = (uid, list) => {
 };
 
 module.exports = (uid, email) => {
+    console.log(`Emailing for ${uid} ${email}`);
     return new Promise((resolve, reject) => {
         Promise.all([
             getMessageForList(uid, 'region'),
