@@ -42,7 +42,7 @@
     "cryptr": "1.0.0",
     "css-loader": "0.23.1",
     "deferred": "0.7.5",
-    "ebird": "0.5.0",
+    "ebird": "0.5.1",
     "email-validator": "1.0.4",
     "express": "4.13.4",
     "firebase": "2.4.2",
@@ -63,7 +63,7 @@
     "react-bootstrap": "0.29.4",
     "react-confirm-bootstrap": "2.1.2",
     "react-currency-masked-input": "1.0.1",
-    "react-data-grid": "0.14.42",
+    "react-data-grid": "0.14.43",
     "react-doc-meta": "0.2.0",
     "react-dom": "15.1.0",
     "react-highcharts": "8.3.2",
@@ -85,7 +85,7 @@
   "devDependencies": {
     "eslint": "^2.11.1",
     "eslint-plugin-react": "^5.1.1",
-    "nightwatch": "^0.9.1",
+    "nightwatch": "^0.9.3",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-hot-middleware": "^2.10.0"
   },
