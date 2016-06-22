@@ -6,7 +6,7 @@ if (process.env.BROWSER) {
         databaseURL: 'https://blazing-inferno-9225.firebaseio.com',
     };
 
-    let firebaseApp = firebase.initializeApp(config);
+    let firebaseApp = firebase.initializeApp(config, 'birder-vs-birder');
     module.exports = firebaseApp;
 } else {
     module.exports = require('../../firebaseNode');

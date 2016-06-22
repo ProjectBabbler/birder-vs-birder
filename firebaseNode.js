@@ -10,5 +10,5 @@ var config = {
         client_email: 'birder-vs-birder-server@blazing-inferno-9225.iam.gserviceaccount.com',
     }
 };
-let firebaseApp = firebase.initializeApp(config);
+let firebaseApp = firebase.initializeApp(config, 'birder-vs-birder-server');
 module.exports = firebaseApp;
