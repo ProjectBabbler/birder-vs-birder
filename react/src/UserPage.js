@@ -104,7 +104,7 @@ var UserPage = React.createClass({
             <div style={{
                 position: 'relative',
             }}>
-                { this.state.userData.shareImage ? (
+                {this.state.userData.shareImage ? (
                     <DocMeta
                         tags={[
                             {
