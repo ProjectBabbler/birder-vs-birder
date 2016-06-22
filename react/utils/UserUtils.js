@@ -1,6 +1,6 @@
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var moment = require('moment');
+var firebase = require('../firebase');
+var firebaseRef = firebase.database();
 
 var getKey = (val) => {
     if (val == undefined) {
@@ -13,7 +13,7 @@ var getKey = (val) => {
 
 var UserUtils = {
     getRecentTotalsRef(uid) {
-        var userRef = firebaseRef.child('ebird/totals').child(uid);
+        var userRef = firebaseRef.ref('ebird/totals').child(uid);
         return userRef.orderByKey().limitToLast(1).once('value').then(snap => {
             return userRef.child(getKey(snap.val()));
         });
@@ -21,21 +21,21 @@ var UserUtils = {
 
     getYesterdayTotalsRef(uid) {
         return firebaseRef
-            .child('ebird/totals')
+            .ref('ebird/totals')
             .child(uid)
             .child(moment.utc().startOf('day').subtract(1, 'days').valueOf());
     },
 
     getLastWeekTotalsRef(uid) {
         return firebaseRef
-            .child('ebird/totals')
+            .ref('ebird/totals')
             .child(uid)
             .child(moment.utc().startOf('day').subtract(7, 'days').valueOf());
     },
 
     getUserData(uid) {
         return firebaseRef
-            .child('users')
+            .ref('users')
             .child(uid)
             .once('value').then(snap => {
                 if (snap) {
@@ -48,7 +48,7 @@ var UserUtils = {
 
     getUserByName(username) {
         return firebaseRef
-            .child('users')
+            .ref('users')
             .orderByChild('ebird_username')
             .equalTo(username)
             .once('value').then(snap => {
@@ -66,7 +66,7 @@ var UserUtils = {
 
     saveFBShareImage(uid, data) {
         return firebaseRef
-            .child('users')
+            .ref('users')
             .child(uid)
             .child('shareImage')
             .set(data);
@@ -74,7 +74,7 @@ var UserUtils = {
 
     getFBShareImage(uid) {
         return firebaseRef
-            .child('users')
+            .ref('users')
             .child(uid)
             .child('shareImage')
             .once('value').then(snap => {

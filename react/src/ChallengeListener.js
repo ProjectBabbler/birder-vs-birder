@@ -1,7 +1,8 @@
 var React = require('react');
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
+
+var firebase = require('../firebase');
+var firebaseRef = firebase.database();
 
 
 var ChallengeListener = React.createClass({
@@ -14,7 +15,7 @@ var ChallengeListener = React.createClass({
     },
 
     componentWillMount() {
-        var challengeRef = firebaseRef.child('challenges').child(this.props.id);
+        var challengeRef = firebaseRef.ref('challenges').child(this.props.id);
         this.bindAsObject(challengeRef, 'challenge');
     },
 

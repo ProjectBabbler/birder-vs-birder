@@ -1,7 +1,5 @@
 var React = require('react');
 var HomePanel = require('./HomePanel');
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
 var { Label, DropdownButton, Glyphicon }= require('react-bootstrap');
 var Confirm = require('react-confirm-bootstrap');
@@ -13,6 +11,9 @@ var AddFriendsModal = require('./AddFriendsModal');
 var chalk = require('chalk');
 var InviteeMenu = require('./InviteeMenu');
 var MenuItem = require('./MenuItem');
+
+var firebase = require('../firebase');
+var firebaseRef = firebase.database();
 
 
 
@@ -33,20 +34,20 @@ var Challenge = React.createClass({
     },
 
     componentWillMount() {
-        this.challengeRef = firebaseRef.child('challenges').child(this.props.id);
+        this.challengeRef = firebaseRef.ref('challenges').child(this.props.id);
         this.challengeRef.child('members').on('value', snap => {
             var ps = [];
             snap.forEach(member => {
                 ps.push(new Promise((resolve, reject) => {
                     Promise.all([
-                        firebaseRef.child('users').child(member.key()).once('value'),
-                        UserUtils.getRecentTotalsRef(member.key()).then(ref => {
+                        firebaseRef.ref('users').child(member.key).once('value'),
+                        UserUtils.getRecentTotalsRef(member.key).then(ref => {
                             return ref.child(this.props.challenge.code).once('value');
                         }),
                     ]).then(result => {
                         return {
                             user: result[0].val(),
-                            userKey: result[0].key(),
+                            userKey: result[0].key,
                             total: result[1].val() || {},
                         };
                     }).then(resolve).catch(reject);
@@ -69,7 +70,7 @@ var Challenge = React.createClass({
         });
         var ps = [];
         this.state.members.forEach(user => {
-            ps.push(firebaseRef.child('users').child(user.userKey).child('challenges').child(this.props.id).set(null));
+            ps.push(firebaseRef.ref('users').child(user.userKey).child('challenges').child(this.props.id).set(null));
         });
         ps.push(this.challengeRef.set(null));
 
@@ -212,7 +213,7 @@ var ChallengeWrapper = React.createClass({
     },
 
     componentWillMount() {
-        this.challengeRef = firebaseRef.child('challenges').child(this.props.id);
+        this.challengeRef = firebaseRef.ref('challenges').child(this.props.id);
         this.bindAsObject(this.challengeRef, 'challenge');
     },
 

@@ -2,9 +2,10 @@ var React = require('react');
 var { FormControl, FormGroup, Button, Alert } = require('react-bootstrap');
 var axios = require('axios');
 var LoadingOverlay = require('./LoadingOverlay');
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var EmailForm = require('./EmailForm');
+
+var firebase = require('../firebase');
+var firebaseRef = firebase.database();
 
 
 
@@ -41,19 +42,13 @@ var SignIn = React.createClass({
             var ebirdData = response.data;
             console.log('successful ebird login');
             // Create Firebase User
-            return firebaseRef.createUser({
-                email: this.state.email,
-                password: this.state.password,
-            }).then((userData) => {
+            return firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((userData) => {
                 console.log('successful created an account');
                 // Log In.
-                return firebaseRef.authWithPassword({
-                    email: this.state.email,
-                    password: this.state.password,
-                });
+                return firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
             }).then((userData) => {
                 console.log('successful logged in');
-                var usersRef = firebaseRef.child('users');
+                var usersRef = firebaseRef.ref('users');
                 return usersRef.child(userData.uid).set({
                     email: this.state.email,
                     fullname: this.state.fullname,

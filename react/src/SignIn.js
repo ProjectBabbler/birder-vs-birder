@@ -1,9 +1,7 @@
 var React = require('react');
 var { FormControl, FormGroup, Button, Alert } = require('react-bootstrap');
 var LoadingOverlay = require('./LoadingOverlay');
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
-
+var firebase = require('../firebase');
 
 var SignIn = React.createClass({
     getInitialState() {
@@ -29,10 +27,7 @@ var SignIn = React.createClass({
             error: '',
         });
 
-        firebaseRef.authWithPassword({
-            email: this.state.email,
-            password: this.state.password,
-        }).then(() => {
+        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then(() => {
             this.props.onSignIn();
         }).catch((error) => {
             this.setState({

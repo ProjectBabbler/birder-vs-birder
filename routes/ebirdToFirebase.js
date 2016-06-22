@@ -1,14 +1,14 @@
 'use strict';
 
 var ebird = require('ebird');
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var RateLimiter = require('limiter').RateLimiter;
 var limiter = new RateLimiter(60 / 3, 'minute');
 var Keys = require('../utils/Keys');
 var Cryptr = require('cryptr');
 var cryptr = new Cryptr(Keys.cryptr);
 var moment = require('moment');
+var firebase = require('../firebaseNode');
+var firebaseRef = firebase.database();
 
 class ebirdToFirebase {
     constructor(uid) {
@@ -17,10 +17,8 @@ class ebirdToFirebase {
     }
 
     auth() {
-        var ref = firebaseRef.child('users').child(this.uid);
-        return ref.authWithCustomToken(Keys.firebase).then(() => {
-            return ref.once('value');
-        }).then((s) => {
+        var ref = firebaseRef.ref('users').child(this.uid);
+        return ref.once('value').then((s) => {
             var userData = s.val();
             var password = cryptr.decrypt(userData.ebird_password);
             return this.ebird.auth(userData.ebird_username, password);
@@ -28,8 +26,8 @@ class ebirdToFirebase {
     }
 
     totals() {
-        var tempRef = firebaseRef.child('temp/ebird/totals');
-        var totalsRef = firebaseRef.child('ebird/totals');
+        var tempRef = firebaseRef.ref('temp/ebird/totals');
+        var totalsRef = firebaseRef.ref('ebird/totals');
         tempRef   =   tempRef.child(this.uid).child(moment().utc().startOf('day').valueOf());
         totalsRef = totalsRef.child(this.uid).child(moment().utc().startOf('day').valueOf());
         var handleData = (list, data) => {
@@ -73,12 +71,12 @@ class ebirdToFirebase {
     }
 
     lists() {
-        var subsRef = firebaseRef.child('ebird/subscriptions').child(this.uid);
+        var subsRef = firebaseRef.ref('ebird/subscriptions').child(this.uid);
         return subsRef.once('value').then((s) => {
             var subs = s.val();
             var handleListData = (code, timeFrame, year, data) => {
                 if (data) {
-                    var listsRef = firebaseRef.child('ebird/lists');
+                    var listsRef = firebaseRef.ref('ebird/lists');
                     return new Promise((resolve, reject) => {
                         var ps = [];
                         var rowRef = listsRef.child(this.uid).child(code).child(timeFrame);

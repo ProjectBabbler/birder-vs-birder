@@ -2,10 +2,11 @@ var React = require('react');
 import { browserHistory } from 'react-router';
 var SignupModal = require('./SignupModal');
 var SignInModal = require('./SignInModal');
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var LoadingOverlay = require('./LoadingOverlay');
 var chalk = require('chalk');
+
+var firebase = require('../firebase');
+var firebaseRef = firebase.database();
 
 
 var Accept = React.createClass({
@@ -22,7 +23,7 @@ var Accept = React.createClass({
         var challengeId = query.challengeId;
         var email = query.email;
 
-        var challengeRef = firebaseRef.child('challenges').child(challengeId);
+        var challengeRef = firebaseRef.ref('challenges').child(challengeId);
 
         var ps = [];
         this.setState({
@@ -30,12 +31,12 @@ var Accept = React.createClass({
         });
 
         ps.push(challengeRef.child('members').child(this.props.authData.uid).set(true));
-        ps.push(firebaseRef.child('users').child(this.props.authData.uid).child('challenges').child(challengeId).set(true));
+        ps.push(firebaseRef.ref('users').child(this.props.authData.uid).child('challenges').child(challengeId).set(true));
 
         ps.push(challengeRef.child('invites').orderByChild('email').equalTo(email).once('value').then((snap) => {
             var ps = [];
             snap.forEach(subSnap => {
-                ps.push(challengeRef.child('invites').child(subSnap.key()).set(null));
+                ps.push(challengeRef.child('invites').child(subSnap.key).set(null));
             });
             return Promise.all(ps);
         }));
@@ -85,8 +86,8 @@ var Accept = React.createClass({
         this.checkMatch();
 
         var ps = [];
-        ps.push(firebaseRef.child('users').orderByChild('email').equalTo(email).once('value'));
-        ps.push(firebaseRef.child('challenges').child(challengeId).once('value'));
+        ps.push(firebaseRef.ref('users').orderByChild('email').equalTo(email).once('value'));
+        ps.push(firebaseRef.ref('challenges').child(challengeId).once('value'));
         Promise.all(ps).then(results => {
             this.setState({
                 user: results[0].val(),

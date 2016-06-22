@@ -1,22 +1,20 @@
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
-var Keys = require('../utils/Keys');
 var UserManager = require('./UserManager');
 var emailUser = require('../routes/emailUser');
 var chalk = require('chalk');
 var deferred = require('deferred');
 
+var firebase = require('../firebaseNode');
+var firebaseRef = firebase.database();
+
 emailUser = deferred.gate(emailUser, 3);
 
 var getUsers = () => {
-    var ref = firebaseRef.child('users');
-    return ref.authWithCustomToken(Keys.firebase).then(() => {
-        return ref.once('value');
-    }).then((s) => {
+    var ref = firebaseRef.ref('users');
+    return ref.once('value').then((s) => {
         var ps = [];
         s.forEach(cs => {
             var userData = cs.val();
-            var userKey = cs.key();
+            var userKey = cs.key;
             ps.push({
                 key: userKey,
                 data: userData,
@@ -29,13 +27,11 @@ var getUsers = () => {
 
 var UsersManager = {
     updateTotals: () => {
-        var ref = firebaseRef.child('users');
-        return ref.authWithCustomToken(Keys.firebase).then(() => {
-            return ref.once('value');
-        }).then((s) => {
+        var ref = firebaseRef.ref('users');
+        return ref.once('value').then((s) => {
             var ps = [];
             s.forEach(cs => {
-                var key = cs.key();
+                var key = cs.key;
                 ps.push(new Promise((resolve, reject) => {
                     UserManager.fetchTotals(key)
                         .then(resolve)
@@ -52,14 +48,12 @@ var UsersManager = {
     },
 
     emailWeekly: () => {
-        var ref = firebaseRef.child('users');
-        return ref.authWithCustomToken(Keys.firebase).then(() => {
-            return ref.once('value');
-        }).then((s) => {
+        var ref = firebaseRef.ref('users');
+        return ref.once('value').then((s) => {
             var ps = [];
             s.forEach(cs => {
                 var userData = cs.val();
-                var userKey = cs.key();
+                var userKey = cs.key;
                 ps.push(emailUser(userKey, userData.email).catch(e => {
                     // Log the error, but don't block all updates.
                     console.error(chalk.red('Error'), userKey, userData.email, e);

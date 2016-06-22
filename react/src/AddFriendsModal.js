@@ -1,10 +1,11 @@
 var React = require('react');
 var { Button, Modal, Alert } = require('react-bootstrap');
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var LoadingOverlay = require('./LoadingOverlay');
 var axios = require('axios');
 var FriendsList = require('./FriendsList');
+
+var firebase = require('../firebase');
+var firebaseRef = firebase.database();
 
 
 var AddFriendsModal = React.createClass({
@@ -35,7 +36,7 @@ var AddFriendsModal = React.createClass({
             loading: true,
         });
 
-        var ref = firebaseRef.child('challenges').child(this.props.challengeId);
+        var ref = firebaseRef.ref('challenges').child(this.props.challengeId);
         var ps = [];
         this.state.friends.forEach(email => {
             var r = ref.child('invites').push();
@@ -47,7 +48,7 @@ var AddFriendsModal = React.createClass({
         });
         Promise.all(ps).then(() => {
             return axios.post('/api/emailInvites', {
-                challengeId: ref.key(),
+                challengeId: ref.key,
             });
         }).then(() => {
             this.close();

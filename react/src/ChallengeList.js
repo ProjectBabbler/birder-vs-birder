@@ -1,11 +1,12 @@
 var React = require('react');
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
 var Challenge = require('./Challenge');
 import CircularProgress from 'material-ui/CircularProgress';
 var { PageHeader } = require('react-bootstrap');
 var CreateChallenge = require('./CreateChallenge');
+
+var firebase = require('../firebase');
+var firebaseRef = firebase.database();
 
 
 
@@ -22,7 +23,7 @@ var ChallengeList = React.createClass({
     },
 
     componentWillMount() {
-        var challengesRef = firebaseRef.child('users').child(this.context.authData.uid).child('challenges');
+        var challengesRef = firebaseRef.ref('users').child(this.context.authData.uid).child('challenges');
         this.bindAsArray(challengesRef, 'challenges');
     },
 

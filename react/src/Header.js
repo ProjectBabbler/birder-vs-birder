@@ -1,12 +1,10 @@
 var React = require('react');
 var { Nav, Navbar, NavItem, NavDropdown, MenuItem } = require('react-bootstrap');
 var { LinkContainer } = require('react-router-bootstrap');
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var { Link } = require('react-router');
 var Donate = require('./Donate');
 import { browserHistory } from 'react-router';
-
+var firebase = require('../firebase');
 
 var Header = React.createClass({
     contextTypes: {
@@ -15,7 +13,7 @@ var Header = React.createClass({
     },
 
     logOut() {
-        firebaseRef.unauth();
+        firebase.auth().signOut();
         browserHistory.push({
             pathname: '/',
         });

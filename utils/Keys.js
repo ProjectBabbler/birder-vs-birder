@@ -7,4 +7,5 @@ module.exports = {
     ironcacheToken: process.env.IRON_CACHE_TOKEN,
     mailchimp: process.env.MAILCHIMP_API,
     newrelic: process.env.NEWRELIC,
+    firebaseServiceKey: process.env.FIREBASE_SERVICE_KEY.replace(/\\n/g, '\n'),
 };

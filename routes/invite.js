@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var Keys = require('../utils/Keys');
 var InviteEmail = require('../bin/react/email/InviteEmail');
 var ReactDOMServer = require('react-dom/server');
@@ -10,6 +8,9 @@ var React = require('react');
 var postmark = require('postmark');
 var client = new postmark.Client(Keys.postmark);
 var chalk = require('chalk');
+
+var firebase = require('../firebaseNode');
+var firebaseRef = firebase.database();
 
 
 
@@ -25,11 +26,9 @@ router.post('/', (req, res) => {
         return;
     }
 
-    var challengeRef = firebaseRef.child('challenges').child(challengeId);
+    var challengeRef = firebaseRef.ref('challenges').child(challengeId);
 
-    challengeRef.authWithCustomToken(Keys.firebase).then(() => {
-        return challengeRef.once('value');
-    }).then(sub => {
+    challengeRef.once('value').then(sub => {
         var ps = [];
         var challenge = sub.val();
         var invites = challenge.invites;
@@ -41,7 +40,7 @@ router.post('/', (req, res) => {
             var email = invites[key].email;
             var inviterId = invites[key].inviter;
 
-            ps.push(firebaseRef.child('users').child(inviterId).once('value').then(inviterSub => {
+            ps.push(firebaseRef.ref('users').child(inviterId).once('value').then(inviterSub => {
                 return new Promise((resolve, reject) => {
                     var inviter = inviterSub.val();
 

@@ -1,12 +1,13 @@
 var React = require('react');
 var Header = require('./Header');
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ReactFireMixin = require('reactfire');
 var Footer = require('./Footer');
 var Ad = require('./Ad');
 var cookie = require('cookie-dough')();
 var UserUtils = require('../utils/UserUtils');
+
+var firebase = require('../firebase');
+var firebaseRef = firebase.database();
 
 var Base = React.createClass({
     mixins: [ReactFireMixin],
@@ -37,7 +38,7 @@ var Base = React.createClass({
 
     componentDidMount() {
         this.listenForUserData();
-        firebaseRef.onAuth(this.onAuthCallback);
+        firebase.auth().onAuthStateChanged(this.onAuthCallback);
     },
 
     componentWillReceiveProps(nextProps) {
@@ -54,7 +55,7 @@ var Base = React.createClass({
 
     listenForUserData() {
         if (this.state.authData && this.state.authData.uid) {
-            var ref = firebaseRef.child('users').child(this.state.authData.uid);
+            var ref = firebaseRef.ref('users').child(this.state.authData.uid);
             if (!this.bound) {
                 this.bindAsObject(ref, 'userData');
                 this.bound = true;
@@ -75,10 +76,6 @@ var Base = React.createClass({
         this.setState({
             authData: authData,
         }, this.listenForUserData);
-    },
-
-    componentWillUnmount() {
-        firebaseRef.offAuth(this.onAuthCallback);
     },
 
     render() {

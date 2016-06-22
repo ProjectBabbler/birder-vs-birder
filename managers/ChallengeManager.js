@@ -1,7 +1,4 @@
 'use strict';
-
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var ChallengeUtils = require('../bin/react/utils/ChallengeUtils');
 var moment = require('moment');
 var emailChallenge = require('../routes/emailChallenge');
@@ -10,13 +7,15 @@ var UserUtils = require('../bin/react/utils/UserUtils');
 var deferred = require('deferred');
 var chalk = require('chalk');
 
+var firebase = require('../firebaseNode');
+var firebaseRef = firebase.database();
 
 var ChallengeManager = {
     updateSnapshot(cid) {
         console.log(`Getting snapshot for challenge ${cid}`);
         return ChallengeUtils.getSnapshot(cid).then(snapshot => {
             return firebaseRef
-                .child('challenges')
+                .ref('challenges')
                 .child(cid)
                 .child('snapshots')
                 .child(moment.utc().startOf('day').valueOf())

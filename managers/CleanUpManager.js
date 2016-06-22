@@ -1,22 +1,22 @@
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var Keys = require('../utils/Keys');
 var moment = require('moment');
 var Cryptr = require('cryptr');
 var cryptr = new Cryptr(Keys.cryptr);
 var deferred = require('deferred');
 
+var firebase = require('../firebaseNode');
+var firebaseRef = firebase.database();
 
-var removeUser = (ref, userSnapshot) => {
+
+var removeUser = (userSnapshot) => {
     var ps = [];
     var userData = userSnapshot.val();
     if (userData.email.indexOf('projectbabbler+test+') == 0) {
-        ps.push(ref.child('users').child(userSnapshot.key()).set(null));
-        ps.push(ref.child('ebird/totals').child(userSnapshot.key()).set(null));
+        ps.push(firebaseRef.ref('users').child(userSnapshot.key).set(null));
+        ps.push(firebaseRef.ref('ebird/totals').child(userSnapshot.key).set(null));
         var password = cryptr.decrypt(userData.ebird_password);
-        ps.push(ref.removeUser({
-            email: userData.email,
-            password: password,
+        ps.push(firebase.auth().signInWithEmailAndPassword(userData.email, password).then(user => {
+            return user.delete();
         }));
     }
 
@@ -26,10 +26,7 @@ removeUser = deferred.gate(removeUser, 5);
 
 var CleanUpManager = {
     cleanUpOldData: () => {
-        var ref = firebaseRef;
-        return ref.authWithCustomToken(Keys.firebase).then(() => {
-            return ref.child('challenges').once('value');
-        }).then((s) => {
+        return firebaseRef.ref('challenges').once('value').then((s) => {
             var ps = [];
             s.forEach(ch => {
                 var challenge = ch.val();
@@ -37,7 +34,7 @@ var CleanUpManager = {
                 var weekOld = moment.utc().startOf('day').subtract(7, 'days').valueOf();
                 for (var time in snapshots) {
                     if (time < weekOld) {
-                        ps.push(ref.child('challenges').child(ch.key()).child('snapshots').child(time).set(null));
+                        ps.push(firebaseRef.ref('challenges').child(ch.key).child('snapshots').child(time).set(null));
                     }
                 }
             });
@@ -46,7 +43,7 @@ var CleanUpManager = {
                 console.log('Old Challenge Snapshots Removed');
             });
         }).then(() => {
-            return ref.child('ebird/totals').once('value');
+            return firebaseRef.ref('ebird/totals').once('value');
         }).then((s) => {
             var ps = [];
             s.forEach(totals => {
@@ -54,7 +51,7 @@ var CleanUpManager = {
                 var twoWeeksOld = moment.utc().startOf('day').subtract(14, 'days').valueOf();
                 for (var date in dates) {
                     if (date < twoWeeksOld) {
-                        ps.push(ref.child('ebird/totals').child(totals.key()).child(date).set(null));
+                        ps.push(firebaseRef.ref('ebird/totals').child(totals.key).child(date).set(null));
                     }
                 }
             });
@@ -63,11 +60,11 @@ var CleanUpManager = {
                 console.log('Old User Totals Removed');
             });
         }).then(() => {
-            return ref.child('users').once('value');
+            return firebaseRef.child('users').once('value');
         }).then((s) => {
             var ps = [];
             s.forEach(user => {
-                ps.push(removeUser(ref, user));
+                ps.push(removeUser(user));
             });
 
             return Promise.all(ps).then(() => {

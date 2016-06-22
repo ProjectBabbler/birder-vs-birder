@@ -1,8 +1,9 @@
 var React = require('react');
 var { FormControl, FormGroup, Button, Alert, Checkbox } = require('react-bootstrap');
 var LoadingOverlay = require('./LoadingOverlay');
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
+
+var firebase = require('../firebase');
+var firebaseRef = firebase.database();
 
 var SettingsPage = React.createClass({
     contextTypes: {
@@ -46,7 +47,7 @@ var SettingsPage = React.createClass({
             error: null,
         });
 
-        var userRef = firebaseRef.child('users').child(this.context.authData.uid);
+        var userRef = firebaseRef.ref('users').child(this.context.authData.uid);
 
         Promise.all([
             userRef.child('fullname').set(this.state.userData.fullname),

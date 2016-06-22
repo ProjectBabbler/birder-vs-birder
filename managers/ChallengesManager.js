@@ -1,18 +1,15 @@
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
-var Keys = require('../utils/Keys');
 var ChallengeManager = require('./ChallengeManager');
 
+var firebase = require('../firebaseNode');
+var firebaseRef = firebase.database();
 
 var ChallengesManager = {
     updateSnapshots: () => {
-        var ref = firebaseRef.child('challenges');
-        return ref.authWithCustomToken(Keys.firebase).then(() => {
-            return ref.once('value');
-        }).then((s) => {
+        var ref = firebaseRef.ref('challenges');
+        return ref.once('value').then((s) => {
             var ps = [];
             s.forEach(cs => {
-                var key = cs.key();
+                var key = cs.key;
                 ps.push(ChallengeManager.updateSnapshot(key));
             });
 
@@ -21,13 +18,11 @@ var ChallengesManager = {
     },
 
     updateCache: () => {
-        var ref = firebaseRef.child('challenges');
-        return ref.authWithCustomToken(Keys.firebase).then(() => {
-            return ref.once('value');
-        }).then((s) => {
+        var ref = firebaseRef.ref('challenges');
+        return ref.once('value').then((s) => {
             var ps = [];
             s.forEach(cs => {
-                var key = cs.key();
+                var key = cs.key;
                 ps.push(ChallengeManager.updateCache(key));
             });
 
@@ -37,13 +32,11 @@ var ChallengesManager = {
 
 
     emailChanges: () => {
-        var ref = firebaseRef.child('challenges');
-        return ref.authWithCustomToken(Keys.firebase).then(() => {
-            return ref.once('value');
-        }).then((s) => {
+        var ref = firebaseRef.ref('challenges');
+        return ref.once('value').then((s) => {
             var ps = [];
             s.forEach(cs => {
-                ps.push(ChallengeManager.emailChanges(cs.key(), cs.val()));
+                ps.push(ChallengeManager.emailChanges(cs.key, cs.val()));
             });
 
             return Promise.all(ps);

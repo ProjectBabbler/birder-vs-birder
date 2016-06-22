@@ -6,11 +6,12 @@ if (process.env.BROWSER) {
 } else {
     LocationsSearch = React.DOM.div;
 }
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var LoadingOverlay = require('./LoadingOverlay');
 var axios = require('axios');
 var FriendsList = require('./FriendsList');
+
+var firebase = require('../firebase');
+var firebaseRef = firebase.database();
 
 
 var CreateChallengeModal = React.createClass({
@@ -83,10 +84,10 @@ var CreateChallengeModal = React.createClass({
         var ref;
         var members;
         if (this.props.edit) {
-            ref = firebaseRef.child('challenges').child(this.props.challengeId);
+            ref = firebaseRef.ref('challenges').child(this.props.challengeId);
             members = this.props.members;
         } else {
-            ref = firebaseRef.child('challenges').push();
+            ref = firebaseRef.ref('challenges').push();
             members = {
                 [this.context.authData.uid]: false,
             };
@@ -110,10 +111,10 @@ var CreateChallengeModal = React.createClass({
             });
             return Promise.all(ps);
         }).then(() => {
-            return firebaseRef.child('users').child(this.context.authData.uid).child('challenges').child(ref.key()).set(true);
+            return firebaseRef.ref('users').child(this.context.authData.uid).child('challenges').child(ref.key).set(true);
         }).then(() => {
             return axios.post('/api/emailInvites', {
-                challengeId: ref.key(),
+                challengeId: ref.key,
             });
         }).catch((e) => {
             this.setState({

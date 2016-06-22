@@ -4,11 +4,12 @@ var client = new postmark.Client(Keys.postmark);
 var ChallengeEmail = require('../bin/react/email/ChallengeEmail');
 var ReactDOMServer = require('react-dom/server');
 var React = require('react');
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
 var moment = require('moment');
 var UserUtils = require('../bin/react/utils/UserUtils');
 var chalk = require('chalk');
+
+var firebase = require('../firebaseNode');
+var firebaseRef = firebase.database();
 
 
 
@@ -17,7 +18,7 @@ module.exports = (challengeKey, challenge, changes, changeTypes) => {
     var subject = `Challenge Updates for ${challenge.name} on ${moment().format('MMMM Do YYYY')} - Birder Vs Birder`;
 
     for (var key in challenge.members) {
-        ps.push(firebaseRef.child('users').child(key).once('value').then(snap => {
+        ps.push(firebaseRef.ref('users').child(key).once('value').then(snap => {
             var user = snap.val();
             user = UserUtils.populateWithDefaults(user);
             var email = user.email;
@@ -33,7 +34,7 @@ module.exports = (challengeKey, challenge, changes, changeTypes) => {
                 changes: changes,
                 challenge: challenge,
                 challengeKey: challengeKey,
-                userKey: snap.key(),
+                userKey: snap.key,
             }));
             return new Promise((resolve, reject) => {
                 client.sendEmail({

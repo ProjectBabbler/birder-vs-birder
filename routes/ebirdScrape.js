@@ -1,10 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
-var Firebase = require('firebase');
-var firebaseRef = new Firebase('https://blazing-inferno-9225.firebaseio.com/');
-var Keys = require('../utils/Keys');
 var ebirdToFirebase = require('./ebirdToFirebase');
+var firebase = require('../firebaseNode');
+var firebaseRef = firebase.database();
 
 
 
@@ -21,14 +20,12 @@ router.post('/', (req, res) => {
     }
 
     var eToF = new ebirdToFirebase(userId);
-    var userRef = firebaseRef.child('users').child(userId);
+    var userRef = firebaseRef.ref('users').child(userId);
 
-    userRef.authWithCustomToken(Keys.firebase).then(() => {
-        return userRef.child('scraping').once('value').then(s => {
-            if (s.val()) {
-                throw 'Already scraping';
-            }
-        });
+    userRef.child('scraping').once('value').then(s => {
+        if (s.val()) {
+            throw 'Already scraping';
+        }
     }).then(() => {
         return userRef.child('scraping').set(true);
     }).then(() => {
