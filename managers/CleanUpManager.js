@@ -60,7 +60,7 @@ var CleanUpManager = {
                 console.log('Old User Totals Removed');
             });
         }).then(() => {
-            return firebaseRef.child('users').once('value');
+            return firebaseRef.ref('users').once('value');
         }).then((s) => {
             var ps = [];
             s.forEach(user => {
