@@ -5,8 +5,9 @@ var ListDiff = (props) => {
         return <div />;
     }
 
-    var sortedList;
-    sortedList = props.list.sort((a, b) => {
+    // Copy the list because "sort" is in place.
+    var sortedList = [...props.list];
+    sortedList = sortedList.sort((a, b) => {
         return new Date(b.date) - new Date(a.date);
     });
     sortedList = sortedList.splice(0, Math.min(props.diff, 3)).map(s => {
