@@ -6,7 +6,7 @@ var deferred = require('deferred');
 var firebase = require('../firebaseNode');
 var firebaseRef = firebase.database();
 
-emailUser = deferred.gate(emailUser, 3);
+emailUser = deferred.gate(emailUser, 1);
 
 var getUsers = () => {
     var ref = firebaseRef.ref('users');

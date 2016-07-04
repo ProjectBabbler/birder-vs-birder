@@ -56,13 +56,13 @@ var getMessageForList = (uid, list) => {
 
 module.exports = (uid, email) => {
     console.log(`Emailing for ${uid} ${email}`);
-    return new Promise((resolve, reject) => {
-        Promise.all([
-            getMessageForList(uid, 'region'),
-            getMessageForList(uid, 'country'),
-            getMessageForList(uid, 'state'),
-            getMessageForList(uid, 'county'),
-        ]).then((results) => {
+    return Promise.all([
+        getMessageForList(uid, 'region'),
+        getMessageForList(uid, 'country'),
+        getMessageForList(uid, 'state'),
+        getMessageForList(uid, 'county'),
+    ]).then((results) => {
+        return new Promise((resolve, reject) => {
             client.sendEmail({
                 From: 'info@birdervsbirder.com',
                 To: email,
@@ -78,8 +78,6 @@ module.exports = (uid, email) => {
                 }
                 resolve();
             });
-        }).catch(e => {
-            reject(e);
         });
     });
 };
