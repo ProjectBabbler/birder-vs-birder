@@ -7,6 +7,8 @@ var ironcache = require('iron-cache');
 var client = ironcache.createClient({ project: Keys.ironcacheProject, token: Keys.ironcacheToken });
 var birdList = require('bird-list');
 var UserUtils = require('./UserUtils');
+var firebase = require('../firebase');
+var firebaseRef = firebase.database();
 
 
 var getCacheKey = (user, code, time) => {
@@ -52,9 +54,11 @@ var saveCachedData = (data, user, code, time, options={force: false}) => {
 
 
 var scrapeEbird = (user, code, time, options) => {
-    var instance = new ebird();
+    var instance = new ebird(user.data.ebird_token);
     var password = cryptr.decrypt(user.data.ebird_password);
-    return instance.auth(user.data.ebird_username, password).then(() => {
+    return instance.auth(user.data.ebird_username, password).then(token => {
+        return firebaseRef.ref('users').child(user.key).child('ebird_token').set(token);
+    }).then((token) => {
         return instance.list(code, time);
     }).then(list => {
         return {

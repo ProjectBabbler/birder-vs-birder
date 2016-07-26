@@ -12,7 +12,7 @@ var firebaseRef = firebase.database();
 
 class ebirdToFirebase {
     constructor(uid) {
-        this.ebird = new ebird();
+        this.ebird;
         this.uid = uid;
     }
 
@@ -20,8 +20,11 @@ class ebirdToFirebase {
         var ref = firebaseRef.ref('users').child(this.uid);
         return ref.once('value').then((s) => {
             var userData = s.val();
+            this.ebird = new ebird(userData.ebird_token);
             var password = cryptr.decrypt(userData.ebird_password);
-            return this.ebird.auth(userData.ebird_username, password);
+            return this.ebird.auth(userData.ebird_username, password).then(token => {
+                return ref.child('ebird_token').set(token);
+            });
         });
     }
 
