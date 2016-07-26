@@ -120,6 +120,7 @@ var getLists = (users, code, time, options={force: false}) => {
 var getListByUserId = (uid, code, time, options={force: false}) => {
     return UserUtils.getUserData(uid).then(data => {
         return getList({
+            key: uid,
             data: data,
         }, code, time);
     }).then(list => {
