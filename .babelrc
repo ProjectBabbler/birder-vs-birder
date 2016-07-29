@@ -6,9 +6,6 @@
     },
     "production": {
       "compact": true,
-      "plugins": [
-        "transform-react-constant-elements",
-      ]
     }
   }
 }
