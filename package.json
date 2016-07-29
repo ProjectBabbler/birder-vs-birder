@@ -45,7 +45,7 @@
     "ebird": "0.7.0",
     "email-validator": "1.0.4",
     "express": "4.14.0",
-    "firebase": "3.2.1",
+    "firebase": "3.2.0",
     "gulp": "3.9.1",
     "gulp-babel": "6.1.2",
     "history": "3.0.0",
