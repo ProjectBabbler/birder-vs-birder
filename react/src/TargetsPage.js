@@ -7,12 +7,18 @@ if (process.env.BROWSER) {
     LocationsSearch = React.DOM.div;
 }
 var birdLocations = require('bird-locations');
+var MonthSelector = require('./MonthSelector');
+var { DropdownButton, MenuItem } = require('react-bootstrap');
+
 
 
 var TargetsPage = React.createClass({
     getInitialState() {
         return {
-            location: null,
+            location: {
+                value: 'aba',
+            },
+            allLocations: null,
         };
     },
 
@@ -34,6 +40,40 @@ var TargetsPage = React.createClass({
         });
     },
 
+    updateStartMonth(startMonth) {
+        this.update({
+            startMonth,
+        });
+    },
+
+    updateEndMonth(endMonth) {
+        this.update({
+            endMonth,
+        });
+    },
+
+    updateArea(area) {
+        this.update({
+            area,
+        });
+    },
+
+    updateTime(time) {
+        this.update({
+            time,
+        });
+    },
+
+    update(query) {
+        browserHistory.push({
+            ...this.props.location,
+            query: {
+                ...this.props.location.query,
+                ...query,
+            }
+        });
+    },
+
     componentDidMount() {
         birdLocations.getByCode(this.props.location.query.location).then(loc => {
             this.setState({
@@ -44,14 +84,86 @@ var TargetsPage = React.createClass({
                 },
             });
         });
+
+        birdLocations.getAll().then(locations => {
+            this.setState({
+                allLocations: locations,
+            });
+        });
     },
 
     render() {
+        let areas = [
+            {
+                value: 'aba',
+                label: 'ABA Area',
+            },
+            {
+                value: 'world',
+                label: 'World',
+            },
+        ];
+
+        if (this.state.allLocations) {
+            let parts = this.props.location.query.location.split('-');
+            for (let i = 0; i < parts.length; i++) {
+                let code = parts.slice(0, i + 1).join('-');
+                let location = this.state.allLocations[code];
+                areas.unshift({
+                    value: code,
+                    label: birdLocations.getNiceName(location),
+                });
+            }
+        }
+
+        let area = areas[0];
+        if (this.props.location.query.area) {
+            area = areas.find((a) => {
+                return a.value == this.props.location.query.area;
+            });
+        }
+
+        let time = this.props.location.query.time || 'life';
+        let times = [
+            'life',
+            'year',
+            'month',
+            'day',
+        ];
         return (
             <div>
                 <h4>Show species observed in</h4>
                 <LocationsSearch value={this.state.location} onChange={this.updateLocation} />
-
+                <h4>During the months of:</h4>
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                }}>
+                    <MonthSelector value={this.props.location.query.startMonth} onChange={this.updateStartMonth} />
+                    <span style={{margin: 15}}>through</span>
+                    <MonthSelector value={this.props.location.query.endMonth} onChange={this.updateEndMonth} />
+                </div>
+                <h4>That I need for my:</h4>
+                <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                }}>
+                    <DropdownButton title={area.label} id={Math.random()}>
+                        {areas.map((a, i) => {
+                            return (
+                                <MenuItem key={i} eventKey={a.value} onSelect={this.updateArea}>{a.label}</MenuItem>
+                            );
+                        })}
+                    </DropdownButton>
+                    <DropdownButton title={time} id={Math.random()} style={{margin: 15}}>
+                        {times.map((t, i) => {
+                            return (
+                                <MenuItem key={i} eventKey={t} onSelect={this.updateTime}>{t}</MenuItem>
+                            );
+                        })}
+                    </DropdownButton>
+                    <span>list</span>
+                </div>
             </div>
         );
     },
