@@ -9,6 +9,7 @@ if (process.env.BROWSER) {
 var birdLocations = require('bird-locations');
 var MonthSelector = require('./MonthSelector');
 var { DropdownButton, MenuItem } = require('react-bootstrap');
+var LoadingOverlay = require('./LoadingOverlay');
 
 
 
@@ -93,6 +94,10 @@ var TargetsPage = React.createClass({
     },
 
     render() {
+        if (!this.state.allLocations) {
+            return <LoadingOverlay isOpened={true} />
+        }
+
         let areas = [
             {
                 value: 'aba',
@@ -104,16 +109,14 @@ var TargetsPage = React.createClass({
             },
         ];
 
-        if (this.state.allLocations) {
-            let parts = this.props.location.query.location.split('-');
-            for (let i = 0; i < parts.length; i++) {
-                let code = parts.slice(0, i + 1).join('-');
-                let location = this.state.allLocations[code];
-                areas.unshift({
-                    value: code,
-                    label: birdLocations.getNiceName(location),
-                });
-            }
+        let parts = this.props.location.query.location.split('-');
+        for (let i = 0; i < parts.length; i++) {
+            let code = parts.slice(0, i + 1).join('-');
+            let location = this.state.allLocations[code];
+            areas.unshift({
+                value: code,
+                label: birdLocations.getNiceName(location),
+            });
         }
 
         let area = areas[0];
