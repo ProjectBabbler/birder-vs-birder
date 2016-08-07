@@ -2,6 +2,8 @@ var React = require('react');
 var NameSearch = require('./NameSearch');
 var ButtonList = require('./ButtonList');
 var { Button } = require('react-bootstrap');
+var Name = require('./Name');
+
 
 var NameList = React.createClass({
     contextTypes: {
@@ -20,11 +22,17 @@ var NameList = React.createClass({
         });
     },
 
+    nameRender(uid) {
+        return (
+            <Name uid={uid} />
+        );
+    },
+
     render() {
         return (
             <div>
                 <NameSearch onChange={this.onNameAdded} />
-                <ButtonList style={{ marginTop: 30 }} list={this.props.list} onChange={this.props.onChange} />
+                <ButtonList style={{ marginTop: 30 }} list={this.props.list} onChange={this.props.onChange} renderFunc={this.nameRender} />
                 {this.context.authData && !this.props.list.has(this.context.authData.uid) ? (
                     <Button style={{ marginTop: 30 }} onClick={this.addMe}>
                         Add me to this list

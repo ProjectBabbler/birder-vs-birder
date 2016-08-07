@@ -2,6 +2,14 @@ var React = require('react');
 var { Button, ButtonGroup } = require('react-bootstrap');
 
 var ButtonList = React.createClass({
+    getDefaultProps() {
+        return {
+            renderFunc(item) {
+                return item;
+            },
+        };
+    },
+
     removeItem(item) {
         var set = new Set(this.props.list);
         set.delete(item);
@@ -13,7 +21,7 @@ var ButtonList = React.createClass({
             <ButtonGroup key={item} bsSize="small" style={{
                 marginRight: 5,
             }}>
-                <Button>{item}</Button>
+                <Button>{this.props.renderFunc(item)}</Button>
                 <Button onClick={this.removeItem.bind(this, item)}>X</Button>
             </ButtonGroup>
         );
