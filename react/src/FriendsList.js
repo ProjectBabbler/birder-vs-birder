@@ -1,6 +1,7 @@
 var React = require('react');
-var { Button, FormControl, FormGroup, ButtonGroup, InputGroup } = require('react-bootstrap');
+var { Button, FormControl, FormGroup, InputGroup } = require('react-bootstrap');
 var emailValidator = require('email-validator');
+var ButtonList = require('./ButtonList');
 
 var FriendsList = React.createClass({
     getInitialState() {
@@ -40,31 +41,6 @@ var FriendsList = React.createClass({
         this.props.onFriendsChange(set);
     },
 
-    removeFriend(email) {
-        var set = new Set(this.props.friends);
-        set.delete(email);
-        this.props.onFriendsChange(set);
-    },
-
-    renderFriend(email) {
-        return (
-            <ButtonGroup key={email} bsSize="small" style={{
-                marginRight: 5,
-            }}>
-                <Button>{email}</Button>
-                <Button onClick={this.removeFriend.bind(this, email)}>X</Button>
-            </ButtonGroup>
-        );
-    },
-
-    renderFriends() {
-        var content = [];
-        this.props.friends.forEach((email) => {
-            content.push(this.renderFriend(email));
-        });
-        return content;
-    },
-
     render() {
         return (
             <div>
@@ -85,7 +61,7 @@ var FriendsList = React.createClass({
                         </InputGroup>
                     </FormGroup>
                 </form>
-                {this.renderFriends()}
+                <ButtonList list={this.props.friends} onChange={this.props.onFriendsChange} />
             </div>
         );
     },

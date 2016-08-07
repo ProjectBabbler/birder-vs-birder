@@ -52,6 +52,7 @@
     "humanname": "0.2.2",
     "iron-cache": "0.2.3",
     "limiter": "1.1.0",
+    "lunr": "0.7.1",
     "mailchimp-v3": "1.0.1",
     "material-ui": "0.15.2",
     "moment": "2.14.1",

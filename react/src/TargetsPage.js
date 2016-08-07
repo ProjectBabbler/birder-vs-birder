@@ -10,8 +10,7 @@ var birdLocations = require('bird-locations');
 var MonthSelector = require('./MonthSelector');
 var { DropdownButton, MenuItem } = require('react-bootstrap');
 var LoadingOverlay = require('./LoadingOverlay');
-
-
+var NameList = require('./NameList');
 
 var TargetsPage = React.createClass({
     getInitialState() {
@@ -65,6 +64,12 @@ var TargetsPage = React.createClass({
         });
     },
 
+    updateUsers(users) {
+        this.update({
+            users: Array.from(users).join(','),
+        });
+    },
+
     update(query) {
         browserHistory.push({
             ...this.props.location,
@@ -95,7 +100,7 @@ var TargetsPage = React.createClass({
 
     render() {
         if (!this.state.allLocations) {
-            return <LoadingOverlay isOpened={true} />
+            return <LoadingOverlay isOpened={true} />;
         }
 
         let areas = [
@@ -133,6 +138,13 @@ var TargetsPage = React.createClass({
             'month',
             'day',
         ];
+
+        let users = this.props.location.query.users || '';
+        let userSet = new Set();
+        if (users) {
+            userSet = new Set(users.split(','));
+        }
+
         return (
             <div>
                 <h4>Show species observed in</h4>
@@ -167,6 +179,8 @@ var TargetsPage = React.createClass({
                     </DropdownButton>
                     <span>list</span>
                 </div>
+                <h4>Users:</h4>
+                <NameList onChange={this.updateUsers} list={userSet} />
             </div>
         );
     },
