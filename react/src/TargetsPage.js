@@ -13,6 +13,10 @@ var LoadingOverlay = require('./LoadingOverlay');
 var NameList = require('./NameList');
 
 var TargetsPage = React.createClass({
+    contextTypes: {
+        authData: React.PropTypes.object,
+    },
+
     getInitialState() {
         return {
             location: {
@@ -96,6 +100,11 @@ var TargetsPage = React.createClass({
                 allLocations: locations,
             });
         });
+
+        let users = this.props.location.query.users;
+        if (!users && this.context.authData) {
+            this.updateUsers([this.context.authData.uid]);
+        }
     },
 
     render() {
