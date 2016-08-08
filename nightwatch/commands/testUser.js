@@ -7,7 +7,7 @@ exports.command = function() {
         .setValue('#test-username', 'greg@boostable.com')
         .setValue('#test-password', process.env.TRAVIS_SAMPLE_PASSWORD)
         .submitForm('#test-login-form')
-        .waitForElementNotPresent('#test-login-form', 10000);
+        .waitForElementNotPresent('#test-login-form', 20000);
 
     return this;
 };
