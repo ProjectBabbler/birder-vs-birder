@@ -1,6 +1,6 @@
 module.exports = {
     'Renders donate page': (browser) => {
-        var baseUrl = browser.globals.baseUrl + '/donate';
+        var baseUrl = browser.globals.baseUrl + 'donate';
 
         browser
             .url(baseUrl)
