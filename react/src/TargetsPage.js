@@ -11,6 +11,8 @@ var MonthSelector = require('./MonthSelector');
 var { DropdownButton, MenuItem } = require('react-bootstrap');
 var LoadingOverlay = require('./LoadingOverlay');
 var NameList = require('./NameList');
+import CircularProgress from 'material-ui/CircularProgress';
+let axios = require('axios');
 
 var TargetsPage = React.createClass({
     contextTypes: {
@@ -23,7 +25,34 @@ var TargetsPage = React.createClass({
                 value: 'aba',
             },
             allLocations: null,
+            fetching: true,
+            targets: {},
         };
+    },
+
+    getTargets(props=this.props) {
+        this.setState({
+            fetching: true,
+        });
+
+        axios.post('/api/targets', {
+            startMonth: 0,
+            endMonth: 0,
+            time: 'life',
+            area: 'world',
+            ...props.location.query,
+        }).then((results) => {
+            console.log(results);
+            this.setState({
+                targets: results.data,
+            });
+        }).catch((err) => {
+            console.log(err);
+        }).then(() => {
+            this.setState({
+                fetching: false,
+            });
+        });
     },
 
     updateLocation(location) {
@@ -105,6 +134,26 @@ var TargetsPage = React.createClass({
         if (!users && this.context.authData) {
             this.updateUsers([this.context.authData.uid]);
         }
+
+        this.getTargets();
+    },
+
+    componentWillReceiveProps(nextProps) {
+        let compare = false;
+        for (let key in nextProps.location.query) {
+            compare = compare || nextProps.location.query[key] != this.props.location.query[key];
+        }
+        if (compare) {
+            this.getTargets(nextProps);
+        }
+    },
+
+    renderTargets() {
+        return (
+            <div>
+                Stuff
+            </div>
+        );
     },
 
     render() {
@@ -133,7 +182,7 @@ var TargetsPage = React.createClass({
             });
         }
 
-        let area = areas[0];
+        let area = areas[areas.length - 1];
         if (this.props.location.query.area) {
             area = areas.find((a) => {
                 return a.value == this.props.location.query.area;
@@ -190,6 +239,12 @@ var TargetsPage = React.createClass({
                 </div>
                 <h4>Users:</h4>
                 <NameList onChange={this.updateUsers} list={userSet} />
+                <h4>Results</h4>
+                <div>
+                    {this.state.fetching ? (
+                        <CircularProgress />
+                    ) : this.renderTargets()}
+                </div>
             </div>
         );
     },
