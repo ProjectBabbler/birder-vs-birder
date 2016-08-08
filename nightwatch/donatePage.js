@@ -4,7 +4,7 @@ module.exports = {
 
         browser
             .url(baseUrl)
-            .expect.element('body').text.to.contains('Donate to Birder Vs Birder');
+            .expect.element('body').text.to.contains('Donate to Birder Vs Birder').after(20000);
         browser
             .end();
     },
