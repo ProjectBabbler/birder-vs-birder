@@ -42,7 +42,7 @@
     "cryptr": "1.0.0",
     "css-loader": "0.23.1",
     "deferred": "0.7.5",
-    "ebird": "0.7.0",
+    "ebird": "0.8.0",
     "email-validator": "1.0.4",
     "express": "4.14.0",
     "firebase": "3.2.1",

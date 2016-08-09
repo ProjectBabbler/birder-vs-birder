@@ -22,7 +22,10 @@ var scrapeEbird = (uid, userData, location, time, area, startMonth, endMonth) =>
         });
     }).then(targets => {
         return {
-            uid,
+            user: {
+                uid,
+                fullname: userData.fullname,
+            },
             targets,
         };
     });

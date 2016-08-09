@@ -8,7 +8,7 @@ if (process.env.BROWSER) {
 }
 var birdLocations = require('bird-locations');
 var MonthSelector = require('./MonthSelector');
-var { DropdownButton, MenuItem } = require('react-bootstrap');
+var { DropdownButton, MenuItem, Table } = require('react-bootstrap');
 var LoadingOverlay = require('./LoadingOverlay');
 var NameList = require('./NameList');
 import CircularProgress from 'material-ui/CircularProgress';
@@ -26,8 +26,30 @@ var TargetsPage = React.createClass({
             },
             allLocations: null,
             fetching: true,
-            targets: {},
+            targets: [],
+            users: [],
         };
+    },
+
+    sortResults(usersData) {
+        let species = {};
+        usersData.forEach(userData => {
+            let {user, targets} = userData;
+            targets.forEach(target => {
+                let obj = species[target.species.code] || {};
+                let users = obj.users || [];
+                species[target.species.code] = {
+                    users: [...users, user.uid],
+                    ...target,
+                };
+            });
+        });
+
+        let sorted = Object.values(species).sort((a, b) => {
+            return b.frequency - a.frequency;
+        });
+
+        return sorted;
     },
 
     getTargets(props=this.props) {
@@ -36,15 +58,19 @@ var TargetsPage = React.createClass({
         });
 
         axios.post('/api/targets', {
-            startMonth: 0,
-            endMonth: 0,
+            startMonth: 1,
+            endMonth: 1,
             time: 'life',
             area: 'world',
             ...props.location.query,
         }).then((results) => {
-            console.log(results);
+            let list = this.sortResults(results.data);
+            let users = results.data.map(userData => {
+                return userData.user;
+            });
             this.setState({
-                targets: results.data,
+                targets: list,
+                users,
             });
         }).catch((err) => {
             console.log(err);
@@ -151,7 +177,52 @@ var TargetsPage = React.createClass({
     renderTargets() {
         return (
             <div>
-                Stuff
+                <Table striped={true} bordered={true} hover={true}>
+                    <thead>
+                        <tr>
+                            <th>
+                                Species
+                            </th>
+                            <th>
+                                Frequency
+                            </th>
+                            <th>
+                                Map
+                            </th>
+                            {this.state.users.map((user, i) => {
+                                return (
+                                    <th key={i}>
+                                        {user.fullname}
+                                    </th>
+                                );
+                            })}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.targets.map((target, i) => {
+                            return (
+                                <tr key={i}>
+                                    <td>
+                                        {target.species.name}
+                                    </td>
+                                    <td>
+                                        {target.frequency}
+                                    </td>
+                                    <td>
+                                        <a target="_blank" href={target.map}>Map</a>
+                                    </td>
+                                    {this.state.users.map((user, i) => {
+                                        return (
+                                            <td key={i} style={{textAlign: 'center'}}>
+                                                {target.users.indexOf(user.uid) != -1 ? 'x' : ''}
+                                            </td>
+                                        );
+                                    })}
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </Table>
             </div>
         );
     },
@@ -239,7 +310,7 @@ var TargetsPage = React.createClass({
                 </div>
                 <h4>Users:</h4>
                 <NameList onChange={this.updateUsers} list={userSet} />
-                <h4>Results</h4>
+                <h4>Targets</h4>
                 <div>
                     {this.state.fetching ? (
                         <CircularProgress />
