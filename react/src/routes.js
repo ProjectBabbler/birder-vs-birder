@@ -28,8 +28,8 @@ module.exports = (
                 <Route path="thankyou" component={ThankYouPage} />
                 <Route component={AuthWrapper}>
                     <Route path="challenge" component={ChallengePage} />
-                    <Route path="targets" component={TargetsPage} />
                 </Route>
+                <Route path="targets" component={TargetsPage} />
                 <Route component={PrivateUserPages}>
                     <Route path="settings" component={SettingsPage} />
                 </Route>
