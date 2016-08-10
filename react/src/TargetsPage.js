@@ -91,6 +91,7 @@ var TargetsPage = React.createClass({
             query: {
                 ...this.props.location.query,
                 location: location.value,
+                area: 'world',
             }
         });
 
@@ -227,11 +228,7 @@ var TargetsPage = React.createClass({
         );
     },
 
-    render() {
-        if (!this.state.allLocations) {
-            return <LoadingOverlay isOpened={true} />;
-        }
-
+    getAreas() {
         let areas = [
             {
                 value: 'aba',
@@ -252,6 +249,16 @@ var TargetsPage = React.createClass({
                 label: birdLocations.getNiceName(location),
             });
         }
+
+        return areas;
+    },
+
+    render() {
+        if (!this.state.allLocations) {
+            return <LoadingOverlay isOpened={true} />;
+        }
+
+        let areas = this.getAreas();
 
         let area = areas[areas.length - 1];
         if (this.props.location.query.area) {
