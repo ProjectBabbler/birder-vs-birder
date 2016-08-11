@@ -25,7 +25,7 @@ var TargetsPage = React.createClass({
                 value: 'aba',
             },
             allLocations: null,
-            fetching: true,
+            fetching: false,
             targets: [],
             users: [],
         };
@@ -53,6 +53,9 @@ var TargetsPage = React.createClass({
     },
 
     getTargets(props=this.props) {
+        if (!props.location.query.location) {
+            return;
+        }
         this.setState({
             fetching: true,
         });
@@ -141,15 +144,17 @@ var TargetsPage = React.createClass({
     },
 
     componentDidMount() {
-        birdLocations.getByCode(this.props.location.query.location).then(loc => {
-            this.setState({
-                location: {
-                    value: this.props.location.query.location,
-                    label: birdLocations.getNiceName(loc),
-                    location: loc,
-                },
+        if (this.props.location.query.location) {
+            birdLocations.getByCode(this.props.location.query.location).then(loc => {
+                this.setState({
+                    location: {
+                        value: this.props.location.query.location,
+                        label: birdLocations.getNiceName(loc),
+                        location: loc,
+                    },
+                });
             });
-        });
+        }
 
         birdLocations.getAll().then(locations => {
             this.setState({
@@ -157,21 +162,29 @@ var TargetsPage = React.createClass({
             });
         });
 
-        let users = this.props.location.query.users;
-        if (!users && this.context.authData) {
-            this.updateUsers([this.context.authData.uid]);
-        }
+        this.setBaseUser();
 
         this.getTargets();
     },
 
-    componentWillReceiveProps(nextProps) {
+    setBaseUser(props=this.props, context=this.context) {
+        let users = props.location.query.users;
+        if (!users && context.authData) {
+            this.updateUsers([context.authData.uid]);
+        }
+    },
+
+    componentWillReceiveProps(nextProps, nextContext) {
         let compare = false;
         for (let key in nextProps.location.query) {
             compare = compare || nextProps.location.query[key] != this.props.location.query[key];
         }
         if (compare) {
             this.getTargets(nextProps);
+        }
+
+        if (nextContext.authData != this.context.authData) {
+            this.setBaseUser(nextProps, nextContext);
         }
     },
 
@@ -240,14 +253,16 @@ var TargetsPage = React.createClass({
             },
         ];
 
-        let parts = this.props.location.query.location.split('-');
-        for (let i = 0; i < parts.length; i++) {
-            let code = parts.slice(0, i + 1).join('-');
-            let location = this.state.allLocations[code];
-            areas.unshift({
-                value: code,
-                label: birdLocations.getNiceName(location),
-            });
+        if (this.props.location.query.location) {
+            let parts = this.props.location.query.location.split('-');
+            for (let i = 0; i < parts.length; i++) {
+                let code = parts.slice(0, i + 1).join('-');
+                let location = this.state.allLocations[code];
+                areas.unshift({
+                    value: code,
+                    label: birdLocations.getNiceName(location),
+                });
+            }
         }
 
         return areas;
