@@ -22,14 +22,14 @@ var Header = React.createClass({
     getUserDropdown() {
         var baseUserUrl = `/user/${this.context.userData.ebird_username}`;
         return (
-            <NavDropdown className="test-nav-user-dropdown" key="user" eventKey={3} title={this.context.userData.ebird_username} id="nav-dropdown">
+            <NavDropdown className="test-nav-user-dropdown" key="user" eventKey={5} title={this.context.userData.ebird_username} id="nav-dropdown">
                 <LinkContainer key="profile" onlyActiveOnIndex={true} to={{ pathname: baseUserUrl }}>
-                    <MenuItem className="test-profile-link" eventKey="3.1">Profile</MenuItem>
+                    <MenuItem className="test-profile-link" eventKey="5.1">Profile</MenuItem>
                 </LinkContainer>
                 <LinkContainer key="signin" to={{ pathname: '/settings' }}>
-                    <MenuItem eventKey="3.2">Settings</MenuItem>
+                    <MenuItem eventKey="5.2">Settings</MenuItem>
                 </LinkContainer>
-                <MenuItem eventKey="3.3" onClick={this.logOut}>Log out</MenuItem>
+                <MenuItem eventKey="5.3" onClick={this.logOut}>Log out</MenuItem>
             </NavDropdown>
         );
     },
@@ -51,6 +51,11 @@ var Header = React.createClass({
             navItems.push(
                 <LinkContainer onlyActiveOnIndex={true} key="dashboard" to={{ pathname: '/' }}>
                     <NavItem eventKey={3}>Dashboard</NavItem>
+                </LinkContainer>
+            );
+            navItems.push(
+                <LinkContainer onlyActiveOnIndex={true} key="targets" to={{ pathname: '/targets' }}>
+                    <NavItem eventKey={4}>Targets</NavItem>
                 </LinkContainer>
             );
             navItems.push(this.getUserDropdown());
