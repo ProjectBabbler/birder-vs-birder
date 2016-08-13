@@ -4,7 +4,7 @@ var chalk = require('chalk');
 
 // Only run this on every fourth hour.
 var moment = require('moment');
-if (moment().hour() % 4 != 0) {
+if (moment().hour() % 4 != 2) {
     process.exit(0);
 } else {
     ChallengesManager.updateCache().then(() => {
