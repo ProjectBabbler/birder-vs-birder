@@ -121,7 +121,7 @@ var UserPage = React.createClass({
                     top: 0,
                     fontStyle: 'italic',
                 }}>
-                    Graphs updated every 4 hours
+                    Graphs updated every hour
                     <br/>
                     {this.renderFBButton()}
                 </div>

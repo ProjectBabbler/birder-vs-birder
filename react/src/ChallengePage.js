@@ -136,7 +136,7 @@ var ChallengePage = React.createClass({
                     textAlign: 'right',
                     fontStyle: 'italic',
                 }}>
-                    Graphs updated every 4 hours
+                    Graphs updated every hour
                 </div>
                 <div style={{
                     display: 'flex',
