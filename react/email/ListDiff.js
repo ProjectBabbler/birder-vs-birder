@@ -10,7 +10,7 @@ var ListDiff = (props) => {
     sortedList = sortedList.sort((a, b) => {
         return new Date(b.date) - new Date(a.date);
     });
-    sortedList = sortedList.map(s => {
+    sortedList = sortedList.splice(0, props.diff).map(s => {
         return (
             <div key={s.commonName} style={{whiteSpace: 'nowrap'}}>{s.commonName}</div>
         );
