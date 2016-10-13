@@ -77,11 +77,15 @@ var UserManager = {
     },
 
     updateCache(user) {
+        if (user.data.invalid_auth) {
+            return;
+        }
+
         return userListsUtils.getList(user, 'WORLD', 'life', {force: true}).then(() => {
             console.log(`Updated world cache for ${user.key}`);
         }).catch(e => {
             // Catch error but don't let it stop the process.
-            console.error(chalk.red('Error'), e);
+            console.error(chalk.red(`Error updating cache for ${user.key}`), e);
         });
     }
 };

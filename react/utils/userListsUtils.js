@@ -58,6 +58,11 @@ var scrapeEbird = (user, code, time, options) => {
     var password = cryptr.decrypt(user.data.ebird_password);
     return instance.auth(user.data.ebird_username, password).then(token => {
         return firebaseRef.ref('users').child(user.key).child('ebird_token').set(token);
+    }).catch((e) => {
+        return firebaseRef.ref('users').child(user.key).child('invalid_auth').set(true).then(() => {
+            // Cause the auth to still fail.
+            throw e;
+        });
     }).then((token) => {
         return instance.list(code, time);
     }).then(list => {
