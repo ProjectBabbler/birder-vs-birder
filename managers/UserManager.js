@@ -19,7 +19,7 @@ var UserManager = {
                 console.log(`Finish fetching totals for ${uid}`);
                 return r;
             });
-        });
+        }).catch(() => {});
     },
 
     takeShareScreenShot(key, data) {
