@@ -34,7 +34,6 @@ var UsersManager = {
                 var key = cs.key;
                 ps.push(new Promise((resolve, reject) => {
                     UserManager.fetchTotals(key)
-                        .then(resolve)
                         .catch((e) => {
                             // Log the error, but don't block all updates.
                             console.error(chalk.red('Error'), e);
