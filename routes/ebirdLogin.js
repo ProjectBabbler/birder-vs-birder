@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
     var password = req.body.password;
 
     ebird.auth(username, password).then(() => {
-        // Don't sign up test account
+        // Don't sign up test account to mailchimp
         if (username == 'projectbabblertest2') {
             return true;
         }
