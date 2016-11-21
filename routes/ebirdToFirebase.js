@@ -21,15 +21,9 @@ class ebirdToFirebase {
         return ref.once('value').then((s) => {
             var userData = s.val();
 
-            if (userData.invalid_auth) {
-                throw 'Invalid Auth';
-            }
-
-            this.ebird = new ebird(userData.ebird_token);
+            this.ebird = new ebird();
             var password = cryptr.decrypt(userData.ebird_password);
-            return this.ebird.auth(userData.ebird_username, password).then(token => {
-                return ref.child('ebird_token').set(token);
-            });
+            return this.ebird.auth(userData.ebird_username, password);
         });
     }
 

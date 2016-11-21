@@ -4,15 +4,11 @@ var ebird = require('ebird');
 var Cryptr = require('cryptr');
 var cryptr = new Cryptr(Keys.cryptr);
 var UserUtils = require('./UserUtils');
-var firebase = require('../firebase');
-var firebaseRef = firebase.database();
 
 var scrapeEbird = (uid, userData, location, time, area, startMonth, endMonth) => {
-    var instance = new ebird(userData.ebird_token);
+    var instance = new ebird();
     var password = cryptr.decrypt(userData.ebird_password);
-    return instance.auth(userData.ebird_username, password).then(token => {
-        return firebaseRef.ref('users').child(uid).child('ebird_token').set(token);
-    }).then(() => {
+    return instance.auth(userData.ebird_username, password).then(() => {
         return instance.targets.species({
             location,
             startMonth,
