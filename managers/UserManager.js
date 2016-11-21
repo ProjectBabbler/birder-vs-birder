@@ -78,7 +78,7 @@ var UserManager = {
 
     updateCache(user) {
         if (user.data.invalid_auth) {
-            return;
+            return true;
         }
 
         return userListsUtils.getList(user, 'WORLD', 'life', {force: true}).then(() => {
