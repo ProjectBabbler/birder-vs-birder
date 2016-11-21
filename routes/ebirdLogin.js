@@ -18,6 +18,10 @@ router.post('/', (req, res) => {
     var password = req.body.password;
 
     ebird.auth(username, password).then(() => {
+        // Don't sign up test account
+        if (username == 'projectbabblertest2') {
+            return true;
+        }
         var parsed = humanname.parse(req.body.fullname);
         return mailchimp.post(`lists/${MailchimpLists.all}/members`, {
             email_address: req.body.email,
@@ -34,7 +38,8 @@ router.post('/', (req, res) => {
         res.send(JSON.stringify({
             encryptedPassword: encryptedPassword,
         }));
-    }).catch(() => {
+    }).catch((e) => {
+        console.log(e);
         res.status(403);
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({
