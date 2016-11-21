@@ -73,7 +73,7 @@ var SignIn = React.createClass({
         }).catch((error) => {
             this.setState({
                 password: '',
-                error: error.data.message,
+                error: error.response.data.message,
             });
         }).then(() => {
             this.setState({
