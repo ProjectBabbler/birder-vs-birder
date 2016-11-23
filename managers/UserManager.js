@@ -8,6 +8,7 @@ var cloudinary = require('cloudinary');
 var deferred = require('deferred');
 var userListsUtils = require('../bin/react/utils/userListsUtils');
 var chalk = require('chalk');
+let AuthException = require('../bin/react/utils/AuthException');
 
 
 var UserManager = {
@@ -80,8 +81,12 @@ var UserManager = {
         return userListsUtils.getList(user, 'WORLD', 'life', {force: true}).then(() => {
             console.log(`Updated world cache for ${user.key}`);
         }).catch(e => {
-            // Catch error but don't let it stop the process.
-            console.error(chalk.red(`Error updating cache for ${user.key}`), e);
+            if (e instanceof AuthException) {
+                console.error(chalk.yellow(`Auth Issues for ${user.key}`), e);
+            } else {
+                // Catch error but don't let it stop the process.
+                console.error(chalk.red(`Error updating cache for ${user.key}`), e);
+            }
         });
     }
 };
