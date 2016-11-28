@@ -9,6 +9,7 @@ var cryptr = new Cryptr(Keys.cryptr);
 var moment = require('moment');
 var firebase = require('../firebaseNode');
 var firebaseRef = firebase.database();
+var AuthException = require('../bin/react/utils/AuthException');
 
 class ebirdToFirebase {
     constructor(uid) {
@@ -23,7 +24,10 @@ class ebirdToFirebase {
 
             this.ebird = new ebird();
             var password = cryptr.decrypt(userData.ebird_password);
-            return this.ebird.auth(userData.ebird_username, password);
+            return this.ebird.auth(userData.ebird_username, password).catch(() => {
+                // Auth issue.
+                throw new AuthException();
+            });
         });
     }
 

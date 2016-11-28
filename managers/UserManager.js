@@ -20,7 +20,14 @@ var UserManager = {
                 console.log(`Finish fetching totals for ${uid}`);
                 return r;
             });
-        }).catch(() => {});
+        }).catch((e) => {
+            if (e instanceof AuthException) {
+                console.error(chalk.yellow(`Auth Issues for ${uid}`), e);
+            } else {
+                // Catch error but don't let it stop the process.
+                console.error(chalk.red(`Error fetching totals for ${uid}`), e);
+            }
+        });
     },
 
     takeShareScreenShot(key, data) {
