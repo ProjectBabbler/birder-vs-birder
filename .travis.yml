@@ -5,7 +5,7 @@ node_js:
 sudo: required
 
 addons:
-  firefox: 'latest'
+  firefox: 47
   hosts:
     - www-local.birdervsbirder.com
   apt:
