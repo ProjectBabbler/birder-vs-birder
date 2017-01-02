@@ -62,6 +62,16 @@ module.exports = (uid, email) => {
         getMessageForList(uid, 'state'),
         getMessageForList(uid, 'county'),
     ]).then((results) => {
+        var hasUpdates = false;
+        results.forEach((m) => {
+            hasUpdates = hasUpdates || m.lineItems.length != 0;
+        });
+
+        // Don't send empty emails.
+        if (!hasUpdates) {
+            return;
+        }
+
         return new Promise((resolve, reject) => {
             client.sendEmail({
                 From: 'info@birdervsbirder.com',
