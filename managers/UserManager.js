@@ -64,7 +64,7 @@ var UserManager = {
                         }
                     }
                 );
-            });
+            }).catch(reject);
         }).then(() => {
             return new Promise((resolve, reject) => {
                 UserUtils.getFBShareImage(key).then(imageData => {

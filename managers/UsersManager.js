@@ -66,7 +66,10 @@ var UsersManager = {
     takeShareScreenShots: () => {
         return getUsers().then(users => {
             var ps = users.map(user => {
-                return UserManager.takeShareScreenShot(user.key, user.data);
+                return UserManager.takeShareScreenShot(user.key, user.data).catch(e => {
+                    // Log the error, but don't block all updates.
+                    console.error(chalk.red('Error'), user.Key, user.data, e);
+                });
             });
 
             return Promise.all(ps);

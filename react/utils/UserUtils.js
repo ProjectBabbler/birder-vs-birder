@@ -4,7 +4,7 @@ var firebaseRef = firebase.database();
 
 var getKey = (val) => {
     if (val == undefined) {
-        throw 'No Keys';
+        throw 'No Keys ' + val;
     }
     for (var key in val) {
         return key;
