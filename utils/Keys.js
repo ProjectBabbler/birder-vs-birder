@@ -1,7 +1,7 @@
 module.exports = {
     cryptr: process.env.cryptr,
     firebase: process.env.firebase,
-    postmark: process.env.POSTMARK_API_KEY,
+    postmark: process.env.POSTMARK_API_TOKEN,
     stripe: process.env.STRIPE_KEY,
     ironcacheProject: process.env.IRON_CACHE_PROJECT,
     ironcacheToken: process.env.IRON_CACHE_TOKEN,
