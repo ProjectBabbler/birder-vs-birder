@@ -42,7 +42,7 @@
     "cryptr": "1.0.0",
     "css-loader": "0.26.0",
     "deferred": "0.7.5",
-    "ebird": "^1.0.2",
+    "ebird": "^1.0.4",
     "email-validator": "1.0.7",
     "express": "4.14.0",
     "firebase": "3.6.1",
@@ -85,11 +85,11 @@
     "webshot": "0.18.0"
   },
   "devDependencies": {
-    "eslint": "^3.7.1",
-    "eslint-plugin-react": "^6.4.1",
-    "nightwatch": "^0.9.8",
-    "webpack-dev-middleware": "^1.8.4",
-    "webpack-hot-middleware": "^2.13.0"
+    "eslint": "^3.19.0",
+    "eslint-plugin-react": "^6.10.3",
+    "nightwatch": "^0.9.20",
+    "webpack-dev-middleware": "^1.12.2",
+    "webpack-hot-middleware": "^2.21.2"
   },
   "engines": {
     "node": ">= 7.0.0"
