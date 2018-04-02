@@ -46,7 +46,7 @@
     "email-validator": "1.0.7",
     "express": "4.14.0",
     "firebase": "3.6.1",
-    "gulp": "^4.0.0",
+    "gulp": "^3.9.1",
     "gulp-babel": "^7.0.1",
     "history": "3.0.0",
     "humanname": "0.2.2",
