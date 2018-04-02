@@ -13,9 +13,6 @@ gulp.task('compile-js', () => {
 
 gulp.task('webpack', (callback) => {
     webpack(require('./webpack.config.prod.js'), (err, stats) => {
-        gutil.log('[webpack]', stats.toString({
-            chunkModules: false,
-        }));
         callback();
     });
 });
