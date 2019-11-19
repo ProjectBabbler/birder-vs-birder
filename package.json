@@ -82,7 +82,7 @@
     "webshot": "0.18.0"
   },
   "devDependencies": {
-    "eslint": "^3.19.0",
+    "eslint": "^4.18.2",
     "eslint-plugin-react": "^6.10.3",
     "nightwatch": "^0.9.20",
     "webpack-dev-middleware": "^1.12.2",
