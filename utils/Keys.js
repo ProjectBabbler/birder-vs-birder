@@ -3,8 +3,6 @@ module.exports = {
     firebase: process.env.firebase,
     postmark: process.env.POSTMARK_API_TOKEN,
     stripe: process.env.STRIPE_KEY,
-    ironcacheProject: process.env.IRON_CACHE_PROJECT,
-    ironcacheToken: process.env.IRON_CACHE_TOKEN,
     newrelic: process.env.NEWRELIC,
-    firebaseServiceKey: process.env.FIREBASE_SERVICE_KEY.replace(/\\n/g, '\n')
+    firebaseServiceKey: process.env.FIREBASE_SERVICE_KEY.replace(/\\n/g, '\n'),
 };

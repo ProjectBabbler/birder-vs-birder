@@ -49,7 +49,6 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.1",
     "history": "3.0.0",
-    "iron-cache": "0.3.0",
     "limiter": "1.1.0",
     "lunr": "0.7.2",
     "material-ui": "0.16.4",
