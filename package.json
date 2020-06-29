@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/ProjectBabbler/birder-vs-birder#readme",
   "dependencies": {
-    "axios": "0.15.3",
+    "axios": "0.18.1",
     "babel-cli": "6.18.0",
     "babel-core": "6.18.2",
     "babel-loader": "6.2.8",
@@ -42,20 +42,17 @@
     "cryptr": "1.0.0",
     "css-loader": "0.26.0",
     "deferred": "0.7.5",
-    "ebird": "1.0.0",
+    "ebird": "^1.0.8",
     "email-validator": "1.0.7",
     "express": "4.14.0",
     "firebase": "3.6.1",
-    "gulp": "3.9.1",
-    "gulp-babel": "6.1.2",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
     "history": "3.0.0",
-    "humanname": "0.2.2",
-    "iron-cache": "0.3.0",
     "limiter": "1.1.0",
     "lunr": "0.7.2",
-    "mailchimp-v3": "1.0.2",
     "material-ui": "0.16.4",
-    "moment": "2.17.0",
+    "moment": "2.19.3",
     "newrelic": "1.34.0",
     "ord": "0.1.1",
     "postmark": "1.3.1",
@@ -85,13 +82,14 @@
     "webshot": "0.18.0"
   },
   "devDependencies": {
-    "eslint": "^3.7.1",
-    "eslint-plugin-react": "^6.4.1",
-    "nightwatch": "^0.9.8",
-    "webpack-dev-middleware": "^1.8.4",
-    "webpack-hot-middleware": "^2.13.0"
+    "eslint": "^4.18.2",
+    "eslint-plugin-react": "^6.10.3",
+    "nightwatch": "^0.9.20",
+    "webpack-dev-middleware": "^1.12.2",
+    "webpack-hot-middleware": "^2.21.2"
   },
   "engines": {
-    "node": ">= 7.0.0"
+    "node": "^8.0.0",
+    "npm": ">=6.0.0"
   }
 }
