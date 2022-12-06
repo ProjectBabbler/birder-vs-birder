@@ -44,7 +44,7 @@
     "deferred": "0.7.5",
     "ebird": "^2.0.2",
     "email-validator": "1.0.7",
-    "express": "4.14.0",
+    "express": "4.17.3",
     "firebase": "3.6.1",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.1",
